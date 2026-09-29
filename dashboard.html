@@ -791,6 +791,17 @@
   }
 
   /* ---------------- Init (guarded) ---------------- */
+  // Tab switching (Chore tracker / Family agreement / My courses / Kids).
+  document.querySelectorAll(".tab").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".tab").forEach(function (b) { b.classList.remove("active"); });
+      document.querySelectorAll(".tab-panel").forEach(function (p) { p.classList.remove("active"); });
+      btn.classList.add("active");
+      var panel = document.getElementById(btn.getAttribute("data-tab-target"));
+      if (panel) panel.classList.add("active");
+    });
+  });
+
   (async function () {
     var session = await TFG.requireParent();
     if (!session) return;
