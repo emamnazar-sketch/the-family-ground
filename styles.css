@@ -540,3 +540,64 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
   #printArea .pa-sig strong { display: block; font-size: 12pt; }
   #printArea .pa-date { text-align: center; margin-top: 28px; color: #333; }
 }
+
+/* ---------- Kids: parent tab + kid pages ---------- */
+.check-row { display: flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; color: var(--ink); }
+.check-row input { width: 22px; height: 22px; accent-color: var(--forest); flex: none; }
+
+.code-reveal { margin-top: 20px; padding: 20px; background: var(--sage-soft); border-radius: 20px; text-align: center; }
+.invite-code {
+  font-family: var(--font-head); font-weight: 900; font-size: 2.6rem;
+  letter-spacing: 0.3em; text-indent: 0.3em; color: var(--forest); margin: 4px 0;
+}
+.invite-code.sm { font-size: 1.5rem; }
+
+.kid-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.kid-card-head h3 { margin: 0; }
+.kid-card h4 { color: var(--forest); margin-bottom: 12px; }
+
+.review-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 16px; padding: 14px; margin-bottom: 12px;
+}
+.review-item .chore-info { flex: 1; min-width: 0; }
+.review-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.note-input { margin-top: 10px; }
+.proof-img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; flex: none; }
+
+/* Kid-facing pages */
+.kid-hero { text-align: center; margin-bottom: 32px; }
+.kid-sun { width: 72px; height: 72px; margin-bottom: 8px; }
+.form-card.kid-card { text-align: center; }
+.form-card.kid-card .form-group { text-align: left; }
+.code-input {
+  text-align: center; font-size: 1.5rem; font-weight: 800;
+  letter-spacing: 0.25em; text-indent: 0.25em; text-transform: uppercase;
+}
+.kid-chip { font-weight: 800; color: var(--forest); }
+.kid-chore {
+  background: var(--card); border-radius: 20px;
+  padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--shadow);
+}
+.kid-chore-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+.photo-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 999px; border: 2px solid var(--sage);
+  color: var(--forest); font-weight: 800; cursor: pointer; background: var(--sage-soft);
+}
+.parent-says {
+  background: #FFF6DE; border-left: 4px solid #E8B93C;
+  padding: 10px 12px; border-radius: 0 12px 12px 0;
+  margin-top: 8px; font-weight: 600; color: var(--ink);
+}
+.celebrate {
+  background: var(--forest); color: var(--cream); font-weight: 800;
+  border-radius: 20px; padding: 16px 20px; margin-bottom: 14px; text-align: center;
+}
+
+@media (max-width: 640px) {
+  .invite-code { font-size: 2rem; }
+  .review-item { flex-wrap: wrap; }
+  .proof-img { width: 100%; height: 180px; }
+}

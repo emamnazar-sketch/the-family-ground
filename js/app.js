@@ -206,6 +206,291 @@
     return session;
   };
 
+  /* ---------------- Parent / kid dashboards ----------------
+     Kids join with a one-time parent code via anonymous sign-in:
+     no email or phone needed for kids.
+  ------------------------------------------------------ */
+
+  // Anonymous sign-in (used by kids).
+  TFG.signInAnonymously = async function () {
+    try {
+      var sb = getClient();
+      var res = await sb.auth.signInAnonymously();
+      if (res.error) return { error: friendlyError(res.error) };
+      return { session: res.data.session, user: res.data.user };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // The kid_profiles row for the current user, or null.
+  TFG.getKidProfile = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { kid: null };
+      var res = await sb.from("kid_profiles").select("id, parent_id, kid_label").eq("id", user.id).maybeSingle();
+      if (res.error) return { error: friendlyError(res.error) };
+      return { kid: res.data || null };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Parent pages: bounce kid sessions to the kid dashboard.
+  TFG.requireParent = async function () {
+    var session = await TFG.requireAuth();
+    if (!session) return null;
+    var kp = await TFG.getKidProfile();
+    if (kp && kp.kid) {
+      window.location.href = "kid-dashboard.html";
+      return null;
+    }
+    return session;
+  };
+
+  // Kid pages: bounce anyone who is not a kid to the login page.
+  TFG.requireKid = async function () {
+    var session = await TFG.requireAuth();
+    if (!session) return null;
+    var kp = await TFG.getKidProfile();
+    if (!kp || !kp.kid) {
+      window.location.href = "login.html";
+      return null;
+    }
+    return { session: session, kid: kp.kid };
+  };
+
+  TFG.signOutKid = async function () {
+    try {
+      var sb = getClient();
+      await sb.auth.signOut();
+    } catch (e) { /* non-fatal */ }
+    window.location.href = "kid-login.html";
+  };
+
+  // Sign out without leaving the page (used when a kid takes over a
+  // shared device where a parent is still logged in).
+  TFG.signOutSilent = async function () {
+    try {
+      var sb = getClient();
+      await sb.auth.signOut();
+    } catch (e) { /* non-fatal */ }
+  };
+
+  // 6-char code from an unambiguous charset (no I, L, O, 0, 1).
+  var CODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  TFG.makeInviteCode = function () {
+    var code = "";
+    for (var i = 0; i < 6; i++) {
+      code += CODE_CHARS.charAt(Math.floor(Math.random() * CODE_CHARS.length));
+    }
+    return code;
+  };
+
+  TFG.createInviteCode = async function (kidLabel) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var code = TFG.makeInviteCode();
+      var res = await sb.from("invite_codes")
+        .insert({ parent_id: user.id, code: code, kid_label: kidLabel || "" })
+        .select().single();
+      if (res.error) return { error: friendlyError(res.error) };
+      return { invite: res.data };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // The parent's kids plus their active (unused) invite codes.
+  TFG.getKids = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var kidsRes = await sb.from("kid_profiles")
+        .select("id, kid_label, created_at").eq("parent_id", user.id).order("created_at", { ascending: true });
+      if (kidsRes.error) return { error: friendlyError(kidsRes.error) };
+      var codesRes = await sb.from("invite_codes")
+        .select("id, code, kid_label, is_active, created_at").eq("parent_id", user.id).eq("is_active", true)
+        .order("created_at", { ascending: false });
+      if (codesRes.error) return { error: friendlyError(codesRes.error) };
+      return { kids: kidsRes.data || [], codes: codesRes.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Fresh code for a kid label (deactivates their old active codes).
+  TFG.newInviteCodeForKid = async function (kidLabel) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      await sb.from("invite_codes").update({ is_active: false })
+        .eq("parent_id", user.id).eq("kid_label", kidLabel || "").eq("is_active", true);
+      return await TFG.createInviteCode(kidLabel);
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Remove a kid: burn their codes, delete the profile row.
+  // Their chores stay but become unassigned (on delete set null).
+  TFG.removeKid = async function (kidId, kidLabel) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      await sb.from("invite_codes").update({ is_active: false })
+        .eq("parent_id", user.id).eq("kid_label", kidLabel || "");
+      var res = await sb.from("kid_profiles").delete().eq("id", kidId).eq("parent_id", user.id);
+      if (res.error) return { error: friendlyError(res.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  /* ---- Chores with kid assignment ---- */
+
+  // The parent's own chores (not assigned to any kid).
+  TFG.getParentChores = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var res = await sb.from("chores").select("*")
+        .eq("user_id", user.id).is("assigned_to", null).order("created_at", { ascending: true });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { chores: res.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // All chores the parent assigned to kids.
+  TFG.getAssignedChores = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var res = await sb.from("chores").select("*")
+        .eq("user_id", user.id).not("assigned_to", "is", null).order("created_at", { ascending: true });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { chores: res.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // The signed-in kid's own chores.
+  TFG.getMyChores = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var res = await sb.from("chores").select("*")
+        .eq("assigned_to", user.id).order("created_at", { ascending: true });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { chores: res.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Parent review: approve the chore or ask the kid to redo it,
+  // with an optional note the kid will see.
+  TFG.reviewChore = async function (choreId, status, parentNote) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      if (status !== "approved" && status !== "resubmit") return { error: "Unknown review action." };
+      var res = await sb.from("chores").update({ status: status, parent_note: parentNote || null })
+        .eq("id", choreId).eq("user_id", user.id).select().single();
+      if (res.error) return { error: friendlyError(res.error) };
+      return { chore: res.data };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Kid marks a chore done. proofPath: storage path in chore-proof, or null.
+  TFG.submitChore = async function (choreId, proofPath) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var res = await sb.from("chores")
+        .update({ status: "submitted", proof_url: proofPath || null })
+        .eq("id", choreId).eq("assigned_to", user.id).select().single();
+      if (res.error) return { error: friendlyError(res.error) };
+      return { chore: res.data };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Kid uploads a proof photo. Path: {kidId}/{choreId}.jpg (upsert).
+  TFG.uploadProof = async function (choreId, file) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var path = user.id + "/" + choreId + ".jpg";
+      var res = await sb.storage.from("chore-proof").upload(path, file, {
+        upsert: true,
+        contentType: file.type || "image/jpeg"
+      });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { path: path };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Signed URL so the parent can view a proof photo.
+  TFG.getProofUrl = async function (path) {
+    try {
+      var sb = getClient();
+      var res = await sb.storage.from("chore-proof").createSignedUrl(path, 3600);
+      if (res.error) return { error: friendlyError(res.error) };
+      return { url: res.data.signedUrl };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Kid redemption: code -> kid_profiles row -> the code is used up.
+  TFG.redeemInviteCode = async function (rawCode) {
+    try {
+      var sb = getClient();
+      var code = String(rawCode || "").trim().toUpperCase();
+      if (!code) return { error: "Please enter the code from your parent." };
+      var user = await TFG.getUser();
+      if (!user) return { error: "Could not start. Please reload and try again." };
+      // Already joined before? Go straight in.
+      var existing = await sb.from("kid_profiles").select("id").eq("id", user.id).maybeSingle();
+      if (existing.data) return { kid: existing.data, already: true };
+      var found = await sb.from("invite_codes")
+        .select("id, parent_id, kid_label").eq("code", code).eq("is_active", true).maybeSingle();
+      if (found.error) return { error: friendlyError(found.error) };
+      if (!found.data) return { error: "That code did not work. Ask your parent for a new one." };
+      var ins = await sb.from("kid_profiles")
+        .insert({ id: user.id, parent_id: found.data.parent_id, kid_label: found.data.kid_label || "" })
+        .select().single();
+      if (ins.error) return { error: friendlyError(ins.error) };
+      // Single use: burn the code.
+      await sb.from("invite_codes").update({ is_active: false }).eq("id", found.data.id);
+      return { kid: ins.data };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
   // Show/hide nav items based on auth state.
   TFG.updateNav = async function () {
     var session = await TFG.getSession();
@@ -381,7 +666,10 @@
         user_id: user.id,
         kid_label: fields.kid_label,
         title: fields.title,
-        frequency: fields.frequency || "daily"
+        frequency: fields.frequency || "daily",
+        assigned_to: fields.assigned_to || null,
+        proof_required: !!fields.proof_required,
+        status: "assigned"
       }).select().single();
       if (res.error) return { error: friendlyError(res.error) };
       return { chore: res.data };

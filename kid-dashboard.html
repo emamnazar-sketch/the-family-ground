@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My chores — The Family Ground</title>
+<meta name="description" content="Your own chore list. Mark chores done, send a photo if your parent asked for one, and see what is approved.">
+<link rel="canonical" href="https://thefamilyground.com/kid-dashboard.html">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:site_name" content="The Family Ground">
+<meta property="og:type" content="website">
+<meta property="og:title" content="My chores — The Family Ground">
+<meta property="og:description" content="Your own chore list. Mark chores done and see what is approved.">
+<meta property="og:url" content="https://thefamilyground.com/kid-dashboard.html">
+<meta property="og:image" content="https://thefamilyground.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="My chores — The Family Ground">
+<meta name="twitter:description" content="Your own chore list. Mark chores done and see what is approved.">
+<meta name="twitter:image" content="https://thefamilyground.com/og-image.png">
+<meta name="theme-color" content="#12503F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "The Family Ground",
+      "url": "https://thefamilyground.com/",
+      "founder": { "@type": "Person", "name": "Amam Nazar" },
+      "sameAs": ["https://www.youtube.com/@amamthefamilyman"]
+    },
+    { "@type": "WebSite", "name": "The Family Ground", "url": "https://thefamilyground.com/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <span class="leaf" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21c-5 0-8-3.5-8-8 0-5 4-9 10-10-.5 6-2 12-2 18z" fill="#F7F3EA"/><path d="M12 21c5 0 8-3.5 8-8 0-5-4-9 10-10 .5 6 2 12 2 18z" fill="#8FBC9F" opacity=".8"/></svg>
+      </span>
+      The Family Ground
+    </a>
+    <nav aria-label="Main">
+      <span class="kid-chip" id="kidChip">Hi!</span>
+      <button type="button" class="btn btn-outline btn-sm" id="kidSignOut">Sign out</button>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="dash-wrap">
+    <div class="wrap wrap-narrow">
+      <div class="kid-hero">
+        <svg class="kid-sun" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="24" fill="#8FBC9F"/>
+          <g stroke="#12503F" stroke-width="6" stroke-linecap="round">
+            <line x1="50" y1="8" x2="50" y2="18"/><line x1="50" y1="82" x2="50" y2="92"/>
+            <line x1="8" y1="50" x2="18" y2="50"/><line x1="82" y1="50" x2="92" y2="50"/>
+            <line x1="20" y1="20" x2="27" y2="27"/><line x1="73" y1="73" x2="80" y2="80"/>
+            <line x1="80" y1="20" x2="73" y2="27"/><line x1="27" y1="73" x2="20" y2="80"/>
+          </g>
+        </svg>
+        <h1>My chores</h1>
+        <p class="muted" style="margin:0;">Do a chore, tap the button, and your parent will check it.</p>
+      </div>
+
+      <p class="form-error" id="kidError" style="margin: 0 0 16px;"></p>
+
+      <h2>Things to do</h2>
+      <div id="todoList"></div>
+
+      <h2 class="mt-4">Try again</h2>
+      <div id="retryList"></div>
+
+      <h2 class="mt-4">Waiting for your parent</h2>
+      <div id="waitingList"></div>
+
+      <h2 class="mt-4">All done</h2>
+      <div id="doneList"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  var errBox = document.getElementById("kidError");
+
+  function showError(msg) {
+    errBox.textContent = msg;
+    errBox.classList.add("visible");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function clearError() {
+    errBox.classList.remove("visible");
+    errBox.textContent = "";
+  }
+
+  function todoHTML(chore) {
+    var photoPart = chore.proof_required
+      ? '<label class="photo-btn"><span data-photo-label="' + TFG.esc(String(chore.id)) + '">Take a photo</span>' +
+        '<input type="file" accept="image/*" capture="environment" data-proof-input="' +
+        TFG.esc(String(chore.id)) + '" hidden></label>'
+      : "";
+    return (
+      '<div class="kid-chore">' +
+        '<p class="chore-title">' + TFG.esc(chore.title) + "</p>" +
+        (chore.proof_required ? '<p class="chore-meta">Your parent asked for a photo of this one.</p>' : "") +
+        '<div class="kid-chore-actions">' + photoPart +
+          '<button type="button" class="btn btn-forest btn-sm" data-mark-done="' + TFG.esc(String(chore.id)) +
+          '" data-needs-photo="' + (chore.proof_required ? "1" : "") + '">I did it!</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function retryHTML(chore) {
+    var note = chore.parent_note
+      ? '<p class="chore-meta parent-says">Your parent says: ' + TFG.esc(chore.parent_note) + "</p>"
+      : "";
+    var photoPart = chore.proof_required
+      ? '<label class="photo-btn"><span data-photo-label="' + TFG.esc(String(chore.id)) + '">Take a photo</span>' +
+        '<input type="file" accept="image/*" capture="environment" data-proof-input="' +
+        TFG.esc(String(chore.id)) + '" hidden></label>'
+      : "";
+    return (
+      '<div class="kid-chore">' +
+        '<p class="chore-title">' + TFG.esc(chore.title) + "</p>" +
+        note +
+        (chore.proof_required ? '<p class="chore-meta">Your parent asked for a photo of this one.</p>' : "") +
+        '<div class="kid-chore-actions">' + photoPart +
+          '<button type="button" class="btn btn-forest btn-sm" data-mark-done="' + TFG.esc(String(chore.id)) +
+          '" data-needs-photo="' + (chore.proof_required ? "1" : "") + '">I did it!</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+  function simpleHTML(chore, extra) {
+    return (
+      '<div class="kid-chore">' +
+        '<p class="chore-title">' + TFG.esc(chore.title) + "</p>" +
+        (extra || "") +
+      "</div>"
+    );
+  }
+
+  async function loadKidChores() {
+    var res = await TFG.getMyChores();
+    var chores = (res && res.chores) || [];
+
+    var todo = chores.filter(function (c) { return c.status === "assigned"; });
+    var retry = chores.filter(function (c) { return c.status === "resubmit"; });
+    var waiting = chores.filter(function (c) { return c.status === "submitted"; });
+    var done = chores.filter(function (c) { return c.status === "approved"; });
+
+    document.getElementById("todoList").innerHTML = todo.length
+      ? todo.map(todoHTML).join("")
+      : '<p class="muted">Nothing to do right now. Nice!</p>';
+
+    document.getElementById("retryList").innerHTML = retry.length
+      ? retry.map(retryHTML).join("")
+      : '<p class="muted">Nothing here.</p>';
+
+    document.getElementById("waitingList").innerHTML = waiting.length
+      ? waiting.map(function (c) { return simpleHTML(c, '<p class="chore-meta">Your parent will check it soon.</p>'); }).join("")
+      : '<p class="muted">Nothing waiting.</p>';
+
+    document.getElementById("doneList").innerHTML = done.length
+      ? '<div class="celebrate">Nice work! You finished ' + done.length + ".</div>" +
+        done.map(function (c) { return simpleHTML(c); }).join("")
+      : '<p class="muted">Finish a chore and it will show up here.</p>';
+  }
+
+  async function markDone(choreId, needsPhoto, btn) {
+    clearError();
+    var file = null;
+    if (needsPhoto) {
+      var input = document.querySelector('input[data-proof-input="' + choreId + '"]');
+      file = input && input.files && input.files[0];
+      if (!file) {
+        showError("Please take a photo first.");
+        return;
+      }
+    }
+    btn.disabled = true;
+    var original = btn.textContent;
+    btn.textContent = "Sending\u2026";
+    try {
+      var proofPath = null;
+      if (file) {
+        var up = await TFG.uploadProof(choreId, file);
+        if (up && up.error) { showError(TFG.friendlyError(up.error)); return; }
+        proofPath = up.path;
+      }
+      var sub = await TFG.submitChore(choreId, proofPath);
+      if (sub && sub.error) { showError(TFG.friendlyError(sub.error)); return; }
+      await loadKidChores();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  }
+
+  (async function () {
+    var res = await TFG.requireKid();
+    if (!res) return;
+    var label = (res.kid && res.kid.kid_label) || "Kid";
+    document.getElementById("kidChip").textContent = "Hi, " + label + "!";
+
+    document.getElementById("kidSignOut").addEventListener("click", function () {
+      TFG.signOutKid();
+    });
+
+    // Photo picked -> show a check on the label.
+    document.addEventListener("change", function (e) {
+      var input = e.target.closest("input[data-proof-input]");
+      if (!input) return;
+      var labelEl = document.querySelector('span[data-photo-label="' + input.getAttribute("data-proof-input") + '"]');
+      if (labelEl && input.files && input.files[0]) labelEl.textContent = "Photo added ✓";
+    });
+
+    // "I did it!" buttons (delegated).
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-mark-done]");
+      if (!btn) return;
+      markDone(btn.getAttribute("data-mark-done"), btn.getAttribute("data-needs-photo") === "1", btn);
+    });
+
+    await loadKidChores();
+  })();
+})();
+</script>
+</body>
+</html>

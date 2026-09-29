@@ -1,0 +1,29 @@
+# The Family Ground
+
+> A membership for parents: track chores, write family agreements together, and take short courses. Built by Amam, a dad of six, who tries things in his own home and shares honestly.
+
+- Home: https://thefamilyground.com/
+- Become a member: https://thefamilyground.com/signup.html
+- Log in: https://thefamilyground.com/login.html
+- Kid login: https://thefamilyground.com/kid-login.html
+- Blog and newsletter: https://blog.thefamilyground.com
+
+## What it is
+
+The Family Ground is a parent membership site. Members get:
+
+- A chore tracker for the whole week.
+- A family agreement builder the whole family fills in together.
+- Short courses inside the membership.
+- A kids' side: each kid gets their own simple dashboard. Kids join with a one-time code from their parent — no email address or phone number needed. Parents assign chores, kids mark them done (with an optional photo), and parents approve or ask them to try again.
+
+## What it is not
+
+- The family agreement is an experiment Amam is trying in his own home, not a proven method.
+- Course outlines are drafts awaiting review, not finished lessons.
+- Membership pricing is not set yet; founding member pricing will be announced at launch.
+- There are no testimonials, statistics, or claimed results on this site.
+
+## Who makes it
+
+Amam Nazar, a dad of six. He does not present himself as a parenting expert or guru.

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kid login — The Family Ground</title>
+<meta name="description" content="Kids: type the one-time code your parent gave you to open your own chore dashboard. No email or phone needed.">
+<link rel="canonical" href="https://thefamilyground.com/kid-login.html">
+<meta property="og:site_name" content="The Family Ground">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kid login — The Family Ground">
+<meta property="og:description" content="Kids: type the one-time code your parent gave you to open your own chore dashboard. No email or phone needed.">
+<meta property="og:url" content="https://thefamilyground.com/kid-login.html">
+<meta property="og:image" content="https://thefamilyground.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kid login — The Family Ground">
+<meta name="twitter:description" content="Kids: type the one-time code your parent gave you to open your own chore dashboard. No email or phone needed.">
+<meta name="twitter:image" content="https://thefamilyground.com/og-image.png">
+<meta name="theme-color" content="#12503F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "The Family Ground",
+      "url": "https://thefamilyground.com/",
+      "founder": { "@type": "Person", "name": "Amam Nazar" },
+      "sameAs": ["https://www.youtube.com/@amamthefamilyman"]
+    },
+    { "@type": "WebSite", "name": "The Family Ground", "url": "https://thefamilyground.com/" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <span class="leaf" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21c-5 0-8-3.5-8-8 0-5 4-9 10-10-.5 6-2 12-2 18z" fill="#F7F3EA"/><path d="M12 21c5 0 8-3.5 8-8 0-5-4-9 10-10 .5 6 2 12 2 18z" fill="#8FBC9F" opacity=".8"/></svg>
+      </span>
+      The Family Ground
+    </a>
+    <nav aria-label="Main">
+      <a class="nl" href="index.html">Home</a>
+      <a class="nl" href="about.html">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="nl" href="login.html">Log in</a>
+      <a class="btn btn-forest btn-sm" href="signup.html">Become a member</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="form-section">
+    <div class="wrap">
+      <div class="form-card kid-card">
+        <svg class="kid-sun" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="24" fill="#8FBC9F"/>
+          <g stroke="#12503F" stroke-width="6" stroke-linecap="round">
+            <line x1="50" y1="8" x2="50" y2="18"/><line x1="50" y1="82" x2="50" y2="92"/>
+            <line x1="8" y1="50" x2="18" y2="50"/><line x1="82" y1="50" x2="92" y2="50"/>
+            <line x1="20" y1="20" x2="27" y2="27"/><line x1="73" y1="73" x2="80" y2="80"/>
+            <line x1="80" y1="20" x2="73" y2="27"/><line x1="27" y1="73" x2="20" y2="80"/>
+          </g>
+        </svg>
+        <h1>Hi there!</h1>
+        <p class="lead">Type the code your parent gave you.</p>
+        <form id="kidCodeForm" novalidate>
+          <div class="form-error"></div>
+          <div class="form-group">
+            <label class="form-label" for="kidCode">Your code</label>
+            <input class="form-input code-input" type="text" id="kidCode" name="kidCode"
+              placeholder="e.g. X7K2P9" maxlength="6" autocomplete="off"
+              autocapitalize="characters" spellcheck="false">
+          </div>
+          <button type="submit" class="btn btn-forest btn-block" id="kidGoBtn">Let&rsquo;s go</button>
+        </form>
+        <p class="mt-2 text-center small muted">No code yet? Ask your parent &mdash; they make one for you.</p>
+        <p class="auth-switch">Are you a parent? <a href="login.html">Log in here</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com">Blog</a>
+      <a href="login.html">Log in</a>
+      <a href="signup.html">Become a member</a>
+    </div>
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  var form = document.getElementById("kidCodeForm");
+  var input = document.getElementById("kidCode");
+  var btn = document.getElementById("kidGoBtn");
+
+  // Already joined on this device? Go straight to the kid dashboard.
+  (async function () {
+    var session = await TFG.getSession();
+    if (!session) return;
+    var kp = await TFG.getKidProfile();
+    if (kp && kp.kid) window.location.href = "kid-dashboard.html";
+  })();
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    TFG.clearFormMessages(form);
+
+    var code = input.value.trim();
+    if (!code) {
+      TFG.showFormError(form, "Please type the code your parent gave you.");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Checking\u2026";
+
+    try {
+      var user = await TFG.getUser();
+      if (user) {
+        var kp = await TFG.getKidProfile();
+        if (kp && kp.kid) {
+          window.location.href = "kid-dashboard.html";
+          return;
+        }
+        // A parent is logged in on this device — switch to a kid login.
+        if (!user.is_anonymous) await TFG.signOutSilent();
+      }
+      var anon = await TFG.signInAnonymously();
+      if (anon && anon.error) {
+        TFG.showFormError(form, TFG.friendlyError(anon.error));
+        return;
+      }
+      var res = await TFG.redeemInviteCode(code);
+      if (res && res.error) {
+        TFG.showFormError(form, TFG.friendlyError(res.error));
+        return;
+      }
+      window.location.href = "kid-dashboard.html";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Let\u2019s go";
+    }
+  });
+})();
+</script>
+</body>
+</html>

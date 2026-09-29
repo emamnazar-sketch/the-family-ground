@@ -5,6 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Home — The Family Ground</title>
 <meta name="description" content="Your member home: track daily chores, build your family agreement, and work through your courses.">
+<link rel="canonical" href="https://thefamilyground.com/dashboard.html">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:site_name" content="The Family Ground">
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Home — The Family Ground">
+<meta property="og:description" content="Your member home: track daily chores, build your family agreement, and work through your courses.">
+<meta property="og:url" content="https://thefamilyground.com/dashboard.html">
+<meta property="og:image" content="https://thefamilyground.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="My Home — The Family Ground">
+<meta name="twitter:description" content="Your member home: track daily chores, build your family agreement, and work through your courses.">
+<meta name="twitter:image" content="https://thefamilyground.com/og-image.png">
+<meta name="theme-color" content="#12503F">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "The Family Ground",
+      "url": "https://thefamilyground.com/",
+      "founder": { "@type": "Person", "name": "Amam Nazar" },
+      "sameAs": ["https://www.youtube.com/@amamthefamilyman"]
+    },
+    { "@type": "WebSite", "name": "The Family Ground", "url": "https://thefamilyground.com/" }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -49,6 +77,7 @@
           <button type="button" class="tab active" data-tab-target="panel-chores">Chore tracker</button>
           <button type="button" class="tab" data-tab-target="panel-agreement">Family agreement</button>
           <button type="button" class="tab" data-tab-target="panel-courses">My courses</button>
+          <button type="button" class="tab" data-tab-target="panel-kids">Kids</button>
         </div>
 
         <div class="tab-panel active" id="panel-chores">
@@ -66,13 +95,29 @@
                   <input class="form-input" type="text" id="choreTitle" placeholder="e.g. Make the bed">
                 </div>
               </div>
-              <div class="form-row mt-2" style="align-items: end;">
+              <div class="form-row mt-2">
                 <div class="form-group" style="margin-bottom: 0;">
                   <label class="form-label" for="frequency">How often?</label>
                   <select class="form-select" id="frequency">
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
                   </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="assignTo">Assign to</label>
+                  <select class="form-select" id="assignTo">
+                    <option value="">Unassigned &mdash; I track it myself</option>
+                  </select>
+                  <p class="form-hint">Pick a kid and this chore moves to their dashboard.</p>
+                </div>
+              </div>
+              <div class="form-row mt-2" style="align-items: end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="check-row" for="proofRequired">
+                    <input type="checkbox" id="proofRequired">
+                    <span>Ask for a photo when it is done</span>
+                  </label>
+                  <p class="form-hint">Off by default. Turn it on only when you want proof.</p>
                 </div>
                 <div>
                   <button type="submit" class="btn btn-forest btn-sm btn-block">Add chore</button>
@@ -157,6 +202,34 @@
           <p class="muted" style="margin-bottom: 24px;">Courses live here, inside your membership. Work through them at your own pace &mdash; your progress is saved.</p>
           <div id="myCourses" class="grid-2"></div>
         </div>
+
+        <div class="tab-panel" id="panel-kids">
+          <div class="panel-card">
+            <h2 class="mt-0">Add a kid</h2>
+            <p class="muted">Your kid gets their own simple dashboard. They join with a one-time code from you &mdash; no email or phone needed for them.</p>
+            <form id="addKidForm">
+              <div class="form-row" style="align-items: end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="newKidLabel">Label for this kid</label>
+                  <input class="form-input" type="text" id="newKidLabel" placeholder="e.g. Age 9" maxlength="40">
+                  <p class="form-hint">Never use real names &mdash; just the age.</p>
+                </div>
+                <div>
+                  <button type="submit" class="btn btn-forest btn-sm btn-block">Create code</button>
+                </div>
+              </div>
+              <p class="form-error" id="kidError" style="margin: 16px 0 0;"></p>
+            </form>
+            <div id="newCodeBox" hidden class="code-reveal">
+              <p class="muted small" style="margin: 0 0 4px;">Read this code to your kid:</p>
+              <p class="invite-code" id="newCodeValue" aria-live="polite"></p>
+              <p class="muted small" style="margin: 8px 0 0;">They type it on the kid login page. Each code works once.</p>
+            </div>
+          </div>
+
+          <h2 class="mt-4">Your kids</h2>
+          <div id="kidsList" class="grid-2"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -192,7 +265,7 @@
     var mondayISO = TFG.dates.isoDate(TFG.dates.mondayOf(new Date()));
     var todayISO = TFG.dates.isoDate(new Date());
 
-    var choresRes = await TFG.getChores();
+    var choresRes = await TFG.getParentChores();
     var chores = (choresRes && choresRes.chores) || [];
     var compRes = await TFG.getWeekCompletions(mondayISO);
     var completions = (compRes && compRes.completions) || [];
@@ -282,6 +355,8 @@
       var kidLabel = document.getElementById("kidLabel").value.trim();
       var title = document.getElementById("choreTitle").value.trim();
       var frequency = document.getElementById("frequency").value;
+      var assignTo = document.getElementById("assignTo").value || null;
+      var proofRequired = document.getElementById("proofRequired").checked;
 
       if (!title) {
         err.textContent = "Please give the chore a title.";
@@ -289,7 +364,13 @@
         return;
       }
 
-      var result = await TFG.addChore({ kid_label: kidLabel, title: title, frequency: frequency });
+      var result = await TFG.addChore({
+        kid_label: kidLabel,
+        title: title,
+        frequency: frequency,
+        assigned_to: assignTo,
+        proof_required: proofRequired
+      });
       if (result && result.error) {
         err.textContent = TFG.friendlyError(result.error);
         err.classList.add("visible");
@@ -297,7 +378,10 @@
       }
       document.getElementById("kidLabel").value = "";
       document.getElementById("choreTitle").value = "";
+      document.getElementById("assignTo").value = "";
+      document.getElementById("proofRequired").checked = false;
       await loadChores();
+      await loadKids();
     });
     await loadChores();
   }
@@ -484,9 +568,231 @@
     await TFG.renderMyCourses(el);
   }
 
+  /* ---------------- Kids ---------------- */
+  var kidsCache = [];
+
+  function statusLabel(status) {
+    if (status === "submitted") return "Waiting for your review";
+    if (status === "resubmit") return "Asked to redo";
+    if (status === "approved") return "Done";
+    return "To do";
+  }
+
+  async function loadAssignOptions() {
+    var sel = document.getElementById("assignTo");
+    var res = await TFG.getKids();
+    kidsCache = (res && res.kids) || [];
+    sel.innerHTML = '<option value="">Unassigned &mdash; I track it myself</option>' +
+      kidsCache.map(function (k) {
+        return '<option value="' + TFG.esc(k.id) + '">' + TFG.esc(k.kid_label || "Kid") + "</option>";
+      }).join("");
+  }
+
+  function kidCardHTML(kid, activeCode, chores) {
+    var waiting = chores.filter(function (c) { return c.status === "submitted"; });
+    var doing = chores.filter(function (c) { return c.status === "assigned" || c.status === "resubmit"; });
+    var done = chores.filter(function (c) { return c.status === "approved"; });
+
+    function choreRow(c, showNote) {
+      var proofBadge = c.proof_required ? ' <span class="chore-meta">· photo was asked</span>' : "";
+      var note = showNote
+        ? '<input class="form-input note-input" type="text" data-note-for="' + TFG.esc(String(c.id)) +
+          '" placeholder="Note for your kid (optional)" value="' + TFG.esc(c.parent_note || "") + '">'
+        : "";
+      var proof = (c.proof_url && showNote)
+        ? '<img class="proof-img" data-proof-path="' + TFG.esc(c.proof_url) +
+          '" data-proof-for="' + TFG.esc(String(c.id)) + '" hidden alt="Photo of the finished chore">'
+        : "";
+      var actions = showNote
+        ? '<div class="review-actions">' +
+            '<button type="button" class="btn btn-forest btn-sm" data-review-approve="' + TFG.esc(String(c.id)) + '">Approve</button>' +
+            '<button type="button" class="btn btn-outline btn-sm" data-review-redo="' + TFG.esc(String(c.id)) + '">Ask to redo</button>' +
+          "</div>"
+        : "";
+      var redoNote = (c.status === "resubmit" && c.parent_note)
+        ? '<p class="chore-meta">Your note: ' + TFG.esc(c.parent_note) + "</p>"
+        : "";
+      return (
+        '<div class="review-item">' +
+          '<div class="chore-info">' +
+            '<p class="chore-title">' + TFG.esc(c.title) + "</p>" +
+            '<p class="chore-meta">' + TFG.esc(statusLabel(c.status)) + proofBadge + "</p>" +
+            redoNote +
+          "</div>" +
+          proof + note + actions +
+          '<button type="button" class="chore-delete" data-chore-delete-assigned="' + TFG.esc(String(c.id)) + '" aria-label="Delete chore">\u00d7</button>' +
+        "</div>"
+      );
+    }
+
+    var codeBlock = activeCode
+      ? '<p class="muted small" style="margin: 12px 0 2px;">Unused code (works once):</p>' +
+        '<p class="invite-code sm">' + TFG.esc(activeCode.code) + "</p>"
+      : '<p class="muted small" style="margin: 12px 0;">No unused code for this kid.</p>';
+
+    return (
+      '<div class="panel-card kid-card">' +
+        '<div class="kid-card-head">' +
+          "<h3>" + TFG.esc(kid.kid_label || "Kid") + "</h3>" +
+          '<button type="button" class="link-btn danger" data-kid-remove="' + TFG.esc(kid.id) +
+            '" data-kid-label="' + TFG.esc(kid.kid_label || "") + '">Remove</button>' +
+        "</div>" +
+        codeBlock +
+        '<button type="button" class="btn btn-outline btn-sm" data-kid-newcode="' + TFG.esc(kid.kid_label || "") + '">New code</button>' +
+        '<h4 class="mt-2">Waiting for review (' + waiting.length + ")</h4>" +
+        (waiting.length ? waiting.map(function (c) { return choreRow(c, true); }).join("")
+          : '<p class="muted small">Nothing waiting right now.</p>') +
+        '<h4 class="mt-2">In progress (' + doing.length + ")</h4>" +
+        (doing.length ? doing.map(function (c) { return choreRow(c, false); }).join("")
+          : '<p class="muted small">No chores in progress.</p>') +
+        '<h4 class="mt-2">Done (' + done.length + ")</h4>" +
+        (done.length ? done.map(function (c) { return choreRow(c, false); }).join("")
+          : '<p class="muted small">Nothing done yet.</p>') +
+      "</div>"
+    );
+  }
+
+  async function loadKids() {
+    var list = document.getElementById("kidsList");
+    var res = await TFG.getKids();
+    if (res && res.error) {
+      list.innerHTML = '<p class="muted">Could not load kids: ' + TFG.esc(res.error) + "</p>";
+      return;
+    }
+    var kids = res.kids || [];
+    var codes = res.codes || [];
+    kidsCache = kids;
+
+    var choresRes = await TFG.getAssignedChores();
+    var assigned = (choresRes && choresRes.chores) || [];
+    var byKid = {};
+    assigned.forEach(function (c) {
+      (byKid[c.assigned_to] = byKid[c.assigned_to] || []).push(c);
+    });
+
+    var joinedLabels = {};
+    kids.forEach(function (k) { joinedLabels[k.kid_label || ""] = true; });
+    var pendingCodes = codes.filter(function (cd) { return !joinedLabels[cd.kid_label || ""]; });
+
+    var html = "";
+    if (!kids.length && !pendingCodes.length) {
+      html = '<p class="muted">No kids yet. Create a code above and read it to your kid.</p>';
+    } else {
+      html = kids.map(function (kid) {
+        var activeCode = codes.filter(function (cd) { return (cd.kid_label || "") === (kid.kid_label || ""); })[0] || null;
+        return kidCardHTML(kid, activeCode, byKid[kid.id] || []);
+      }).join("");
+      html += pendingCodes.map(function (cd) {
+        return (
+          '<div class="panel-card kid-card">' +
+            "<h3>" + TFG.esc(cd.kid_label || "Kid") + ' <span class="muted small">· not joined yet</span></h3>' +
+            '<p class="muted small" style="margin: 12px 0 2px;">Unused code (works once):</p>' +
+            '<p class="invite-code sm">' + TFG.esc(cd.code) + "</p>" +
+            '<p class="muted small">Read this code to your kid so they can join.</p>' +
+          "</div>"
+        );
+      }).join("");
+    }
+    list.innerHTML = html;
+
+    // Resolve proof photo URLs.
+    list.querySelectorAll("img[data-proof-path]").forEach(function (img) {
+      TFG.getProofUrl(img.getAttribute("data-proof-path")).then(function (r) {
+        if (r && r.url) { img.src = r.url; img.hidden = false; }
+      });
+    });
+  }
+
+  function initKids() {
+    // Add-a-kid form.
+    document.getElementById("addKidForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var err = document.getElementById("kidError");
+      var box = document.getElementById("newCodeBox");
+      var val = document.getElementById("newCodeValue");
+      err.classList.remove("visible");
+      box.hidden = true;
+
+      var label = document.getElementById("newKidLabel").value.trim();
+      if (!label) {
+        err.textContent = "Please add a label, like an age.";
+        err.classList.add("visible");
+        return;
+      }
+      var result = await TFG.createInviteCode(label);
+      if (result && result.error) {
+        err.textContent = TFG.friendlyError(result.error);
+        err.classList.add("visible");
+        return;
+      }
+      document.getElementById("newKidLabel").value = "";
+      val.textContent = result.invite.code;
+      box.hidden = false;
+      await loadKids();
+      await loadAssignOptions();
+    });
+
+    // Delegated clicks: remove kid, new code, approve, ask to redo, delete chore.
+    document.getElementById("kidsList").addEventListener("click", async function (e) {
+      var removeBtn = e.target.closest("[data-kid-remove]");
+      var newCodeBtn = e.target.closest("[data-kid-newcode]");
+      var approveBtn = e.target.closest("[data-review-approve]");
+      var redoBtn = e.target.closest("[data-review-redo]");
+      var delBtn = e.target.closest("[data-chore-delete-assigned]");
+
+      if (removeBtn) {
+        var label = removeBtn.getAttribute("data-kid-label") || "this kid";
+        if (confirm("Remove " + label + "? Their chores will move back to your list.")) {
+          var r = await TFG.removeKid(removeBtn.getAttribute("data-kid-remove"), removeBtn.getAttribute("data-kid-label"));
+          if (r && r.error) { alert(TFG.friendlyError(r.error)); return; }
+          await loadKids();
+          await loadAssignOptions();
+          await loadChores();
+        }
+        return;
+      }
+      if (newCodeBtn) {
+        var r2 = await TFG.newInviteCodeForKid(newCodeBtn.getAttribute("data-kid-newcode"));
+        if (r2 && r2.error) { alert(TFG.friendlyError(r2.error)); return; }
+        document.getElementById("newCodeValue").textContent = r2.invite.code;
+        document.getElementById("newCodeBox").hidden = false;
+        await loadKids();
+        return;
+      }
+      function noteFor(choreId) {
+        var input = document.querySelector('[data-note-for="' + choreId + '"]');
+        return input ? input.value.trim() : "";
+      }
+      if (approveBtn) {
+        var id = approveBtn.getAttribute("data-review-approve");
+        var r3 = await TFG.reviewChore(id, "approved", noteFor(id));
+        if (r3 && r3.error) { alert(TFG.friendlyError(r3.error)); return; }
+        await loadKids();
+        return;
+      }
+      if (redoBtn) {
+        var id2 = redoBtn.getAttribute("data-review-redo");
+        var r4 = await TFG.reviewChore(id2, "resubmit", noteFor(id2));
+        if (r4 && r4.error) { alert(TFG.friendlyError(r4.error)); return; }
+        await loadKids();
+        return;
+      }
+      if (delBtn) {
+        if (confirm("Delete this chore?")) {
+          var r5 = await TFG.deleteChore(delBtn.getAttribute("data-chore-delete-assigned"));
+          if (r5 && r5.error) { alert(TFG.friendlyError(r5.error)); return; }
+          await loadKids();
+        }
+      }
+    });
+
+    loadAssignOptions();
+    loadKids();
+  }
+
   /* ---------------- Init (guarded) ---------------- */
   (async function () {
-    var session = await TFG.requireAuth();
+    var session = await TFG.requireParent();
     if (!session) return;
     await TFG.ensureProfile(); // OAuth members skip email sign-up, so their profile row may not exist yet.
 
@@ -500,6 +806,7 @@
     await initChores();
     initAgreement();
     await initCourses();
+    initKids();
   })();
 })();
 </script>
