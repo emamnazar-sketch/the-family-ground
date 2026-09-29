@@ -52,7 +52,7 @@
       <a class="nl" href="about.html">About</a>
       <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
       <a class="nl" href="login.html">Log in</a>
-      <a class="btn btn-forest btn-sm" href="signup.html">Become a member</a>
+      <a class="btn btn-forest btn-sm" href="membership.html">Become a member</a>
     </nav>
   </div>
 </div>
@@ -106,7 +106,7 @@
       <a href="about.html">About</a>
       <a href="https://blog.thefamilyground.com">Blog</a>
       <a href="login.html">Log in</a>
-      <a href="signup.html">Become a member</a>
+      <a href="membership.html">Become a member</a>
     </div>
     <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
   </div>
@@ -128,7 +128,7 @@
     googleBtn.disabled = true;
     googleBtn.textContent = "Connecting to Google\u2026";
     try {
-      var result = await TFG.signInWithGoogle();
+      var result = await TFG.signInWithGoogle(TFG.nextParam() || "dashboard.html");
       if (result && result.error) {
         TFG.showFormError(form, TFG.friendlyError(result.error));
       }
@@ -169,7 +169,7 @@
         TFG.showFormSuccess(form, "You are almost in. Please check your email and click the confirmation link to finish signing up.");
         return;
       }
-      window.location.href = "dashboard.html";
+      window.location.href = TFG.nextParam() || "dashboard.html";
     } finally {
       btn.disabled = false;
       btn.textContent = "Become a member";

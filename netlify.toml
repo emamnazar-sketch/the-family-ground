@@ -1,0 +1,10 @@
+# The Family Ground — Netlify
+# Static site, no build step. Functions power Stripe checkout.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  # Stripe needs the raw request body to verify webhook signatures.
+  node_bundler = "esbuild"

@@ -129,7 +129,7 @@
     googleBtn.disabled = true;
     googleBtn.textContent = "Connecting to Google\u2026";
     try {
-      var result = await TFG.signInWithGoogle();
+      var result = await TFG.signInWithGoogle(TFG.nextParam() || "dashboard.html");
       if (result && result.error) {
         TFG.showFormError(form, TFG.friendlyError(result.error));
       }
@@ -161,7 +161,7 @@
         TFG.showFormError(form, TFG.friendlyError(result.error));
         return;
       }
-      window.location.href = "dashboard.html";
+      window.location.href = TFG.nextParam() || "dashboard.html";
     } finally {
       btn.disabled = false;
       btn.textContent = "Log in";

@@ -15,8 +15,7 @@ window.TFG_CONFIG = {
   // TODO (Amam): paste your Supabase anon/public key here
   SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwdWt3ZHZtd3JkaG5sb2dmdmF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NDgwMTEsImV4cCI6MjEwNjIyNDAxMX0.mYMoGZp_EK-Pq1fDhUkiTC7AlbooUD5CY64Yz15eCLM",
 
-  // Membership price — DECISION NEEDED (Amam):
-  // Set when founding-member pricing is announced at launch.
-  // Example: "$9/month" or "$79/year". Shown on signup.html.
-  PRICE_PLACEHOLDER: "PRICE_NOT_SET"
+  // Membership price — LOCKED by Amam (2026-09-29): $9.99/month recurring.
+  // Marketed as "less than two cups of coffee". Cancel anytime.
+  PRICE_PLACEHOLDER: "$9.99/month"
 };

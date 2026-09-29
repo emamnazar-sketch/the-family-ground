@@ -601,3 +601,22 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
   .review-item { flex-wrap: wrap; }
   .proof-img { width: 100%; height: 180px; }
 }
+
+/* ---------- Membership (Stripe checkout) ---------- */
+.price-hero { text-align: center; margin: 6px 0 4px; }
+.price-big { font-family: "Nunito", sans-serif; font-weight: 900; font-size: 3.2rem; color: var(--forest); }
+.price-per { font-weight: 700; color: var(--ink-soft); font-size: 1.1rem; }
+
+.member-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: var(--cream); border: 2px solid var(--sage);
+  border-radius: 18px; padding: 16px 20px; margin: 18px 0 6px;
+}
+.member-banner[hidden] { display: none; }
+.member-banner-text { display: flex; flex-direction: column; gap: 2px; }
+.member-banner-text strong { font-family: "Nunito", sans-serif; color: var(--forest); font-size: 1.05rem; }
+.member-banner-text span { color: var(--ink-soft); font-size: 0.95rem; }
+
+@media (max-width: 640px) {
+  .member-banner { flex-direction: column; align-items: stretch; text-align: center; }
+}

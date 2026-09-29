@@ -121,12 +121,13 @@
 
   // Starts the Google (Gmail) OAuth flow. On success the browser leaves
   // for Google and comes back to dashboard.html with a session.
-  TFG.signInWithGoogle = async function () {
+  TFG.signInWithGoogle = async function (redirectPath) {
     try {
       var sb = getClient();
+      var target = redirectPath || "dashboard.html";
       var res = await sb.auth.signInWithOAuth({
         provider: "google",
-        options: { redirectTo: window.location.origin + "/dashboard.html" }
+        options: { redirectTo: window.location.origin + "/" + target }
       });
       if (res.error) return { error: friendlyError(res.error) };
       return { ok: true };
@@ -204,6 +205,59 @@
       return null;
     }
     return session;
+  };
+
+  /* ---------------- Membership (Stripe checkout) ---------------- */
+
+  // ?next= value, validated to a same-site relative page (e.g. "membership.html").
+  TFG.nextParam = function () {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var next = params.get("next") || "";
+      if (/^[a-zA-Z0-9._-]+\.html$/.test(next)) return next;
+    } catch (e) { /* ignore */ }
+    return "";
+  };
+
+  // The caller's membership status: 'active' | 'past_due' | 'canceled' | 'none'.
+  TFG.getMembershipStatus = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return "none";
+      var res = await sb.from("profiles").select("membership_status").eq("id", user.id).maybeSingle();
+      if (res.error || !res.data) return "none";
+      return res.data.membership_status || "none";
+    } catch (e) {
+      return "none";
+    }
+  };
+
+  // Starts Stripe Checkout for the $9.99/month membership.
+  // Returns { url } | { alreadyMember: true } | { error, loginRequired? }.
+  TFG.startCheckout = async function () {
+    try {
+      var session = await TFG.getSession();
+      if (!session) return { loginRequired: true, error: "Please log in first." };
+      await TFG.ensureProfile();
+      var res = await fetch("/.netlify/functions/create-checkout", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + session.access_token,
+          "Content-Type": "application/json"
+        }
+      });
+      var data = null;
+      try { data = await res.json(); } catch (e) { /* ignore */ }
+      if (!res.ok) {
+        return { error: (data && data.error) || "Something went wrong. Please try again." };
+      }
+      if (data && data.alreadyMember) return { alreadyMember: true };
+      if (data && data.url) return { url: data.url };
+      return { error: "Something went wrong. Please try again." };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
   };
 
   /* ---------------- Parent / kid dashboards ----------------
@@ -883,6 +937,14 @@
         ? cfg.PRICE_PLACEHOLDER
         : "Founding member pricing announced at launch";
     });
+
+    // Dashboard membership banner: show the upgrade nudge to non-members.
+    var memberBanner = document.getElementById("memberBanner");
+    if (memberBanner) {
+      TFG.getMembershipStatus().then(function (status) {
+        memberBanner.hidden = (status === "active");
+      });
+    }
 
     // Public course catalog.
     var catalog = document.getElementById("courseCatalog");

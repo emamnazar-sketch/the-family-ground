@@ -245,3 +245,68 @@ create policy "Parents read kids proof"
         and kp.parent_id = auth.uid()
     )
   );
+
+-- ============================================================
+-- Membership via Stripe (added 2026-09-29)
+-- $9.99/month recurring. The webhook (service_role) is the only
+-- writer of the membership columns; a trigger blocks everyone else.
+-- Run in the Supabase SQL editor (safe to re-run).
+-- ============================================================
+
+alter table public.profiles add column if not exists membership_status text not null default 'none';
+alter table public.profiles add column if not exists stripe_customer_id text;
+alter table public.profiles add column if not exists stripe_subscription_id text;
+alter table public.profiles add column if not exists membership_updated_at timestamptz;
+
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'profiles_membership_status_check') then
+    alter table public.profiles
+      add constraint profiles_membership_status_check
+      check (membership_status in ('none', 'active', 'past_due', 'canceled'));
+  end if;
+end $$;
+
+create unique index if not exists profiles_stripe_customer_id_key
+  on public.profiles (stripe_customer_id);
+
+-- Replace the broad "for all" profile policy with read/insert/update,
+-- so members can still edit their own name but never their membership.
+drop policy if exists "Members manage own profile" on public.profiles;
+
+drop policy if exists "Members read own profile" on public.profiles;
+create policy "Members read own profile"
+  on public.profiles for select
+  using (auth.uid() = id);
+
+drop policy if exists "Members insert own profile" on public.profiles;
+create policy "Members insert own profile"
+  on public.profiles for insert
+  with check (auth.uid() = id);
+
+drop policy if exists "Members update own profile" on public.profiles;
+create policy "Members update own profile"
+  on public.profiles for update
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+
+-- Only the service_role (the Stripe webhook) may change membership columns.
+create or replace function public.protect_membership_columns()
+returns trigger
+language plpgsql
+as $$
+begin
+  if coalesce(auth.jwt() ->> 'role', '') <> 'service_role' then
+    new.membership_status      := old.membership_status;
+    new.stripe_customer_id     := old.stripe_customer_id;
+    new.stripe_subscription_id := old.stripe_subscription_id;
+    new.membership_updated_at  := old.membership_updated_at;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists protect_membership_columns on public.profiles;
+create trigger protect_membership_columns
+  before update on public.profiles
+  for each row execute function public.protect_membership_columns();
