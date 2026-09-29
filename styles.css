@@ -85,6 +85,9 @@ a { color: var(--forest); }
   font-family: var(--font-head); font-weight: 900; font-size: 18px;
   margin-right: 14px; white-space: nowrap;
 }
+.brand-logo {
+  height: 30px; width: auto; display: block; flex: none;
+}
 .leaf {
   width: 34px; height: 34px; border-radius: 50%;
   background: var(--forest);
