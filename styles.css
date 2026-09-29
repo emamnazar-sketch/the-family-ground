@@ -184,6 +184,28 @@ img { max-width: 100%; height: auto; }
 
 .btn-sm { padding: 10px 20px; font-size: 0.9rem; }
 .btn-block { width: 100%; }
+.btn-google {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--cream-dark);
+  box-shadow: 0 1px 3px rgba(35, 42, 36, 0.12);
+}
+.btn-google:hover { background: var(--cream); color: var(--ink); }
+.btn-google svg { width: 20px; height: 20px; flex: none; }
+.divider-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+.divider-or::before,
+.divider-or::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--cream-dark);
+}
 
 .btn-danger-outline {
   background: transparent;

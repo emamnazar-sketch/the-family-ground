@@ -55,6 +55,7 @@
     if (/unable to validate email/i.test(msg)) return "That email address does not look valid. Please check it.";
     if (/email not confirmed/i.test(msg)) return "Please confirm your email first — check your inbox for the confirmation link.";
     if (/rate limit/i.test(msg)) return "Too many attempts. Please wait a minute and try again.";
+    if (/provider is not enabled|unsupported provider/i.test(msg)) return "Google sign-in is not switched on yet. Please try again in a few minutes.";
     return msg;
   }
   TFG.friendlyError = friendlyError;
@@ -118,6 +119,22 @@
     }
   };
 
+  // Starts the Google (Gmail) OAuth flow. On success the browser leaves
+  // for Google and comes back to dashboard.html with a session.
+  TFG.signInWithGoogle = async function () {
+    try {
+      var sb = getClient();
+      var res = await sb.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin + "/dashboard.html" }
+      });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
   TFG.signOut = async function () {
     try {
       var sb = getClient();
@@ -156,6 +173,26 @@
       return res.data.user || null;
     } catch (e) {
       return null;
+    }
+  };
+
+  // Creates the profiles row for OAuth members (Google sign-in skips
+  // the email sign-up path that normally creates it).
+  TFG.ensureProfile = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var existing = await sb.from("profiles").select("id").eq("id", user.id).maybeSingle();
+      if (existing.error) return { error: friendlyError(existing.error) };
+      if (existing.data) return { ok: true };
+      var meta = user.user_metadata || {};
+      var fullName = meta.full_name || meta.name || user.email || "Member";
+      var ins = await sb.from("profiles").insert({ id: user.id, full_name: fullName });
+      if (ins.error) return { error: friendlyError(ins.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
     }
   };
 
