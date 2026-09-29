@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Family Ground — A home base for parents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#12503F; --forest-deep:#0C3A2D; --sage:#8FBC9F; --cream:#F7F3EA; --ink:#232A24;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--forest-deep);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .display{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.01em;text-transform:uppercase}
+  ::selection{background:var(--sage);color:var(--forest-deep)}
+
+  /* ---------- nav ---------- */
+  header.nav{padding:22px 0;position:absolute;top:0;left:0;right:0;z-index:10}
+  header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream)}
+  .mark{width:38px;height:38px;border-radius:12px;background:var(--sage);color:var(--forest-deep);display:flex;align-items:center;justify-content:center;font-family:'Anton';font-size:20px}
+  .brand b{font-size:17px;letter-spacing:.02em}
+  nav.links{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+  nav.links a.nl{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);text-decoration:none;opacity:.72}
+  nav.links a.nl:hover{opacity:1}
+  .btn{display:inline-block;font-weight:800;font-size:15px;letter-spacing:.02em;text-decoration:none;padding:14px 30px;border-radius:999px;transition:transform .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-sage{background:var(--sage);color:var(--forest-deep)}
+  .btn-ghost{border:2px solid rgba(247,243,234,.5);color:var(--cream)}
+  .btn-ghost:hover{border-color:var(--cream)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;padding:170px 0 110px;
+    background:radial-gradient(900px 520px at 82% 8%, rgba(143,188,159,.22), transparent 60%),
+               radial-gradient(700px 500px at 8% 95%, rgba(143,188,159,.12), transparent 60%),
+               var(--forest-deep);}
+  .hero-grid{position:absolute;inset:0;opacity:.07;
+    background-image:linear-gradient(var(--cream) 1px,transparent 1px),linear-gradient(90deg,var(--cream) 1px,transparent 1px);
+    background-size:72px 72px;}
+  .hero .wrap{position:relative}
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);border:1px solid rgba(143,188,159,.45);border-radius:999px;padding:9px 20px;margin-bottom:30px}
+  .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--sage)}
+  h1{font-size:clamp(58px,8.6vw,124px);line-height:.96;color:var(--cream);margin-bottom:28px;max-width:12em}
+  h1 .stroke{color:transparent;-webkit-text-stroke:2px var(--sage)}
+  .lede{font-size:19px;line-height:1.7;color:rgba(247,243,234,.82);max-width:36em;margin-bottom:38px}
+  .lede b{color:var(--cream)}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+  .fine{font-size:13.5px;color:rgba(247,243,234,.6)}
+  .fine a{color:var(--sage);font-weight:700}
+  .hero-badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:44px}
+  .hbadge{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);background:rgba(143,188,159,.12);border:1px solid rgba(143,188,159,.3);padding:10px 18px;border-radius:999px}
+
+  /* ---------- ticker ---------- */
+  .ticker{background:var(--sage);color:var(--forest-deep);overflow:hidden;white-space:nowrap;padding:16px 0;border-top:3px solid var(--forest-deep);border-bottom:3px solid var(--forest-deep)}
+  .ticker span{font-family:'Anton';font-size:24px;letter-spacing:.06em;text-transform:uppercase;margin:0 18px}
+  .ticker .star{color:var(--forest-deep);opacity:.55}
+
+  /* ---------- tools ---------- */
+  .tools{background:var(--cream);color:var(--ink);padding:104px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:52px}
+  h2{font-size:clamp(40px,5.4vw,72px);line-height:1;color:var(--forest-deep)}
+  .sec-head p{max-width:24em;font-size:16.5px;color:rgba(35,42,36,.72)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--forest);color:var(--cream);border-radius:22px;padding:38px 32px;position:relative;overflow:hidden;transition:transform .18s ease}
+  .card:hover{transform:translateY(-6px)}
+  .card .bignum{font-family:'Anton';font-size:88px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--sage);opacity:.9;display:block;margin-bottom:22px}
+  .card h3{font-family:'Anton';font-size:30px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:14px;color:var(--cream)}
+  .card p{font-size:15.5px;color:rgba(247,243,234,.8);line-height:1.65}
+  .card .flag{display:inline-block;margin-top:18px;font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--forest-deep);background:var(--sage);padding:7px 14px;border-radius:999px}
+
+  /* ---------- honest band ---------- */
+  .honest{background:var(--ink);padding:96px 0;text-align:center}
+  .honest .wrap{max-width:880px}
+  .honest .kicker{border-color:rgba(143,188,159,.4)}
+  .honest h2{color:var(--cream);font-size:clamp(34px,4.6vw,60px);margin-bottom:22px}
+  .honest h2 .hl{color:var(--sage)}
+  .honest p{font-size:18px;color:rgba(247,243,234,.78);max-width:36em;margin:0 auto}
+
+  /* ---------- cta ---------- */
+  .cta{background:var(--sage);color:var(--forest-deep);padding:104px 0;text-align:center}
+  .cta .wrap{max-width:760px}
+  .cta h2{font-size:clamp(44px,6vw,80px);margin-bottom:20px}
+  .cta p{font-size:18px;font-weight:500;margin-bottom:36px;color:rgba(12,58,45,.85)}
+  .btn-deep{background:var(--forest-deep);color:var(--cream)}
+  .blogline{margin-top:28px;font-size:14.5px;font-weight:600;color:rgba(12,58,45,.7)}
+  .blogline a{color:var(--forest-deep);font-weight:800}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--forest-deep);padding:64px 0 40px}
+  footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:48px}
+  footer p{font-size:14.5px;color:rgba(247,243,234,.6);margin-top:14px;max-width:26em}
+  footer h4{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-bottom:16px}
+  footer ul{list-style:none}
+  footer li{margin-bottom:10px}
+  footer li a{color:rgba(247,243,234,.72);text-decoration:none;font-size:15px}
+  footer li a:hover{color:var(--sage)}
+  .copy{margin-top:52px;padding-top:24px;border-top:1px solid rgba(247,243,234,.14);font-size:13px;color:rgba(247,243,234,.45);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:900px){
+    .cards{grid-template-columns:1fr}
+    .hero{padding:150px 0 84px}
+    footer .wrap{grid-template-columns:1fr;gap:32px}
+    nav.links{gap:16px}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#"><span class="mark">F</span><b>The Family Ground</b></a>
+    <nav class="links">
+      <a class="nl" href="#">Home</a>
+      <a class="nl" href="#">Courses</a>
+      <a class="nl" href="#">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="nl" href="#">Log in</a>
+      <a class="btn btn-sage" href="#" style="padding:11px 24px">Become a member</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap">
+    <span class="kicker"><span class="dot"></span>The Family Ground &mdash; Parent Membership</span>
+    <h1 class="display">Raise your family <span class="stroke">on purpose.</span></h1>
+    <p class="lede">One home base for busy parents. <b>Track chores.</b> <b>Build family agreements.</b> <b>Take short courses.</b> Made by a dad of six who is figuring it out right alongside you.</p>
+    <div class="cta-row">
+      <a class="btn btn-sage" href="#">Become a member</a>
+      <a class="btn btn-ghost" href="#">Log in</a>
+    </div>
+    <p class="fine">Free to look around. Member tools open after <a href="#">Google sign-in</a>.</p>
+    <div class="hero-badges">
+      <span class="hbadge">Chore tracking</span>
+      <span class="hbadge">Agreement builder</span>
+      <span class="hbadge">Short courses</span>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <span>Chore tracking</span><span class="star">&#10022;</span><span>Family agreements</span><span class="star">&#10022;</span><span>Short courses</span><span class="star">&#10022;</span><span>Weekly routines</span><span class="star">&#10022;</span><span>Chore tracking</span><span class="star">&#10022;</span><span>Family agreements</span><span class="star">&#10022;</span>
+</div>
+
+<section class="tools">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="display">Everything.<br>One place.</h2>
+      <p>Three member tools, built plain and simple. Sign in with Google and they&rsquo;re yours.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="bignum">01</span>
+        <h3 class="display">Track</h3>
+        <p>Daily chore charts for each kid. Check off the day. See the whole week at a glance. Simple enough to use every single day.</p>
+      </div>
+      <div class="card">
+        <span class="bignum">02</span>
+        <h3 class="display">Agree</h3>
+        <p>Build a family agreement together &mdash; rules, rewards, and consequences everyone signs. An experiment I&rsquo;m trying with my own kids, built in the open.</p>
+        <span class="flag">An experiment</span>
+      </div>
+      <div class="card">
+        <span class="bignum">03</span>
+        <h3 class="display">Learn</h3>
+        <p>Short, plain-talk courses for real homes. Course one is being written right now &mdash; members get first access.</p>
+        <span class="flag">In the works</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="honest">
+  <div class="wrap">
+    <span class="kicker"><span class="dot"></span>No gurus here</span>
+    <h2 class="display">No perfect families.<br><span class="hl">Just honest tools.</span></h2>
+    <p>I&rsquo;m Amam &mdash; a dad of six, ages nine to twenty-one. I&rsquo;m not an expert. I&rsquo;m building the tools I wish I had, testing them at home, and sharing the ride.</p>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2 class="display">Ready when you are.</h2>
+    <p>Sign in with Google to unlock the member side &mdash; chores, agreements, and courses.</p>
+    <a class="btn btn-deep" href="#">Become a member</a>
+    <p class="blogline">Rather read first? The blog &amp; newsletter live at <a href="https://blog.thefamilyground.com">blog.thefamilyground.com</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#"><span class="mark">F</span><b>The Family Ground</b></a>
+      <p>A home base for parents building a strong family &mdash; on purpose, one day at a time.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="https://blog.thefamilyground.com">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Members</h4>
+      <ul>
+        <li><a href="#">Log in</a></li>
+        <li><a href="#">Become a member</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="copy" style="width:100%">
+      <span>&copy; 2026 The Family Ground. All rights reserved.</span>
+      <span>Built by a dad, for parents.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

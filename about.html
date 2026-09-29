@@ -4,98 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Amam — The Family Ground</title>
-<meta name="description" content="Meet Amam Nazar, a dad of six and the parent behind The Family Ground — honest help for families building a strong home in a distracted world.">
+<meta name="description" content="Meet Amam, a dad of six behind The Family Ground — trying things out in his own home and sharing what happens.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container nav-inner">
-    <a href="index.html" class="logo">The Family Ground</a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="about.html">About</a>
-      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
-      <a href="login.html" data-auth="logged-out">Log in</a>
-      <a href="dashboard.html" data-auth="logged-in" hidden>Dashboard</a>
-      <a href="signup.html" class="btn btn-primary btn-sm" data-auth="logged-out">Become a member</a>
-      <button class="btn btn-outline btn-sm" data-auth="logged-in" data-action="sign-out" hidden>Sign out</button>
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <span class="leaf" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21c-5 0-8-3.5-8-8 0-5 4-9 10-10-.5 6-2 12-2 18z" fill="#F7F3EA"/><path d="M12 21c5 0 8-3.5 8-8 0-5-4-9-10-10 .5 6 2 12 2 18z" fill="#8FBC9F" opacity=".8"/></svg>
+      </span>
+      The Family Ground
+    </a>
+    <nav>
+      <a class="nl" href="index.html">Home</a>
+      <a class="nl" href="dashboard.html">My Home</a>
+      <a class="nl" href="about.html">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="btn btn-outline btn-sm" href="#" data-action="sign-out">Sign out</a>
     </nav>
   </div>
-</header>
+</div>
 
 <main>
-  <!-- Small hero -->
-  <section class="hero" style="padding:64px 0">
-    <div class="container">
-      <div class="hero-inner">
-        <span class="badge badge-on-dark">About</span>
-        <h1>Hi, I'm Amam.</h1>
-        <p class="hero-sub">I'm a dad of six, and I started The Family Ground because our family needed it first.</p>
+  <section class="page-hero">
+    <div class="wrap-narrow">
+      <div class="stars" aria-hidden="true" style="display:flex;justify-content:center;gap:14px;margin-bottom:26px;">
+        <svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#8FBC9F"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" style="margin-top:10px"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#12503F" opacity=".5"/></svg>
+        <svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#8FBC9F"/></svg>
       </div>
+      <span class="kicker">My story</span>
+      <h1>Hello, I&rsquo;m Amam.</h1>
+      <p class="lede">I&rsquo;m a dad of six. I started The Family Ground because my own family needed it first.</p>
     </div>
   </section>
 
-  <!-- Story -->
-  <section class="section">
-    <div class="container-narrow">
-      <p>I'm Amam Nazar. I have six kids, and I run the YouTube channel <strong>Amam The Family Man</strong>, where I talk honestly about modern parenting — phones, screens, and what it takes to keep a family close in a distracted world.</p>
-
-      <p>I'm not an expert, and I don't pretend to be one. I'm just a dad who has learned a lot of things the hard way. One of the biggest lessons was about phones in our home. I watched how much time all of us — not just the kids, me too — were spending on screens, and how little real time we were spending together. Evenings that used to be family time had turned into everyone sitting in the same room looking at different screens.</p>
-
-      <p>So we started doing things differently. We set phone-free times — parts of the day where the phones simply go away, like dinner and the hours before bed. It wasn't easy at first. But when the screens are off, something simple happens: we talk. We notice each other again.</p>
-
-      <p>The other thing that changed our home was the family agreement. Instead of me handing down rules, we sit down together and the kids help suggest the rules, the rewards, and the consequences. Then everyone signs it. When kids have a say in the rules, they take them seriously — and when there's a disagreement, we can point back to what we all agreed on.</p>
-
-      <p>We also hold a weekly family meeting. Nothing big — just a time to sit together, look back at the week, talk about what worked and what didn't, and make small fixes. It's become one of the most important parts of our week.</p>
-
-      <p>That's what The Family Ground is: the tools and courses I wish I'd had years ago, built around these same ideas — whole-family agreements, weekly check-ins, and phone-free time that brings a family back together.</p>
-
-      <p>If any of this sounds like your house, you're in the right place. I'm glad you're here.</p>
+  <section style="padding:40px 0 60px;">
+    <div class="wrap-narrow story">
+      <p class="big">I&rsquo;m not an expert. I&rsquo;m just a dad.</p>
+      <p>I run the YouTube channel <strong>Amam The Family Man</strong>, where I talk in plain words about modern parenting &mdash; phones, screens, and how to keep a family close when the world pulls everyone apart.</p>
+      <p>With six kids at home, I have learned most things the hard way. One big lesson was about phones. I watched all of us &mdash; not just the kids, me too &mdash; spend more and more time on screens. Evenings that used to be family time turned into everyone sitting in the same room, looking at different screens.</p>
+      <p>So we started trying small changes. Phone-free times: parts of the day when the phones go away, like dinner and the hour before bed. It was not easy at first. But I keep trying, and I share what happens here &mdash; the good days and the messy ones.</p>
+      <p>The other thing I&rsquo;m trying is the family agreement. Instead of me handing down rules, we sit down together. The kids help suggest the rules, the rewards, and the consequences. Then everyone signs it. It is still an experiment in our home. I don&rsquo;t know yet how it will turn out &mdash; but I believe kids take rules more seriously when they helped write them.</p>
+      <p>That is what The Family Ground is: the tools I wish I had years ago, built around the same small ideas &mdash; agreements the whole family writes together, weekly check-ins, and phone-free time that gives a family its evenings back.</p>
+      <p>If any of this sounds like your house, pull up a chair. You belong here.</p>
     </div>
   </section>
 
-  <!-- CTA band -->
-  <section class="section-tight">
-    <div class="container">
-      <div class="cta-band">
-        <h2>Join me — become a member.</h2>
-        <p>Start with the 7-Day Family Screen Reset and build your family's agreement together. <span data-price></span>.</p>
-        <a href="signup.html" class="btn btn-light">Become a member</a>
+  <section class="cta-wrap">
+    <div class="wrap">
+      <div class="cta-card">
+        <svg class="deco" style="top:-40px;left:-40px" width="220" height="220" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="90" fill="none" stroke="#8FBC9F" stroke-width="10"/></svg>
+        <svg class="deco" style="bottom:-60px;right:-30px" width="260" height="260" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="#8FBC9F"/></svg>
+        <h2>Come try it with me.</h2>
+        <p>Your chore charts, your family agreement, and your courses are waiting in your member home.</p>
+        <div class="cta-row">
+          <a class="btn btn-cream" href="dashboard.html">Go to My Home</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <p class="footer-logo">The Family Ground</p>
-      <p class="footer-blurb">Practical tools for parents building a strong family in a distracted world.</p>
-    </div>
-    <div>
-      <p class="footer-heading">Explore</p>
+  <div class="wrap fin">
+    <div class="links">
       <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
+      <a href="dashboard.html">My Home</a>
       <a href="about.html">About</a>
-      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+      <a href="https://blog.thefamilyground.com">Blog</a>
     </div>
-    <div>
-      <p class="footer-heading">Members</p>
-      <a href="signup.html">Become a member</a>
-      <a href="login.html">Log in</a>
-      <a href="dashboard.html">Dashboard</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <p>&copy; <span id="year">2026</span> The Family Ground. All rights reserved.</p>
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
   </div>
 </footer>
 

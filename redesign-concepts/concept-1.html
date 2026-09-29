@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Family Ground — A membership for parents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#12503F; --sage:#8FBC9F; --cream:#F7F3EA; --ink:#232A24;
+    --cream-deep:#EFE8D8; --line:rgba(35,42,36,.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  ::selection{background:var(--sage);color:var(--forest)}
+
+  /* ---------- top rule + nav ---------- */
+  .topline{height:6px;background:var(--forest)}
+  header.nav{padding:26px 0}
+  header.nav .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .wordmark{font-family:'Fraunces',serif;font-weight:600;font-size:27px;color:var(--forest);text-decoration:none;letter-spacing:-.01em}
+  .wordmark em{font-style:italic;font-weight:400}
+  nav.links{display:flex;gap:30px;align-items:center;flex-wrap:wrap}
+  nav.links a.nl{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.75}
+  nav.links a.nl:hover{opacity:1;color:var(--forest)}
+  .btn{display:inline-block;font-weight:600;font-size:15px;text-decoration:none;padding:13px 28px;border-radius:999px;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-solid{background:var(--forest);color:var(--cream)}
+  .btn-solid:hover{box-shadow:0 8px 22px rgba(18,80,63,.28)}
+  .btn-line{border:1.5px solid var(--forest);color:var(--forest);background:transparent}
+  .btn-line:hover{background:rgba(18,80,63,.06)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 96px}
+  .hero .wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:72px;align-items:center}
+  .kicker{font-size:12.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--forest);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+  .kicker::before{content:"";width:34px;height:2px;background:var(--forest);display:inline-block}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(42px,4.9vw,68px);line-height:1.06;letter-spacing:-.015em;color:var(--ink);margin-bottom:26px}
+  h1 em{font-style:italic;color:var(--forest)}
+  .lede{font-size:19px;line-height:1.7;color:rgba(35,42,36,.82);max-width:34em;margin-bottom:34px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .fine{font-size:13.5px;color:rgba(35,42,36,.6)}
+  .fine a{color:var(--forest);font-weight:600}
+  .art{display:flex;justify-content:center}
+  .art svg{width:100%;max-width:460px;height:auto}
+
+  /* ---------- inside ---------- */
+  .inside{padding:96px 0;border-top:1px solid var(--line)}
+  .inside .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px}
+  .sticky{position:sticky;top:40px;align-self:start}
+  h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(32px,3.4vw,46px);line-height:1.12;letter-spacing:-.01em;margin-bottom:18px}
+  h2 em{font-style:italic;color:var(--forest)}
+  .sec-sub{font-size:17px;color:rgba(35,42,36,.75);max-width:26em}
+  .tool{padding:34px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:72px 1fr;gap:18px}
+  .tool:last-child{border-bottom:1px solid var(--line)}
+  .num{font-family:'Fraunces',serif;font-style:italic;font-size:30px;color:var(--sage)}
+  .tool h3{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:8px}
+  .tool p{font-size:16px;color:rgba(35,42,36,.78);max-width:36em}
+  .tag{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--forest);background:rgba(143,188,159,.28);padding:6px 14px;border-radius:999px}
+
+  /* ---------- voice / quote ---------- */
+  .voice{padding:110px 0;background:var(--forest);color:var(--cream);margin:40px 0 0}
+  .voice .wrap{max-width:860px;text-align:center}
+  .voice .kicker{color:var(--sage);justify-content:center}
+  .voice .kicker::before{background:var(--sage)}
+  blockquote{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.35;margin-bottom:28px}
+  .attr{font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);font-weight:600}
+  .voice p.body{margin:26px auto 34px;max-width:38em;font-size:17px;color:rgba(247,243,234,.85)}
+  .btn-cream{background:var(--cream);color:var(--forest)}
+  .textlink{color:var(--sage);font-weight:600;text-decoration:none;border-bottom:1px solid var(--sage);padding-bottom:2px}
+
+  /* ---------- cta ---------- */
+  .cta{padding:110px 0;text-align:center}
+  .cta .wrap{max-width:720px}
+  .cta p{font-size:18px;color:rgba(35,42,36,.78);margin:0 auto 34px;max-width:34em}
+  .blogline{margin-top:26px;font-size:14.5px;color:rgba(35,42,36,.6)}
+  .blogline a{color:var(--forest);font-weight:600}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:56px 0 40px}
+  footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:48px}
+  footer .wordmark{font-size:23px}
+  footer p{font-size:14.5px;color:rgba(35,42,36,.65);margin-top:14px;max-width:26em}
+  footer h4{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--forest);margin-bottom:16px}
+  footer ul{list-style:none}
+  footer li{margin-bottom:10px}
+  footer li a{color:rgba(35,42,36,.75);text-decoration:none;font-size:15px}
+  footer li a:hover{color:var(--forest)}
+  .copy{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:rgba(35,42,36,.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media(max-width:860px){
+    .hero{padding:48px 0 64px}
+    .hero .wrap{grid-template-columns:1fr;gap:48px}
+    .art{order:-1}
+    .art svg{max-width:330px}
+    .inside .wrap{grid-template-columns:1fr;gap:40px}
+    .sticky{position:static}
+    footer .wrap{grid-template-columns:1fr;gap:32px}
+    nav.links{gap:18px}
+  }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="#">The Family <em>Ground</em></a>
+    <nav class="links">
+      <a class="nl" href="#">Home</a>
+      <a class="nl" href="#">Courses</a>
+      <a class="nl" href="#">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="nl" href="#">Log in</a>
+      <a class="btn btn-solid" href="#" style="padding:11px 24px">Become a member</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="kicker">A membership for parents</p>
+      <h1>Strong families are built in <em>small, daily</em> moments.</h1>
+      <p class="lede">I&rsquo;m Amam &mdash; a dad of six. The Family Ground is my home base for parents: simple tools I&rsquo;m trying in my own home and sharing honestly. Chore charts. Family agreements. Short courses. Nothing fancy.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="#">Become a member</a>
+        <a class="btn btn-line" href="https://blog.thefamilyground.com">Read the blog</a>
+      </div>
+      <p class="fine">The welcome page is free to read. Member tools open after you <a href="#">sign in with Google</a>.</p>
+    </div>
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 460 540" role="img">
+        <rect x="60" y="40" width="340" height="460" rx="170" fill="none" stroke="#12503F" stroke-width="3"/>
+        <rect x="105" y="95" width="250" height="350" rx="125" fill="#8FBC9F" opacity=".45"/>
+        <circle cx="300" cy="180" r="52" fill="#12503F"/>
+        <rect x="150" y="300" width="160" height="10" rx="5" fill="#12503F" opacity=".8"/>
+        <rect x="170" y="326" width="120" height="10" rx="5" fill="#12503F" opacity=".45"/>
+        <rect x="190" y="352" width="80" height="10" rx="5" fill="#12503F" opacity=".25"/>
+        <circle cx="140" cy="150" r="10" fill="#8FBC9F"/>
+        <circle cx="352" cy="400" r="14" fill="#8FBC9F" opacity=".7"/>
+        <path d="M96 470 q 40 -34 80 0 t 80 0 t 80 0" fill="none" stroke="#12503F" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="inside">
+  <div class="wrap">
+    <div class="sticky">
+      <p class="kicker">Inside the membership</p>
+      <h2>Three tools.<br><em>One calm place.</em></h2>
+      <p class="sec-sub">Everything lives behind a simple Google sign-in &mdash; no passwords to remember, no bots.</p>
+    </div>
+    <div>
+      <div class="tool">
+        <div class="num">01</div>
+        <div>
+          <h3>Chore &amp; routine tracking</h3>
+          <p>A simple chart for each kid. Mark each day done, and watch the week fill up. Built for real homes &mdash; messy, busy, normal.</p>
+        </div>
+      </div>
+      <div class="tool">
+        <div class="num">02</div>
+        <div>
+          <h3>Family agreement builder</h3>
+          <p>Write house rules together &mdash; rules, rewards, and consequences everyone signs. This is an experiment I&rsquo;m trying with my own kids, built in the open.</p>
+          <span class="tag">An experiment, not a promise</span>
+        </div>
+      </div>
+      <div class="tool">
+        <div class="num">03</div>
+        <div>
+          <h3>Short courses</h3>
+          <p>Plain-talk lessons for real homes, in words anyone can follow. The first course is still being written &mdash; members get it first.</p>
+          <span class="tag">In the works</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="voice">
+  <div class="wrap">
+    <p class="kicker">Why I&rsquo;m doing this</p>
+    <blockquote>&ldquo;I&rsquo;m not an expert. I&rsquo;m a dad of six, still learning every day. Everything here is something I&rsquo;m testing in my own home &mdash; and I&rsquo;ll tell you honestly how it goes.&rdquo;</blockquote>
+    <p class="attr">&mdash; Amam</p>
+    <p class="body">Six kids, ages nine to twenty-one. I&rsquo;ve made plenty of mistakes, and I&rsquo;m still making them. The Family Ground is where I keep the tools that help me show up better &mdash; and share them with you.</p>
+    <a class="textlink" href="#">More about me &rarr;</a>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <p class="kicker" style="justify-content:center">Join us</p>
+    <h2>Come in. <em>Look around.</em></h2>
+    <p>The welcome page is free. Sign in with Google to open the member tools &mdash; chores, agreements, and courses.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-solid" href="#">Become a member</a>
+      <a class="btn btn-line" href="#">Log in</a>
+    </div>
+    <p class="blogline">Prefer reading first? The blog and newsletter live at <a href="https://blog.thefamilyground.com">blog.thefamilyground.com</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="#">The Family <em>Ground</em></a>
+      <p>A membership for parents building a strong family &mdash; one small day at a time.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="https://blog.thefamilyground.com">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Members</h4>
+      <ul>
+        <li><a href="#">Log in</a></li>
+        <li><a href="#">Become a member</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="copy" style="width:100%">
+      <span>&copy; 2026 The Family Ground. All rights reserved.</span>
+      <span>Made with care, by a dad.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

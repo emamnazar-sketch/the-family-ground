@@ -3,203 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Family Ground — Membership for parents building a strong family</title>
-<meta name="description" content="The Family Ground is a membership for parents: track chores and routines, build a family agreement together, and learn through short practical courses — built by Amam Nazar, a dad of six.">
+<title>The Family Ground — A warm place for parents</title>
+<meta name="description" content="The Family Ground is a membership for parents: track chores, write family agreements together, and take short courses — built by Amam, a dad of six.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container nav-inner">
-    <a href="index.html" class="logo">The Family Ground</a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="about.html">About</a>
-      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
-      <a href="login.html" data-auth="logged-out">Log in</a>
-      <a href="dashboard.html" data-auth="logged-in" hidden>Dashboard</a>
-      <a href="signup.html" class="btn btn-primary btn-sm" data-auth="logged-out">Become a member</a>
-      <button class="btn btn-outline btn-sm" data-auth="logged-in" data-action="sign-out" hidden>Sign out</button>
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <span class="leaf" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 21c-5 0-8-3.5-8-8 0-5 4-9 10-10-.5 6-2 12-2 18z" fill="#F7F3EA"/><path d="M12 21c5 0 8-3.5 8-8 0-5-4-9-10-10 .5 6 2 12 2 18z" fill="#8FBC9F" opacity=".8"/></svg>
+      </span>
+      The Family Ground
+    </a>
+    <nav>
+      <a class="nl" href="index.html">Home</a>
+      <a class="nl" href="about.html">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="nl" href="dashboard.html" data-auth="logged-in" hidden>My Home</a>
+      <a class="nl" href="login.html" data-auth="logged-out">Log in</a>
+      <a class="btn btn-forest btn-sm" href="signup.html" data-auth="logged-out">Become a member</a>
+      <a class="btn btn-outline btn-sm" href="#" data-auth="logged-in" data-action="sign-out" hidden>Sign out</a>
     </nav>
   </div>
-</header>
+</div>
 
-<main>
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-inner">
-        <span class="badge badge-on-dark">Membership for parents</span>
-        <h1>Build a strong family in a distracted world.</h1>
-        <p class="hero-sub">I'm Amam, a dad of six. The Family Ground is where I share what's actually helped our family: simple tools to get everyone off their phones, agree on the rules together, and keep the house calm — without yelling.</p>
-        <div class="hero-ctas">
-          <a href="signup.html" class="btn btn-light">Become a member</a>
-          <a href="#how" style="color:#fff;text-decoration:underline;align-self:center;">See how it works</a>
+<section class="hero">
+  <div class="wrap">
+    <svg class="sun" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="26" fill="#8FBC9F"/>
+      <g stroke="#12503F" stroke-width="5" stroke-linecap="round">
+        <line x1="50" y1="6" x2="50" y2="16"/><line x1="50" y1="84" x2="50" y2="94"/>
+        <line x1="6" y1="50" x2="16" y2="50"/><line x1="84" y1="50" x2="94" y2="50"/>
+        <line x1="19" y1="19" x2="26" y2="26"/><line x1="74" y1="74" x2="81" y2="81"/>
+        <line x1="81" y1="19" x2="74" y2="26"/><line x1="26" y1="74" x2="19" y2="81"/>
+      </g>
+    </svg>
+    <span class="kicker">Welcome in</span>
+    <h1>A warm little home on the internet <span class="wiggle">for parents<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10 Q 25 2 50 8 T 100 8 T 150 8 T 198 8" fill="none" stroke="#8FBC9F" stroke-width="6" stroke-linecap="round"/></svg></span></h1>
+    <p class="lede">The Family Ground is a membership where you can track chores, write family agreements, and take short courses &mdash; all in one friendly place.</p>
+    <div class="cta-row" data-auth="logged-out">
+      <a class="btn btn-forest" href="signup.html">Become a member</a>
+      <a class="btn btn-soft" href="login.html">Log in</a>
+    </div>
+    <div class="cta-row" data-auth="logged-in" hidden>
+      <a class="btn btn-forest" href="dashboard.html">Go to My Home</a>
+    </div>
+    <p class="note"><b>Free</b> to look around &middot; Member tools open after <b>Google sign-in</b></p>
+  </div>
+  <svg class="hills" viewBox="0 0 1440 190" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 120 Q 240 40 480 100 T 960 90 T 1440 110 L1440 190 L0 190 Z" fill="#8FBC9F" opacity=".55"/>
+    <path d="M0 150 Q 260 80 520 130 T 1040 125 T 1440 140 L1440 190 L0 190 Z" fill="#12503F"/>
+    <g fill="#F7F3EA" opacity=".9">
+      <ellipse cx="220" cy="70" rx="52" ry="18"/><ellipse cx="262" cy="62" rx="40" ry="16"/>
+      <ellipse cx="1150" cy="52" rx="58" ry="19"/><ellipse cx="1198" cy="44" rx="42" ry="15"/>
+    </g>
+    <g fill="#12503F">
+      <path d="M700 38 l7 16 17 2 -12 12 3 17 -15 -8 -15 8 3 -17 -12 -12 17 -2z" opacity=".35"/>
+      <path d="M880 60 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" opacity=".3"/>
+      <path d="M420 52 l5 11 12 2 -9 8 2 12 -10 -6 -10 6 2 -12 -9 -8 12 -2z" opacity=".3"/>
+    </g>
+  </svg>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" style="background:#F7F3EA">
+  <path d="M0 70 L0 35 Q 180 0 360 30 T 720 30 T 1080 30 T 1440 30 L1440 70 Z" fill="#DCEBDF"/>
+</svg>
+
+<section class="inside">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>What&rsquo;s inside</h2>
+      <p>Three friendly tools for members. Sign in with Google and they are all yours.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#12503F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="3"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/><line x1="4" y1="10" x2="20" y2="10"/><path d="M9 15l2 2 4-4"/></svg>
         </div>
+        <h3>Chore charts</h3>
+        <p>Make a chart for each kid, check off each day, and see the whole week fill up. Easy enough for busy evenings.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- Problem -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Sound familiar?</h2>
-      <p class="section-lede">Most families I talk to are dealing with the same few things. You're not behind — and you're definitely not alone.</p>
-      <div class="grid-3">
-        <div class="card">
-          <h3>Phones at the table</h3>
-          <p>Dinner is quiet, but not in a good way. Everyone is looking at a screen instead of each other, and you miss the way it used to feel.</p>
+      <div class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#12503F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
-        <div class="card">
-          <h3>Morning chaos</h3>
-          <p>Getting everyone up, dressed, and out the door feels like a fight every single day. By 8 AM, you're already worn out.</p>
-        </div>
-        <div class="card">
-          <h3>Bedtime battles</h3>
-          <p>Phones and tablets sneak back into bedrooms, lights go out later and later, and the morning chaos starts the night before.</p>
-        </div>
+        <h3>Family agreements</h3>
+        <p>Write house rules together &mdash; with rewards and consequences the whole family signs. I&rsquo;m trying this with my own kids, out in the open.</p>
+        <span class="flag">An experiment</span>
       </div>
-    </div>
-  </section>
-
-  <!-- Pillars -->
-  <section class="section" style="background:var(--white);">
-    <div class="container">
-      <h2 class="section-title">Three things members get</h2>
-      <p class="section-lede">Nothing fancy. Just practical tools that fit a real home with real kids.</p>
-      <div class="grid-3">
-        <div class="card">
-          <div class="pillar-icon">✅</div>
-          <h3>Track</h3>
-          <p>Chore and routine tracking for the kids — so everyone knows what they're supposed to do, and you stop repeating yourself ten times a day.</p>
+      <div class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#12503F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V4H6.5A2.5 2.5 0 004 6.5v13z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20v-5"/></svg>
         </div>
-        <div class="card">
-          <div class="pillar-icon">🤝</div>
-          <h3>Agree</h3>
-          <p>Build a family agreement together. Your kids help suggest the rules, the rewards, and the consequences — and everyone signs it.</p>
-        </div>
-        <div class="card">
-          <div class="pillar-icon">📚</div>
-          <h3>Learn</h3>
-          <p>Short, practical courses that fit real life. One small step at a time — no long lectures, no guilt.</p>
-        </div>
+        <h3>Short courses</h3>
+        <p>Courses live inside the membership, in plain words. The first one is still being written &mdash; members will get it first.</p>
+        <span class="flag">In the works</span>
       </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="section" id="how">
-    <div class="container">
-      <h2 class="section-title">How membership works</h2>
-      <p class="section-lede">Three steps. No complicated setup, no tech skills needed.</p>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Join as a founding member</h3>
-          <p>Sign up in a minute. Founding members get the first course ready to go, plus every new course as it's made.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>Set up your family</h3>
-          <p>Add your kids' routines and chores, then build your first family agreement together at the table.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Keep it going</h3>
-          <p>Weekly family check-ins, short courses, and a rhythm that gets easier the longer you stick with it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About strip -->
-  <section class="section-tight">
-    <div class="container">
-      <div class="about-strip">
-        <div class="about-portrait">AN</div>
-        <div>
-          <h2>Hi, I'm Amam.</h2>
-          <p>I'm a dad of six, and I run the YouTube channel <strong>Amam The Family Man</strong>, where I talk honestly about modern parenting — phones, screens, and keeping a family close in a distracted world. Everything in this membership comes from what our family has actually tried at our own kitchen table.</p>
-          <a href="about.html">Read my story →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Questions parents ask</h2>
-      <div class="faq-list mt-4">
-        <details class="faq-item">
-          <summary>What do I get as a member?</summary>
-          <div class="faq-answer"><p>You get the chore and routine tracker, the family agreement builder, the 7-Day Family Screen Reset course, and every new course as it's released. Everything lives in one simple dashboard.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>How much does it cost?</summary>
-          <div class="faq-answer"><p><span data-price></span>. No hidden fees, no surprises.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>Can I cancel anytime?</summary>
-          <div class="faq-answer"><p>Yes. You can cancel in one click from your account, and you keep full access until the end of your billing period.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>Is this for single parents?</summary>
-          <div class="faq-answer"><p>Absolutely. The tools work for any family — one parent, two parents, grandparents raising kids. If you're the one running the house, this is for you.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>Do my kids need their own accounts?</summary>
-          <div class="faq-answer"><p>No. You manage everything from your own account. When you set up chores and routines, use age labels like "Age 9" — never your kids' real names.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>I'm not tech-savvy — is this hard to use?</summary>
-          <div class="faq-answer"><p>No. If you can send a text message, you can use this. Everything is plain and simple, and if you ever get stuck, you can reach me for help.</p></div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA band -->
-  <section class="section-tight">
-    <div class="container">
-      <div class="cta-band">
-        <h2>Ready for calmer days at home?</h2>
-        <p>Join as a founding member and start with the 7-Day Family Screen Reset. <span data-price></span>.</p>
-        <a href="signup.html" class="btn btn-light">Become a member</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <p class="footer-logo">The Family Ground</p>
-      <p class="footer-blurb">Practical tools for parents building a strong family in a distracted world.</p>
-    </div>
-    <div>
-      <p class="footer-heading">Explore</p>
-      <a href="index.html">Home</a>
-      <a href="courses.html">Courses</a>
-      <a href="about.html">About</a>
-      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
-    </div>
-    <div>
-      <p class="footer-heading">Members</p>
-      <a href="signup.html">Become a member</a>
-      <a href="login.html">Log in</a>
-      <a href="dashboard.html">Dashboard</a>
     </div>
   </div>
-  <div class="container footer-bottom">
-    <p>&copy; <span id="year">2026</span> The Family Ground. All rights reserved.</p>
+</section>
+
+<section class="about-sec">
+  <div class="wrap-narrow">
+    <div class="stars" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#8FBC9F"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" style="margin-top:10px"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#12503F" opacity=".5"/></svg>
+      <svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z" fill="#8FBC9F"/></svg>
+    </div>
+    <h2>Hello, I&rsquo;m Amam.</h2>
+    <p class="big">I&rsquo;m a dad of six &mdash; not an expert.</p>
+    <p>I&rsquo;m just a dad trying things out in his own home and sharing what happens &mdash; the good days and the messy ones. Pull up a chair. You belong here.</p>
+    <a class="textlink" href="about.html">Read my story &rarr;</a>
+  </div>
+</section>
+
+<section class="cta-wrap">
+  <div class="wrap">
+    <div class="cta-card">
+      <svg class="deco" style="top:-40px;left:-40px" width="220" height="220" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="90" fill="none" stroke="#8FBC9F" stroke-width="10"/></svg>
+      <svg class="deco" style="bottom:-60px;right:-30px" width="260" height="260" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="80" fill="#8FBC9F"/></svg>
+      <h2>The door is open.</h2>
+      <p>Sign in with Google and make yourself at home. Chores, agreements, and courses are waiting inside.</p>
+      <div class="cta-row">
+        <a class="btn btn-cream" href="signup.html" data-auth="logged-out">Become a member</a>
+        <a class="btn btn-cream" href="dashboard.html" data-auth="logged-in" hidden>Go to My Home</a>
+      </div>
+      <p class="priceline"><span data-price></span></p>
+      <p class="blogline">Love to read? The blog &amp; newsletter live at <a href="https://blog.thefamilyground.com">blog.thefamilyground.com</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com">Blog</a>
+      <a href="dashboard.html" data-auth="logged-in" hidden>My Home</a>
+      <a href="login.html" data-auth="logged-out">Log in</a>
+      <a href="signup.html" data-auth="logged-out">Become a member</a>
+    </div>
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
   </div>
 </footer>
 

@@ -228,7 +228,7 @@
   };
 
   /* ---------------- Course catalog data ----------------
-     Single source of truth for courses.html and dashboard "My Courses".
+     Single source of truth for the dashboard "My Courses" tab.
      Lesson bodies are DRAFT outlines — Amam will write the real lessons.
   ------------------------------------------------------ */
   TFG.COURSES = [
@@ -563,7 +563,10 @@
     // Auth-aware nav + sign out buttons.
     TFG.updateNav();
     document.querySelectorAll("[data-action='sign-out']").forEach(function (btn) {
-      btn.addEventListener("click", function () { TFG.signOut(); });
+      btn.addEventListener("click", function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        TFG.signOut();
+      });
     });
 
     // Generic tabs: [data-tab-target] buttons, .tab-panel panels.
