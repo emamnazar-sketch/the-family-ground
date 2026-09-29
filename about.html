@@ -49,10 +49,12 @@
     </a>
     <nav>
       <a class="nl" href="index.html">Home</a>
-      <a class="nl" href="dashboard.html">My Home</a>
       <a class="nl" href="about.html">About</a>
       <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
-      <a class="btn btn-outline btn-sm" href="#" data-action="sign-out">Sign out</a>
+      <a class="nl" href="dashboard.html" data-auth="logged-in" hidden>My Home</a>
+      <a class="nl" href="login.html" data-auth="logged-out">Log in</a>
+      <a class="btn btn-forest btn-sm" href="signup.html" data-auth="logged-out">Become a member</a>
+      <a class="btn btn-outline btn-sm" href="#" data-auth="logged-in" data-action="sign-out" hidden>Sign out</a>
     </nav>
   </div>
 </div>
@@ -114,12 +116,12 @@
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
 <script>
-// Members only — send visitors to the login gate.
+// Public page — just set the nav for logged in / logged out visitors.
 (function () {
   (async function () {
-    var session = await TFG.requireParent();
-    if (!session) return;
-    await TFG.ensureProfile();
+    await TFG.updateNav();
+    var session = await TFG.getSession();
+    if (session) await TFG.ensureProfile();
   })();
 })();
 </script>
