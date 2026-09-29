@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Amam — The Family Ground</title>
+<meta name="description" content="Meet Amam Nazar, a dad of six and the parent behind The Family Ground — honest help for families building a strong home in a distracted world.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">The Family Ground</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+      <a href="login.html" data-auth="logged-out">Log in</a>
+      <a href="dashboard.html" data-auth="logged-in" hidden>Dashboard</a>
+      <a href="signup.html" class="btn btn-primary btn-sm" data-auth="logged-out">Become a member</a>
+      <button class="btn btn-outline btn-sm" data-auth="logged-in" data-action="sign-out" hidden>Sign out</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Small hero -->
+  <section class="hero" style="padding:64px 0">
+    <div class="container">
+      <div class="hero-inner">
+        <span class="badge badge-on-dark">About</span>
+        <h1>Hi, I'm Amam.</h1>
+        <p class="hero-sub">I'm a dad of six, and I started The Family Ground because our family needed it first.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="section">
+    <div class="container-narrow">
+      <p>I'm Amam Nazar. I have six kids, and I run the YouTube channel <strong>Amam The Family Man</strong>, where I talk honestly about modern parenting — phones, screens, and what it takes to keep a family close in a distracted world.</p>
+
+      <p>I'm not an expert, and I don't pretend to be one. I'm just a dad who has learned a lot of things the hard way. One of the biggest lessons was about phones in our home. I watched how much time all of us — not just the kids, me too — were spending on screens, and how little real time we were spending together. Evenings that used to be family time had turned into everyone sitting in the same room looking at different screens.</p>
+
+      <p>So we started doing things differently. We set phone-free times — parts of the day where the phones simply go away, like dinner and the hours before bed. It wasn't easy at first. But when the screens are off, something simple happens: we talk. We notice each other again.</p>
+
+      <p>The other thing that changed our home was the family agreement. Instead of me handing down rules, we sit down together and the kids help suggest the rules, the rewards, and the consequences. Then everyone signs it. When kids have a say in the rules, they take them seriously — and when there's a disagreement, we can point back to what we all agreed on.</p>
+
+      <p>We also hold a weekly family meeting. Nothing big — just a time to sit together, look back at the week, talk about what worked and what didn't, and make small fixes. It's become one of the most important parts of our week.</p>
+
+      <p>That's what The Family Ground is: the tools and courses I wish I'd had years ago, built around these same ideas — whole-family agreements, weekly check-ins, and phone-free time that brings a family back together.</p>
+
+      <p>If any of this sounds like your house, you're in the right place. I'm glad you're here.</p>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="cta-band">
+        <h2>Join me — become a member.</h2>
+        <p>Start with the 7-Day Family Screen Reset and build your family's agreement together. <span data-price></span>.</p>
+        <a href="signup.html" class="btn btn-light">Become a member</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-logo">The Family Ground</p>
+      <p class="footer-blurb">Practical tools for parents building a strong family in a distracted world.</p>
+    </div>
+    <div>
+      <p class="footer-heading">Explore</p>
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+    </div>
+    <div>
+      <p class="footer-heading">Members</p>
+      <a href="signup.html">Become a member</a>
+      <a href="login.html">Log in</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; <span id="year">2026</span> The Family Ground. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

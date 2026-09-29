@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become a member — The Family Ground</title>
+<meta name="description" content="Join The Family Ground as a founding member. Track routines, build a family agreement everyone signs, and learn from short, practical parenting courses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">The Family Ground</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+      <a href="login.html" data-auth="logged-out">Log in</a>
+      <a href="dashboard.html" data-auth="logged-in" hidden>Dashboard</a>
+      <a href="signup.html" class="btn btn-primary btn-sm" data-auth="logged-out">Become a member</a>
+      <button class="btn btn-outline btn-sm" data-auth="logged-in" data-action="sign-out" hidden>Sign out</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container-narrow">
+      <div class="form-card">
+        <span class="badge">Founding member</span>
+        <h1>Join The Family Ground</h1>
+        <p class="muted">Practical tools for parents building a strong family in a distracted world. As a founding member, you help shape what this becomes — and you get everything first.</p>
+        <p><strong data-price></strong></p>
+        <ul class="mb-2" style="padding-left: 1.2em; color: var(--ink-soft);">
+          <li style="margin-bottom: 0.5em;">A chore and routine tracker you manage for your whole family</li>
+          <li style="margin-bottom: 0.5em;">A family agreement builder — write rules, rewards, and consequences together, then everyone signs</li>
+          <li style="margin-bottom: 0.5em;">The 7-Day Family Screen Reset course, for when screen time turns into fights</li>
+          <li style="margin-bottom: 0.5em;">First access to every new course as it is added</li>
+        </ul>
+        <hr class="divider">
+        <form id="signupForm" novalidate>
+          <div class="form-error"></div>
+          <div class="form-success"></div>
+          <div class="form-group">
+            <label class="form-label" for="fullName">Full name</label>
+            <input class="form-input" type="text" id="fullName" name="fullName" autocomplete="name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-input" type="password" id="password" name="password" autocomplete="new-password" minlength="6" required>
+            <p class="form-hint">At least 6 characters.</p>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="signupBtn">Become a member</button>
+        </form>
+        <p class="auth-switch">Already a member? <a href="login.html">Log in</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-logo">The Family Ground</p>
+      <p class="footer-blurb">Practical tools for parents building a strong family in a distracted world.</p>
+    </div>
+    <div>
+      <p class="footer-heading">Explore</p>
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+    </div>
+    <div>
+      <p class="footer-heading">Members</p>
+      <a href="signup.html">Become a member</a>
+      <a href="login.html">Log in</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; <span id="year">2026</span> The Family Ground. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  var form = document.getElementById("signupForm");
+  var btn = document.getElementById("signupBtn");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    TFG.clearFormMessages(form);
+
+    var fullName = document.getElementById("fullName").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var password = document.getElementById("password").value;
+
+    if (!fullName || !email || !password) {
+      TFG.showFormError(form, "Please fill in your name, email, and password.");
+      return;
+    }
+    if (password.length < 6) {
+      TFG.showFormError(form, "Your password needs to be at least 6 characters.");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Joining\u2026";
+
+    try {
+      var result = await TFG.signUp(fullName, email, password);
+      if (result && result.error) {
+        TFG.showFormError(form, TFG.friendlyError(result.error));
+        return;
+      }
+      if (result && result.needsConfirmation) {
+        TFG.showFormSuccess(form, "You are almost in. Please check your email and click the confirmation link to finish signing up.");
+        return;
+      }
+      window.location.href = "dashboard.html";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Become a member";
+    }
+  });
+})();
+</script>
+</body>
+</html>

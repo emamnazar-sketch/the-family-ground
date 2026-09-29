@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — The Family Ground</title>
+<meta name="description" content="Your member dashboard: track daily chores, build your family agreement, and work through your courses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">The Family Ground</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+      <a href="login.html" data-auth="logged-out">Log in</a>
+      <a href="dashboard.html" data-auth="logged-in" hidden>Dashboard</a>
+      <a href="signup.html" class="btn btn-primary btn-sm" data-auth="logged-out">Become a member</a>
+      <button class="btn btn-outline btn-sm" data-auth="logged-in" data-action="sign-out" hidden>Sign out</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section-tight">
+    <div class="container">
+      <div class="dashboard-head">
+        <h1>Welcome back</h1>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <span class="member-chip"><span class="member-avatar" id="memberAvatar">M</span><span id="memberName">Member</span></span>
+          <button class="btn btn-outline btn-sm" data-action="sign-out">Sign out</button>
+        </div>
+      </div>
+
+      <div data-tabs>
+        <div class="tabs">
+          <button type="button" class="tab active" data-tab-target="panel-chores">Chore tracker</button>
+          <button type="button" class="tab" data-tab-target="panel-agreement">Family agreement</button>
+          <button type="button" class="tab" data-tab-target="panel-courses">My courses</button>
+        </div>
+
+        <div class="tab-panel active" id="panel-chores">
+          <h2 class="mt-0">Add a chore</h2>
+          <form id="choreForm" class="card" style="margin-bottom: 28px;">
+            <div class="form-row">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="kidLabel">Who is it for?</label>
+                <input class="form-input" type="text" id="kidLabel" placeholder="e.g. Age 9">
+                <p class="form-hint">Never use real names — just use the age.</p>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="choreTitle">Chore</label>
+                <input class="form-input" type="text" id="choreTitle" placeholder="e.g. Make the bed">
+              </div>
+            </div>
+            <div class="form-row mt-2" style="align-items: end;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="frequency">How often?</label>
+                <select class="form-select" id="frequency">
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                </select>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary btn-sm btn-block">Add chore</button>
+              </div>
+            </div>
+            <p class="form-error" id="choreError" style="margin: 16px 0 0;"></p>
+          </form>
+
+          <h2>Today</h2>
+          <div id="todayList"></div>
+
+          <h2 class="mt-4">This week</h2>
+          <div class="week-grid">
+            <table class="week-table" id="weekTable"></table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panel-agreement">
+          <div class="agreement-layout">
+            <div>
+              <form id="agreementForm" class="card agreement-builder-form">
+                <h2 class="mt-0">Build your agreement</h2>
+                <div class="form-group">
+                  <label class="form-label" for="agTitle">Title</label>
+                  <input class="form-input" type="text" id="agTitle" value="Our Family Agreement">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agRules">Our rules</label>
+                  <textarea class="form-textarea" id="agRules" placeholder="One rule per line, e.g.&#10;No phones at the dinner table&#10;Bedtime is 9 pm on school nights"></textarea>
+                  <p class="form-hint">Write one rule per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agRewards">Rewards</label>
+                  <textarea class="form-textarea" id="agRewards" placeholder="One per line, e.g.&#10;A full week of chores done means movie night"></textarea>
+                  <p class="form-hint">Write one reward per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agConsequences">Consequences</label>
+                  <textarea class="form-textarea" id="agConsequences" placeholder="One per line, e.g.&#10;Chores not done means no screens until they are"></textarea>
+                  <p class="form-hint">Write one consequence per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agDisagree">When we disagree</label>
+                  <textarea class="form-textarea" id="agDisagree" placeholder="e.g. We take a 10-minute break, then talk it through calmly."></textarea>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="agSig1">Signed by</label>
+                    <input class="form-input" type="text" id="agSig1" placeholder="Name">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="agSig2">Signed by</label>
+                    <input class="form-input" type="text" id="agSig2" placeholder="Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agDate">Date</label>
+                  <input class="form-input" type="date" id="agDate">
+                </div>
+                <div class="form-row">
+                  <button type="submit" class="btn btn-primary">Save agreement</button>
+                  <button type="button" class="btn btn-outline" id="previewBtn">Update preview</button>
+                </div>
+                <p class="form-error" id="agreementError" style="margin: 16px 0 0;"></p>
+                <p class="form-success" id="agreementSuccess" style="margin: 16px 0 0;"></p>
+              </form>
+
+              <h3 class="mt-4">Saved agreements</h3>
+              <div class="saved-list" id="savedAgreements"></div>
+            </div>
+            <div>
+              <div class="agreement-preview" id="agreementPreview"></div>
+              <div class="text-center mt-2 no-print">
+                <button class="btn btn-outline btn-sm no-print" id="printAgreement">Print agreement</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panel-courses">
+          <div id="myCourses" class="grid-2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-logo">The Family Ground</p>
+      <p class="footer-blurb">Practical tools for parents building a strong family in a distracted world.</p>
+    </div>
+    <div>
+      <p class="footer-heading">Explore</p>
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com" target="_blank" rel="noopener">Blog</a>
+    </div>
+    <div>
+      <p class="footer-heading">Members</p>
+      <a href="signup.html">Become a member</a>
+      <a href="login.html">Log in</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; <span id="year">2026</span> The Family Ground. All rights reserved.</p>
+  </div>
+</footer>
+
+<div id="printArea"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  function lines(value) {
+    return value.split("\n").map(function (s) { return s.trim(); }).filter(Boolean);
+  }
+
+  /* ---------------- Chores ---------------- */
+  async function loadChores() {
+    var todayList = document.getElementById("todayList");
+    var weekTable = document.getElementById("weekTable");
+    var mondayISO = TFG.dates.isoDate(TFG.dates.mondayOf(new Date()));
+    var todayISO = TFG.dates.isoDate(new Date());
+
+    var choresRes = await TFG.getChores();
+    var chores = (choresRes && choresRes.chores) || [];
+    var compRes = await TFG.getWeekCompletions(mondayISO);
+    var completions = (compRes && compRes.completions) || [];
+
+    function isDone(choreId, dateISO) {
+      return completions.some(function (c) {
+        return c.chore_id === choreId && c.completed_on === dateISO;
+      });
+    }
+
+    // Today list
+    if (chores.length === 0) {
+      todayList.innerHTML = '<p class="muted">No chores yet. Add one above to get started.</p>';
+    } else {
+      todayList.innerHTML = chores.map(function (chore) {
+        var done = isDone(chore.id, todayISO);
+        return (
+          '<div class="chore-item">' +
+            '<button type="button" class="chore-check' + (done ? " done" : "") + '" data-chore-toggle="' + TFG.esc(String(chore.id)) + '" aria-label="Mark chore done">' + (done ? "\u2713" : "") + "</button>" +
+            '<div class="chore-info">' +
+              '<p class="chore-title">' + TFG.esc(chore.title) + "</p>" +
+              '<p class="chore-meta">' + TFG.esc(chore.kid_label || "") + (chore.frequency ? " \u00b7 " + TFG.esc(chore.frequency) : "") + "</p>" +
+            "</div>" +
+            '<button type="button" class="chore-delete" data-chore-delete="' + TFG.esc(String(chore.id)) + '" aria-label="Delete chore">\u00d7</button>' +
+          "</div>"
+        );
+      }).join("");
+    }
+
+    // Week table
+    var monday = TFG.dates.parseISO(mondayISO);
+    var dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    var head = "<thead><tr><th>Chore</th>";
+    for (var d = 0; d < 7; d++) {
+      var day = TFG.dates.addDays(monday, d);
+      head += "<th>" + dayNames[d] + "<br><span class=\"small muted\">" + TFG.esc(day.getMonth() + 1 + "/" + day.getDate()) + "</span></th>";
+    }
+    head += "</tr></thead>";
+
+    var body = "<tbody>";
+    if (chores.length === 0) {
+      body += '<tr><td colspan="8" class="muted">No chores yet.</td></tr>';
+    } else {
+      chores.forEach(function (chore) {
+        body += "<tr><td>" + TFG.esc(chore.title) + "</td>";
+        for (var d = 0; d < 7; d++) {
+          var dateISO = TFG.dates.isoDate(TFG.dates.addDays(monday, d));
+          var done = isDone(chore.id, dateISO);
+          body += '<td class="day-cell" data-chore-toggle-week="' + TFG.esc(String(chore.id)) + '" data-date="' + dateISO + '">' +
+            '<span class="day-dot' + (done ? " done" : "") + '">' + (done ? "\u2713" : "") + "</span></td>";
+        }
+        body += "</tr>";
+      });
+    }
+    body += "</tbody>";
+    weekTable.innerHTML = head + body;
+
+    // Wire toggles + deletes (event delegation)
+    todayList.addEventListener("click", async function (e) {
+      var toggle = e.target.closest("[data-chore-toggle]");
+      var del = e.target.closest("[data-chore-delete]");
+      if (toggle) {
+        await TFG.toggleCompletion(toggle.getAttribute("data-chore-toggle"), todayISO);
+        await loadChores();
+      } else if (del) {
+        if (confirm("Delete this chore? Its history for this week will be removed too.")) {
+          await TFG.deleteChore(del.getAttribute("data-chore-delete"));
+          await loadChores();
+        }
+      }
+    });
+    weekTable.addEventListener("click", async function (e) {
+      var cell = e.target.closest("[data-chore-toggle-week]");
+      if (cell) {
+        await TFG.toggleCompletion(cell.getAttribute("data-chore-toggle-week"), cell.getAttribute("data-date"));
+        await loadChores();
+      }
+    });
+  }
+
+  async function initChores() {
+    document.getElementById("choreForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var err = document.getElementById("choreError");
+      err.classList.remove("visible");
+
+      var kidLabel = document.getElementById("kidLabel").value.trim();
+      var title = document.getElementById("choreTitle").value.trim();
+      var frequency = document.getElementById("frequency").value;
+
+      if (!title) {
+        err.textContent = "Please give the chore a title.";
+        err.classList.add("visible");
+        return;
+      }
+
+      var result = await TFG.addChore({ kid_label: kidLabel, title: title, frequency: frequency });
+      if (result && result.error) {
+        err.textContent = TFG.friendlyError(result.error);
+        err.classList.add("visible");
+        return;
+      }
+      document.getElementById("kidLabel").value = "";
+      document.getElementById("choreTitle").value = "";
+      await loadChores();
+    });
+    await loadChores();
+  }
+
+  /* ---------------- Agreement ---------------- */
+  var editingId = null;
+
+  function readBuilder() {
+    return {
+      title: document.getElementById("agTitle").value.trim() || "Our Family Agreement",
+      body: {
+        rules: lines(document.getElementById("agRules").value),
+        rewards: lines(document.getElementById("agRewards").value),
+        consequences: lines(document.getElementById("agConsequences").value),
+        disagree: document.getElementById("agDisagree").value.trim(),
+        signatures: [
+          { name: document.getElementById("agSig1").value.trim(), date: document.getElementById("agDate").value },
+          { name: document.getElementById("agSig2").value.trim(), date: document.getElementById("agDate").value }
+        ],
+        date: document.getElementById("agDate").value
+      }
+    };
+  }
+
+  function listHTML(items, ordered) {
+    if (!items.length) return '<p class="muted small">Nothing added yet.</p>';
+    var tag = ordered ? "ol" : "ul";
+    return "<" + tag + ">" + items.map(function (i) { return "<li>" + TFG.esc(i) + "</li>"; }).join("") + "</" + tag + ">";
+  }
+
+  function renderPreview() {
+    var data = readBuilder();
+    var preview = document.getElementById("agreementPreview");
+    var sigs = data.body.signatures.filter(function (s) { return s.name; });
+    var sigHTML = sigs.length
+      ? '<div class="signature-block">' + sigs.map(function (s) {
+          return '<div class="signature-line"><strong>' + TFG.esc(s.name) + "</strong>Signature</div>";
+        }).join("") + "</div>"
+      : "";
+    preview.innerHTML =
+      "<h2>" + TFG.esc(data.title) + "</h2>" +
+      '<p class="agreement-date">An agreement made by our whole family</p>' +
+      "<h4>Our rules</h4>" + listHTML(data.body.rules, true) +
+      "<h4>Rewards</h4>" + listHTML(data.body.rewards, false) +
+      "<h4>Consequences</h4>" + listHTML(data.body.consequences, false) +
+      "<h4>When we disagree</h4>" +
+      (data.body.disagree ? "<p>" + TFG.esc(data.body.disagree) + "</p>" : '<p class="muted small">Nothing added yet.</p>') +
+      sigHTML +
+      (data.body.date ? '<p class="agreement-date">Signed on ' + TFG.esc(data.body.date) + "</p>" : "");
+  }
+
+  function printAgreementHTML(title, body) {
+    function items(itemsArr, ordered) {
+      if (!itemsArr.length) return "<p>\u2014</p>";
+      var tag = ordered ? "ol" : "ul";
+      return "<" + tag + ">" + itemsArr.map(function (i) { return "<li>" + TFG.esc(i) + "</li>"; }).join("") + "</" + tag + ">";
+    }
+    var sigs = (body.signatures || []).filter(function (s) { return s.name; });
+    return (
+      '<div class="pa-doc">' +
+        "<h2>" + TFG.esc(title) + "</h2>" +
+        '<p class="pa-sub">Signed by our family</p>' +
+        "<h4>Our rules</h4>" + items(body.rules || [], true) +
+        "<h4>Rewards</h4>" + items(body.rewards || [], false) +
+        "<h4>Consequences</h4>" + items(body.consequences || [], false) +
+        "<h4>When we disagree</h4>" + (body.disagree ? "<p>" + TFG.esc(body.disagree) + "</p>" : "<p>\u2014</p>") +
+        '<div class="pa-sigs">' + sigs.map(function (s) {
+          return '<div class="pa-sig"><strong>' + TFG.esc(s.name) + "</strong>Signature</div>";
+        }).join("") + "</div>" +
+        (body.date ? '<p class="pa-date">Signed on ' + TFG.esc(body.date) + "</p>" : "") +
+      "</div>"
+    );
+  }
+
+  async function loadSavedAgreements() {
+    var list = document.getElementById("savedAgreements");
+    var res = await TFG.getAgreements();
+    var agreements = (res && res.agreements) || [];
+    if (!agreements.length) {
+      list.innerHTML = '<p class="muted small">No saved agreements yet.</p>';
+      return;
+    }
+    list.innerHTML = "";
+    agreements.forEach(function (a) {
+      var item = document.createElement("div");
+      item.className = "saved-item";
+      var title = document.createElement("strong");
+      title.textContent = a.title || "Untitled agreement";
+      var actions = document.createElement("div");
+      actions.className = "saved-actions";
+
+      var loadBtn = document.createElement("button");
+      loadBtn.type = "button";
+      loadBtn.className = "link-btn";
+      loadBtn.textContent = "Load";
+      loadBtn.addEventListener("click", function () {
+        editingId = a.id;
+        var body = a.body || {};
+        document.getElementById("agTitle").value = a.title || "";
+        document.getElementById("agRules").value = (body.rules || []).join("\n");
+        document.getElementById("agRewards").value = (body.rewards || []).join("\n");
+        document.getElementById("agConsequences").value = (body.consequences || []).join("\n");
+        document.getElementById("agDisagree").value = body.disagree || "";
+        var sigs = body.signatures || [];
+        document.getElementById("agSig1").value = (sigs[0] && sigs[0].name) || "";
+        document.getElementById("agSig2").value = (sigs[1] && sigs[1].name) || "";
+        document.getElementById("agDate").value = body.date || TFG.dates.isoDate(new Date());
+        renderPreview();
+        document.getElementById("panel-agreement").scrollIntoView();
+      });
+
+      var printBtn = document.createElement("button");
+      printBtn.type = "button";
+      printBtn.className = "link-btn";
+      printBtn.textContent = "Print";
+      printBtn.addEventListener("click", function () {
+        document.getElementById("printArea").innerHTML = printAgreementHTML(a.title || "Our Family Agreement", a.body || {});
+        window.print();
+      });
+
+      var delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "link-btn danger";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", async function () {
+        if (confirm("Delete this agreement? This cannot be undone.")) {
+          await TFG.deleteAgreement(a.id);
+          if (editingId === a.id) editingId = null;
+          await loadSavedAgreements();
+        }
+      });
+
+      actions.appendChild(loadBtn);
+      actions.appendChild(printBtn);
+      actions.appendChild(delBtn);
+      item.appendChild(title);
+      item.appendChild(actions);
+      list.appendChild(item);
+    });
+  }
+
+  function initAgreement() {
+    document.getElementById("agDate").value = TFG.dates.isoDate(new Date());
+
+    var inputs = ["agTitle", "agRules", "agRewards", "agConsequences", "agDisagree", "agSig1", "agSig2", "agDate"];
+    inputs.forEach(function (id) {
+      document.getElementById(id).addEventListener("input", renderPreview);
+    });
+    document.getElementById("previewBtn").addEventListener("click", renderPreview);
+
+    document.getElementById("agreementForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var err = document.getElementById("agreementError");
+      var ok = document.getElementById("agreementSuccess");
+      err.classList.remove("visible");
+      ok.classList.remove("visible");
+
+      var data = readBuilder();
+      var result = await TFG.saveAgreement({ id: editingId, title: data.title, body: data.body });
+      if (result && result.error) {
+        err.textContent = TFG.friendlyError(result.error);
+        err.classList.add("visible");
+        return;
+      }
+      editingId = null;
+      ok.textContent = "Agreement saved.";
+      ok.classList.add("visible");
+      await loadSavedAgreements();
+    });
+
+    document.getElementById("printAgreement").addEventListener("click", function () {
+      var data = readBuilder();
+      document.getElementById("printArea").innerHTML = printAgreementHTML(data.title, data.body);
+      window.print();
+    });
+
+    renderPreview();
+    loadSavedAgreements();
+  }
+
+  /* ---------------- Courses ---------------- */
+  async function initCourses() {
+    var el = document.getElementById("myCourses");
+    await TFG.renderMyCourses(el);
+  }
+
+  /* ---------------- Init (guarded) ---------------- */
+  (async function () {
+    var session = await TFG.requireAuth();
+    if (!session) return;
+
+    var user = session.user || {};
+    var name = user.user_metadata && user.user_metadata.full_name
+      ? user.user_metadata.full_name
+      : (user.email || "Member");
+    document.getElementById("memberName").textContent = name;
+    document.getElementById("memberAvatar").textContent = name.trim().charAt(0).toUpperCase() || "M";
+
+    await initChores();
+    initAgreement();
+    await initCourses();
+  })();
+})();
+</script>
+</body>
+</html>
