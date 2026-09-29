@@ -475,16 +475,15 @@
       // Already joined before? Go straight in.
       var existing = await sb.from("kid_profiles").select("id").eq("id", user.id).maybeSingle();
       if (existing.data) return { kid: existing.data, already: true };
-      var found = await sb.from("invite_codes")
-        .select("id, parent_id, kid_label").eq("code", code).eq("is_active", true).maybeSingle();
-      if (found.error) return { error: friendlyError(found.error) };
-      if (!found.data) return { error: "That code did not work. Ask your parent for a new one." };
+      // Redeem atomically: validates the code and burns it in one step.
+      var redeemed = await sb.rpc("redeem_invite_code", { p_code: code });
+      if (redeemed.error) return { error: "That code did not work. Ask your parent for a new one." };
+      var row = redeemed.data && redeemed.data[0];
+      if (!row || !row.parent_id) return { error: "That code did not work. Ask your parent for a new one." };
       var ins = await sb.from("kid_profiles")
-        .insert({ id: user.id, parent_id: found.data.parent_id, kid_label: found.data.kid_label || "" })
+        .insert({ id: user.id, parent_id: row.parent_id, kid_label: row.kid_label || "" })
         .select().single();
       if (ins.error) return { error: friendlyError(ins.error) };
-      // Single use: burn the code.
-      await sb.from("invite_codes").update({ is_active: false }).eq("id", found.data.id);
       return { kid: ins.data };
     } catch (e) {
       return { error: friendlyError(e) };

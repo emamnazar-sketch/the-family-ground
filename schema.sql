@@ -149,13 +149,38 @@ create policy "Anyone can read active codes"
   on public.invite_codes for select
   using (is_active = true);
 
--- invite_codes: single-use redemption — anyone can flip an active code
--- to inactive, nothing else.
+-- invite_codes: single-use redemption happens through an atomic
+-- SECURITY DEFINER function (avoids cross-user RLS update quirks and
+-- double-redeem races). Kids call it via rpc("redeem_invite_code").
 drop policy if exists "Redeem active code" on public.invite_codes;
-create policy "Redeem active code"
-  on public.invite_codes for update
-  using (is_active = true)
-  with check (is_active = false);
+drop policy if exists "Redeemers deactivate used code" on public.invite_codes;
+
+create or replace function public.redeem_invite_code(p_code text)
+returns table (parent_id uuid, kid_label text)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_parent uuid;
+  v_label text;
+begin
+  select ic.parent_id, ic.kid_label into v_parent, v_label
+  from public.invite_codes ic
+  where ic.code = p_code and ic.is_active = true
+  for update;
+  if not found then
+    raise exception 'Invalid or used code';
+  end if;
+  update public.invite_codes set is_active = false where code = p_code;
+  parent_id := v_parent;
+  kid_label := v_label;
+  return next;
+end;
+$$;
+
+revoke all on function public.redeem_invite_code(text) from public;
+grant execute on function public.redeem_invite_code(text) to authenticated;
 
 -- kid_profiles: a parent can read their own kids' rows.
 drop policy if exists "Parents read own kids" on public.kid_profiles;
