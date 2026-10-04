@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parent view (preview) — The Family Ground</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .demo-banner{background:#B45309;color:#fff;text-align:center;padding:10px 16px;font-weight:800;font-size:14px;position:sticky;top:0;z-index:200;}
+  .demo-banner small{display:block;font-weight:600;font-size:12px;opacity:.9;}
+  .back-link{display:inline-block;margin:16px 0 0 16px;font-weight:700;color:#12503F;}
+  .chore-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;border:1px solid #E5E0D3;border-radius:12px;margin-bottom:10px;}
+  .chore-row .chore-info{flex:1;}
+  .pill-status{font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+  .st-todo{background:#FEF3C7;color:#92400E;}
+  .st-wait{background:#DBEAFE;color:#1E40AF;}
+  .st-done{background:#D1FAE5;color:#065F46;}
+  .st-retry{background:#FEE2E2;color:#991B1B;}
+</style>
+</head>
+<body>
+<div class="demo-banner">PREVIEW — demo data, nothing here is real<small>Parent dashboard as a member sees it. <a href="index.html" style="color:#fff;text-decoration:underline;">Back to preview home</a></small></div>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="../images/logo-wordmark.png" alt="The Family Ground">
+    </a>
+    <nav aria-label="Main">
+      <a class="nl" href="index.html">Preview home</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="dash-wrap">
+    <div class="wrap">
+      <div class="dashboard-head">
+        <div>
+          <h1>Welcome back</h1>
+          <p class="muted" style="margin:0;">This is your home. Everything lives here.</p>
+        </div>
+        <div class="dash-actions">
+          <span class="member-chip"><span class="member-avatar">D</span><span>Demo Parent</span></span>
+          <button type="button" class="btn btn-outline btn-sm" disabled title="Demo">Sign out</button>
+        </div>
+      </div>
+
+      <div data-tabs>
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab active" data-tab-target="panel-chores">Chore tracker</button>
+          <button type="button" class="tab" data-tab-target="panel-agreement">Family agreement</button>
+          <button type="button" class="tab" data-tab-target="panel-courses">My courses</button>
+          <button type="button" class="tab" data-tab-target="panel-kids">Kids</button>
+        </div>
+
+        <div class="tab-panel active" id="panel-chores">
+          <div class="panel-card">
+            <h2 class="mt-0">Add a chore</h2>
+            <form onsubmit="return false;">
+              <div class="form-row">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="kidLabel">Who is it for?</label>
+                  <input class="form-input" type="text" id="kidLabel" placeholder="e.g. Age 9">
+                  <p class="form-hint">Never use real names &mdash; just use the age.</p>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="choreTitle">Chore</label>
+                  <input class="form-input" type="text" id="choreTitle" placeholder="e.g. Make the bed">
+                </div>
+              </div>
+              <div class="form-row mt-2">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="frequency">How often?</label>
+                  <select class="form-select" id="frequency">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="assignTo">Assign to</label>
+                  <select class="form-select" id="assignTo">
+                    <option value="">Unassigned &mdash; I track it myself</option>
+                    <option>Age 9</option>
+                    <option>Age 13</option>
+                  </select>
+                  <p class="form-hint">Pick a kid and this chore moves to their dashboard.</p>
+                </div>
+              </div>
+              <div class="form-row mt-2" style="align-items: end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="check-row" for="proofRequired">
+                    <input type="checkbox" id="proofRequired">
+                    <span>Ask for a photo when it is done</span>
+                  </label>
+                  <p class="form-hint">Off by default. Turn it on only when you want proof.</p>
+                </div>
+                <div>
+                  <button type="submit" class="btn btn-forest btn-sm btn-block" disabled title="Demo">Add chore</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <h2>Today</h2>
+          <div class="chore-row">
+            <div class="chore-info"><p class="chore-title">Make the bed</p><p class="chore-meta">Age 9 &middot; Daily</p></div>
+            <span class="pill-status st-done">Approved</span>
+          </div>
+          <div class="chore-row">
+            <div class="chore-info"><p class="chore-title">Clear the dinner table</p><p class="chore-meta">Age 13 &middot; Daily</p></div>
+            <span class="pill-status st-wait">Waiting for you</span>
+          </div>
+          <div class="chore-row">
+            <div class="chore-info"><p class="chore-title">Read for 20 minutes</p><p class="chore-meta">Age 9 &middot; Daily</p></div>
+            <span class="pill-status st-todo">To do</span>
+          </div>
+          <div class="chore-row">
+            <div class="chore-info"><p class="chore-title">Take out the trash</p><p class="chore-meta">Age 13 &middot; Weekly</p></div>
+            <span class="pill-status st-retry">Try again</span>
+          </div>
+
+          <h2 class="mt-4">This week</h2>
+          <div class="week-grid">
+            <table class="week-table">
+              <tr><th></th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+              <tr><td>Make the bed (Age 9)</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td></td><td></td><td></td></tr>
+              <tr><td>Clear the table (Age 13)</td><td>&#10003;</td><td>&#10003;</td><td></td><td>&#10003;</td><td></td><td></td><td></td></tr>
+              <tr><td>Read 20 min (Age 9)</td><td>&#10003;</td><td></td><td>&#10003;</td><td></td><td></td><td></td><td></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panel-agreement">
+          <div class="agreement-layout">
+            <div>
+              <form class="panel-card" onsubmit="return false;">
+                <h2 class="mt-0">Build your agreement</h2>
+                <div class="form-group">
+                  <label class="form-label" for="agTitle">Title</label>
+                  <input class="form-input" type="text" id="agTitle" value="Our Family Agreement">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agRules">Our rules</label>
+                  <textarea class="form-textarea" id="agRules">No phones at the dinner table
+Bedtime is 9 pm on school nights
+Shoes by the door, not in the living room</textarea>
+                  <p class="form-hint">Write one rule per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agRewards">Rewards</label>
+                  <textarea class="form-textarea" id="agRewards">A full week of chores done means movie night
+Pick the Friday dinner spot</textarea>
+                  <p class="form-hint">Write one reward per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agConsequences">Consequences</label>
+                  <textarea class="form-textarea" id="agConsequences">Chores not done means no screens until they are
+Phone stays in the kitchen overnight</textarea>
+                  <p class="form-hint">Write one consequence per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agDisagree">When we disagree</label>
+                  <textarea class="form-textarea" id="agDisagree">We take a 10-minute break, then talk it through calmly.</textarea>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="agSig1">Signed by</label>
+                    <input class="form-input" type="text" id="agSig1" value="Dad">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="agSig2">Signed by</label>
+                    <input class="form-input" type="text" id="agSig2" value="Age 13">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <button type="submit" class="btn btn-forest" disabled title="Demo">Save agreement</button>
+                  <button type="button" class="btn btn-outline" disabled title="Demo">Update preview</button>
+                </div>
+              </form>
+
+              <h3 class="mt-4">Saved agreements</h3>
+              <div class="saved-list">
+                <div class="chore-row">
+                  <div class="chore-info"><p class="chore-title">Our Family Agreement</p><p class="chore-meta">Signed October 1, 2026</p></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="agreement-preview">
+                <h3>Our Family Agreement</h3>
+                <p class="agreement-date">An agreement made by our whole family</p>
+                <h4>Our rules</h4>
+                <ul><li>No phones at the dinner table</li><li>Bedtime is 9 pm on school nights</li><li>Shoes by the door, not in the living room</li></ul>
+                <h4>Rewards</h4>
+                <ul><li>A full week of chores done means movie night</li><li>Pick the Friday dinner spot</li></ul>
+                <h4>Consequences</h4>
+                <ul><li>Chores not done means no screens until they are</li><li>Phone stays in the kitchen overnight</li></ul>
+                <h4>When we disagree</h4>
+                <p>We take a 10-minute break, then talk it through calmly.</p>
+                <p class="agreement-date">Signed on October 1, 2026 &middot; Dad &middot; Age 13</p>
+              </div>
+              <div class="text-center mt-2">
+                <button type="button" class="btn btn-outline btn-sm" disabled title="Demo">Print agreement</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panel-courses">
+          <p class="muted" style="margin-bottom: 24px;">Courses live here, inside your membership. Work through them at your own pace &mdash; your progress is saved.</p>
+          <div class="grid-2">
+            <div class="card course-card">
+              <span class="course-status status-members">Members only</span>
+              <h3>7-Day Family Screen Reset</h3>
+              <p class="muted">One small step a day to take your evenings back.</p>
+              <p>A week of short, practical steps that help your family agree on screen limits &mdash; without the daily fights. Built for real homes with real kids, not perfect ones.</p>
+              <div class="progress"><div class="progress-fill" style="width:29%"></div></div>
+              <p class="progress-label">2 of 7 lessons complete</p>
+              <div class="mt-2">
+                <label class="lesson-check"><input type="checkbox" checked disabled><span class="done">Day 1 &mdash; See the real picture</span></label>
+                <label class="lesson-check"><input type="checkbox" checked disabled><span class="done">Day 2 &mdash; Talk, don't lecture</span></label>
+                <label class="lesson-check"><input type="checkbox" disabled><span>Day 3 &mdash; Pick your phone-free times</span></label>
+                <label class="lesson-check"><input type="checkbox" disabled><span>Day 4 &mdash; Build the agreement together</span></label>
+                <label class="lesson-check"><input type="checkbox" disabled><span>Day 5 &mdash; Handle the pushback</span></label>
+                <label class="lesson-check"><input type="checkbox" disabled><span>Day 6 &mdash; Make the evenings yours again</span></label>
+                <label class="lesson-check"><input type="checkbox" disabled><span>Day 7 &mdash; Keep it going</span></label>
+              </div>
+            </div>
+            <div class="card course-card">
+              <span class="course-status status-soon">Coming soon</span>
+              <h3>Calm Mornings, Peaceful Bedtimes</h3>
+              <p>Simple morning and bedtime routines your kids help build &mdash; so the day starts and ends with calm instead of chaos.</p>
+              <p class="small muted">Members will get this course first.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panel-kids">
+          <div class="panel-card">
+            <h2 class="mt-0">Add a kid</h2>
+            <p class="muted">Your kid gets their own simple dashboard. They join with a one-time code from you &mdash; no email or phone needed for them.</p>
+            <form onsubmit="return false;">
+              <div class="form-row" style="align-items: end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="newKidLabel">Label for this kid</label>
+                  <input class="form-input" type="text" id="newKidLabel" placeholder="e.g. Age 9" maxlength="40">
+                  <p class="form-hint">Never use real names &mdash; just the age.</p>
+                </div>
+                <div>
+                  <button type="submit" class="btn btn-forest btn-sm btn-block" disabled title="Demo">Create code</button>
+                </div>
+              </div>
+            </form>
+            <div class="code-reveal">
+              <p class="muted small" style="margin: 0 0 4px;">Sample code (how it looks):</p>
+              <p class="invite-code">K7X2P9</p>
+              <p class="muted small" style="margin: 8px 0 0;">They type it on the kid login page. Each code works once.</p>
+            </div>
+          </div>
+
+          <h2 class="mt-4">Your kids</h2>
+          <div class="grid-2">
+            <div class="card kid-card">
+              <div class="kid-card-head"><h3 style="margin:0;">Age 9</h3></div>
+              <p class="muted small">3 chores assigned &middot; 2 approved this week</p>
+            </div>
+            <div class="card kid-card">
+              <div class="kid-card-head"><h3 style="margin:0;">Age 13</h3></div>
+              <p class="muted small">2 chores assigned &middot; 1 waiting for your check</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <p class="copy">&copy; 2026 The Family Ground &middot; Preview only.</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('[data-tabs] .tab').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var wrap = btn.closest('[data-tabs]');
+    wrap.querySelectorAll('.tab').forEach(function (b) { b.classList.remove('active'); });
+    wrap.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById(btn.getAttribute('data-tab-target')).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

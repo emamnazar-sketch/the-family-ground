@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kid view (preview) — The Family Ground</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  .demo-banner{background:#B45309;color:#fff;text-align:center;padding:10px 16px;font-weight:800;font-size:14px;position:sticky;top:0;z-index:200;}
+  .demo-banner small{display:block;font-weight:600;font-size:12px;opacity:.9;}
+</style>
+</head>
+<body>
+<div class="demo-banner">PREVIEW — demo data, nothing here is real<small>Kid dashboard as a kid sees it. <a href="index.html" style="color:#fff;text-decoration:underline;">Back to preview home</a></small></div>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="../images/logo-wordmark.png" alt="The Family Ground">
+    </a>
+    <nav aria-label="Main">
+      <span class="kid-chip">Hi, Age 9!</span>
+      <button type="button" class="btn btn-outline btn-sm" disabled title="Demo">Sign out</button>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="dash-wrap">
+    <div class="wrap wrap-narrow">
+      <div class="kid-hero">
+        <svg class="kid-sun" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="24" fill="#8FBC9F"/>
+          <g stroke="#12503F" stroke-width="6" stroke-linecap="round">
+            <line x1="50" y1="8" x2="50" y2="18"/><line x1="50" y1="82" x2="50" y2="92"/>
+            <line x1="8" y1="50" x2="18" y2="50"/><line x1="82" y1="50" x2="92" y2="50"/>
+            <line x1="20" y1="20" x2="27" y2="27"/><line x1="73" y1="73" x2="80" y2="80"/>
+            <line x1="80" y1="20" x2="73" y2="27"/><line x1="27" y1="73" x2="20" y2="80"/>
+          </g>
+        </svg>
+        <h1>My chores</h1>
+        <p class="muted" style="margin:0;">Do a chore, tap the button, and your parent will check it.</p>
+      </div>
+
+      <h2>Things to do</h2>
+      <div id="todoList">
+        <div class="kid-chore">
+          <p class="chore-title">Read for 20 minutes</p>
+          <div class="kid-chore-actions">
+            <button type="button" class="btn btn-forest btn-sm" data-demo-done>I did it!</button>
+          </div>
+        </div>
+        <div class="kid-chore">
+          <p class="chore-title">Put the shoes by the door</p>
+          <p class="chore-meta">Your parent asked for a photo of this one.</p>
+          <div class="kid-chore-actions">
+            <button type="button" class="btn btn-forest btn-sm" data-demo-done>I did it!</button>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="mt-4">Try again</h2>
+      <div id="retryList">
+        <div class="kid-chore">
+          <p class="chore-title">Clean under the bed</p>
+          <p class="chore-meta parent-says">Your parent says: You missed the corners — one more try, you have got this.</p>
+          <div class="kid-chore-actions">
+            <button type="button" class="btn btn-forest btn-sm" data-demo-done>I did it!</button>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="mt-4">Waiting for your parent</h2>
+      <div id="waitingList">
+        <div class="kid-chore">
+          <p class="chore-title">Feed the cat</p>
+          <p class="chore-meta">Your parent will check it soon.</p>
+        </div>
+      </div>
+
+      <h2 class="mt-4">All done</h2>
+      <div id="doneList">
+        <div class="celebrate">Nice work! You finished 2.</div>
+        <div class="kid-chore"><p class="chore-title">Make the bed</p></div>
+        <div class="kid-chore"><p class="chore-title">Brush teeth</p></div>
+      </div>
+
+      <p class="muted small" style="text-align:center;margin-top:32px;">In the demo, tapping &ldquo;I did it!&rdquo; moves the chore to &ldquo;Waiting for your parent&rdquo; so you can see how it feels.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <p class="copy">&copy; 2026 The Family Ground &middot; Preview only.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('[data-demo-done]');
+  if (!btn) return;
+  var card = btn.closest('.kid-chore');
+  var title = card.querySelector('.chore-title').textContent;
+  card.remove();
+  var wrap = document.createElement('div');
+  wrap.className = 'kid-chore';
+  wrap.innerHTML = '<p class="chore-title"></p><p class="chore-meta">Your parent will check it soon.</p>';
+  wrap.querySelector('.chore-title').textContent = title;
+  document.getElementById('waitingList').appendChild(wrap);
+});
+</script>
+</body>
+</html>
