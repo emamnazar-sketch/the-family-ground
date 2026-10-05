@@ -191,6 +191,7 @@
                 </div>
               </div>
               <p class="form-error" id="choreError" style="margin: 16px 0 0;"></p>
+            <p class="form-success" id="choreAddedMsg" style="margin: 16px 0 0;"></p>
             </form>
           </div>
 
@@ -472,6 +473,8 @@
       e.preventDefault();
       var err = document.getElementById("choreError");
       err.classList.remove("visible");
+      var addedMsg = document.getElementById("choreAddedMsg");
+      addedMsg.classList.remove("visible");
 
       var kidLabel = document.getElementById("kidLabel").value.trim();
       var title = document.getElementById("choreTitle").value.trim();
@@ -503,11 +506,20 @@
       var keepAssign = document.getElementById("assignTo").value;
       var keepFreq = document.getElementById("frequency").value;
       var keepProof = document.getElementById("proofRequired").checked;
+      var assignSel = document.getElementById("assignTo");
+      var assignText = keepAssign && assignSel.selectedIndex >= 0
+        ? assignSel.options[assignSel.selectedIndex].text : "";
       document.getElementById("choreTitle").value = "";
       document.getElementById("kidLabel").value = keepLabel;
       document.getElementById("assignTo").value = keepAssign;
       document.getElementById("frequency").value = keepFreq;
       document.getElementById("proofRequired").checked = keepProof;
+      // Confirm where the chore went (assigned chores live on the kid's
+      // card, not in the Today/This week lists).
+      addedMsg.textContent = keepAssign
+        ? "Added! Find it on " + assignText + "'s card in the Kids tab."
+        : "Added to your list below.";
+      addedMsg.classList.add("visible");
       await loadChores();
       await loadKids();
       document.getElementById("choreTitle").focus();
