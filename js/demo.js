@@ -38,6 +38,14 @@
         return '<line x1="' + (m.x - s) + '" y1="' + (m.y - s) + '" x2="' + (m.x + s) + '" y2="' + (m.y + s) + '" stroke="' + GOLD + '" stroke-width="5" stroke-linecap="round"/>' +
           '<line x1="' + (m.x - s) + '" y1="' + (m.y + s) + '" x2="' + (m.x + s) + '" y2="' + (m.y - s) + '" stroke="' + GOLD + '" stroke-width="5" stroke-linecap="round"/>';
       }
+      if (m.kind === "chest") {
+        return '<rect x="' + (m.x - 26) + '" y="' + (m.y - 18) + '" width="52" height="36" rx="6" fill="' + GOLD + '" stroke="#8B5E34" stroke-width="3"/>' +
+          '<rect x="' + (m.x - 26) + '" y="' + (m.y - 18) + '" width="52" height="14" rx="6" fill="#8B5E34"/>';
+      }
+      if (m.kind === "chip") {
+        return '<rect x="' + (m.x - 30) + '" y="' + (m.y - 19) + '" width="60" height="38" rx="7" fill="' + GOLD + '" stroke="' + FOREST + '" stroke-width="2.5"/>' +
+          '<text x="' + m.x + '" y="' + (m.y + 4) + '" text-anchor="middle" font-size="10" font-weight="bold" fill="' + FOREST + '">' + m.label + "</text>";
+      }
       return "";
     }).join("");
   }

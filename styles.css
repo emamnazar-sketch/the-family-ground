@@ -626,3 +626,13 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 .qr-block p { margin: 4px 0; }
 .qr-slot { display: inline-block; background: #fff; padding: 8px; border-radius: 12px; border: 2px solid #E4E0D2; }
 .qr-slot img, .qr-slot canvas { display: block; }
+
+/* ---------- Why $9.99 box ---------- */
+.why-box { background: rgba(255,255,255,.12); border: 2px dashed rgba(247,243,234,.5); border-radius: 18px; padding: 22px 24px; margin: 20px 0; text-align: left; }
+.why-box h3 { color: var(--cream); margin: 0 0 6px; font-size: 1.25rem; }
+.why-box .why-price { color: var(--cream); opacity: .85; margin: 0 0 12px; }
+.why-box ul { list-style: none; margin: 0 0 12px; padding: 0; }
+.why-box li { color: var(--cream); margin: 10px 0; padding-left: 30px; position: relative; line-height: 1.5; }
+.why-box li::before { content: "\2713"; position: absolute; left: 0; color: var(--sage); font-weight: 900; font-size: 1.2rem; }
+.why-box .why-fine { color: var(--cream); opacity: .85; font-size: .95rem; margin: 12px 0 0; }
+.why-box .why-dad { color: var(--cream); margin: 12px 0 0; font-style: italic; }

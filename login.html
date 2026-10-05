@@ -65,34 +65,10 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.3H12v4.3h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.1 3.5 2.7.2.1c2.2-2 3.8-5 3.8-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.1.1-3.7 2.9v.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.1-3.7-2.9-.1.1C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l3.9-3z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l3.9 3c1-2.9 3.7-4.9 6.8-4.9z"/></svg>
           Continue with Google
         </button>
-        <div class="divider-or"><span>or</span></div>
-        <form id="loginForm" novalidate>
-          <div class="form-error"></div>
-          <div class="form-success"></div>
-          <div class="form-group">
-            <label class="form-label" for="email">Email</label>
-            <input class="form-input" type="email" id="email" name="email" autocomplete="email" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="password">Password</label>
-            <input class="form-input" type="password" id="password" name="password" autocomplete="current-password" required>
-          </div>
-          <button type="submit" class="btn btn-forest btn-block" id="loginBtn">Log in</button>
-        </form>
-        <p class="mt-2 text-center small"><a href="#" id="forgotLink">Forgot your password?</a></p>
-        <div id="forgotBox" hidden class="mt-2">
-          <hr class="divider">
-          <p class="small muted">Enter the email you signed up with and we will send you a reset link.</p>
-          <div class="form-group">
-            <label class="form-label" for="forgotEmail">Email</label>
-            <input class="form-input" type="email" id="forgotEmail" autocomplete="email">
-          </div>
-          <p class="form-error" id="forgotError" style="margin-bottom: 16px;"></p>
-          <p class="form-success" id="forgotSuccess" style="margin-bottom: 16px;"></p>
-          <button type="button" class="btn btn-outline btn-block" id="forgotBtn">Send reset link</button>
-        </div>
+        <p class="form-error" id="loginError" style="margin-top: 16px;"></p>
+        <p class="muted small text-center" style="margin-top: 12px;">One tap — no passwords to remember.</p>
         <p class="auth-switch">Not a member yet? <a href="signup.html">Become a member</a></p>
-        <p class="auth-switch" style="margin-top: 12px;">Are you a kid? <a href="kid-login.html">Type your parent&rsquo;s code</a></p>
+        <p class="auth-switch" style="margin-top: 12px;">Are you a kid? <a href="kid-login.html">Scan your parent&rsquo;s square</a></p>
       </div>
     </div>
   </section>
@@ -116,95 +92,25 @@
 <script src="js/app.js"></script>
 <script>
 (function () {
-  var form = document.getElementById("loginForm");
-  var btn = document.getElementById("loginBtn");
   var googleBtn = document.getElementById("googleBtn");
+  var errBox = document.getElementById("loginError");
 
-  // Google (Gmail) OAuth sign-in.
   googleBtn.addEventListener("click", async function () {
-    TFG.clearFormMessages(form);
+    errBox.classList.remove("visible");
+    errBox.textContent = "";
     var original = googleBtn.innerHTML;
     googleBtn.disabled = true;
     googleBtn.textContent = "Connecting to Google\u2026";
     try {
       var result = await TFG.signInWithGoogle();
       if (result && result.error) {
-        TFG.showFormError(form, TFG.friendlyError(result.error));
+        errBox.textContent = TFG.friendlyError(result.error);
+        errBox.classList.add("visible");
       }
       // On success the browser leaves for Google; nothing else to do here.
     } finally {
       googleBtn.disabled = false;
       googleBtn.innerHTML = original;
-    }
-  });
-
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    TFG.clearFormMessages(form);
-
-    var email = document.getElementById("email").value.trim();
-    var password = document.getElementById("password").value;
-
-    if (!email || !password) {
-      TFG.showFormError(form, "Please enter your email and password.");
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = "Logging in\u2026";
-
-    try {
-      var result = await TFG.signIn(email, password);
-      if (result && result.error) {
-        TFG.showFormError(form, TFG.friendlyError(result.error));
-        return;
-      }
-      window.location.href = "dashboard.html";
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "Log in";
-    }
-  });
-
-  // Forgot password toggle
-  var forgotLink = document.getElementById("forgotLink");
-  var forgotBox = document.getElementById("forgotBox");
-  var forgotBtn = document.getElementById("forgotBtn");
-  var forgotEmail = document.getElementById("forgotEmail");
-  var forgotError = document.getElementById("forgotError");
-  var forgotSuccess = document.getElementById("forgotSuccess");
-
-  forgotLink.addEventListener("click", function (e) {
-    e.preventDefault();
-    forgotBox.hidden = !forgotBox.hidden;
-  });
-
-  forgotBtn.addEventListener("click", async function () {
-    forgotError.classList.remove("visible");
-    forgotSuccess.classList.remove("visible");
-
-    var email = forgotEmail.value.trim();
-    if (!email) {
-      forgotError.textContent = "Please enter your email first.";
-      forgotError.classList.add("visible");
-      return;
-    }
-
-    forgotBtn.disabled = true;
-    forgotBtn.textContent = "Sending\u2026";
-
-    try {
-      var result = await TFG.resetPassword(email);
-      if (result && result.error) {
-        forgotError.textContent = TFG.friendlyError(result.error);
-        forgotError.classList.add("visible");
-        return;
-      }
-      forgotSuccess.textContent = "Check your inbox for the reset link.";
-      forgotSuccess.classList.add("visible");
-    } finally {
-      forgotBtn.disabled = false;
-      forgotBtn.textContent = "Send reset link";
     }
   });
 })();
