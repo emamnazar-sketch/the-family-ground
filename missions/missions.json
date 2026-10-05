@@ -1,0 +1,82 @@
+[
+  {
+    "id": "spiral-vs-lightning",
+    "title": "Spiral vs Lightning",
+    "instruction": "Left hand traces the smooth spiral. Right hand traces the sharp lightning. Both hands at the same time!",
+    "age_band": "4-6",
+    "file": "spiral-vs-lightning-4-6.pdf",
+    "tags": {
+      "age_bands": [
+        "4-6",
+        "7-9",
+        "10-12",
+        "13+"
+      ],
+      "days": [
+        "saturday",
+        "anytime"
+      ],
+      "mechanic": "trace-contrast"
+    }
+  },
+  {
+    "id": "spiral-vs-lightning",
+    "title": "Spiral vs Lightning",
+    "instruction": "Left hand traces the smooth spiral. Right hand traces the sharp lightning. Both hands at the same time!",
+    "age_band": "7-9",
+    "file": "spiral-vs-lightning-7-9.pdf",
+    "tags": {
+      "age_bands": [
+        "4-6",
+        "7-9",
+        "10-12",
+        "13+"
+      ],
+      "days": [
+        "saturday",
+        "anytime"
+      ],
+      "mechanic": "trace-contrast"
+    }
+  },
+  {
+    "id": "spiral-vs-lightning",
+    "title": "Spiral vs Lightning",
+    "instruction": "Left hand traces the smooth spiral. Right hand traces the sharp lightning. Both hands at the same time!",
+    "age_band": "10-12",
+    "file": "spiral-vs-lightning-10-12.pdf",
+    "tags": {
+      "age_bands": [
+        "4-6",
+        "7-9",
+        "10-12",
+        "13+"
+      ],
+      "days": [
+        "saturday",
+        "anytime"
+      ],
+      "mechanic": "trace-contrast"
+    }
+  },
+  {
+    "id": "spiral-vs-lightning",
+    "title": "Spiral vs Lightning",
+    "instruction": "Left hand traces the smooth spiral. Right hand traces the sharp lightning. Both hands at the same time!",
+    "age_band": "13+",
+    "file": "spiral-vs-lightning-13+.pdf",
+    "tags": {
+      "age_bands": [
+        "4-6",
+        "7-9",
+        "10-12",
+        "13+"
+      ],
+      "days": [
+        "saturday",
+        "anytime"
+      ],
+      "mechanic": "trace-contrast"
+    }
+  }
+]
