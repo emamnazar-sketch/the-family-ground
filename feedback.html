@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Give feedback — The Family Ground</title>
+<meta name="description" content="Tell us what's working, what's broken, and what we should build next.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/logo.png" type="image/png">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="images/logo-wordmark.png" alt="The Family Ground">
+    </a>
+    <nav>
+      <a class="nl" href="index.html">Home</a>
+      <a class="nl" href="about.html">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="nl" href="dashboard.html" data-auth="logged-in" hidden>My Home</a>
+      <a class="nl" href="login.html" data-auth="logged-out">Log in</a>
+      <a class="btn btn-forest btn-sm" href="signup.html" data-auth="logged-out">Become a member</a>
+      <a class="btn btn-outline btn-sm" href="#" data-auth="logged-in" data-action="sign-out" hidden>Sign out</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="form-section">
+    <div class="wrap">
+      <div class="form-card">
+        <div class="badge-row"><span class="badge">Feedback</span></div>
+        <h1>Help us make it better.</h1>
+        <p class="lead">You're one of our first families — what you tell us shapes what we build next. Be honest, we can take it.</p>
+        <form id="feedbackForm">
+          <div class="form-group">
+            <label class="form-label" for="fbTopic">What kind of feedback is this?</label>
+            <select class="form-select" id="fbTopic">
+              <option value="Idea">Idea — something we should build</option>
+              <option value="Bug">Bug — something broken or confusing</option>
+              <option value="Question">Question</option>
+              <option value="Praise">Praise — something you love</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fbWorking">What's working well for your family so far?</label>
+            <textarea class="form-textarea" id="fbWorking" placeholder="e.g. The kids actually ask for the weekend mission."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fbBroken">What's confusing, broken, or annoying?</label>
+            <textarea class="form-textarea" id="fbBroken" placeholder="e.g. I couldn't figure out how to..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fbNext">What should we build next?</label>
+            <textarea class="form-textarea" id="fbNext" placeholder="e.g. I wish it had..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fbName">Your name <span class="muted">(optional)</span></label>
+            <input class="form-input" type="text" id="fbName" placeholder="First name is fine" maxlength="60">
+          </div>
+          <button type="submit" class="btn btn-forest btn-block" id="fbSend">Send feedback</button>
+          <p class="form-error" id="fbError" style="margin: 16px 0 0;"></p>
+          <p class="muted small text-center" style="margin-top: 12px;">This opens your email app with everything addressed to us — just hit send.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com">Blog</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  var form = document.getElementById("feedbackForm");
+  var errBox = document.getElementById("fbError");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    errBox.classList.remove("visible");
+    errBox.textContent = "";
+
+    var topic = document.getElementById("fbTopic").value;
+    var working = document.getElementById("fbWorking").value.trim();
+    var broken = document.getElementById("fbBroken").value.trim();
+    var next = document.getElementById("fbNext").value.trim();
+    var name = document.getElementById("fbName").value.trim();
+
+    if (!working && !broken && !next) {
+      errBox.textContent = "Please answer at least one question so we know what to do with it.";
+      errBox.classList.add("visible");
+      return;
+    }
+
+    var lines = [];
+    lines.push("Topic: " + topic);
+    if (name) lines.push("From: " + name);
+    lines.push("");
+    if (working) { lines.push("WORKING WELL:"); lines.push(working); lines.push(""); }
+    if (broken) { lines.push("CONFUSING / BROKEN:"); lines.push(broken); lines.push(""); }
+    if (next) { lines.push("BUILD NEXT:"); lines.push(next); lines.push(""); }
+    lines.push("— sent from thefamilyground.com/feedback.html");
+
+    var subject = encodeURIComponent("Feedback (" + topic + ") — The Family Ground");
+    var body = encodeURIComponent(lines.join("\n"));
+    window.location.href = "mailto:thefamilyground@gmail.com?subject=" + subject + "&body=" + body;
+  });
+})();
+</script>
+</body>
+</html>
