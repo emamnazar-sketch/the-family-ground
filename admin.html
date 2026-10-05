@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — The Family Ground</title>
+<meta name="description" content="Site owner dashboard.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/logo.png" type="image/png">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 18px 0 8px; }
+.stat-card { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); padding: 18px; }
+.stat-card .num { font-family: var(--font-head); font-weight: 800; font-size: 1.7rem; color: var(--forest); margin: 0; }
+.stat-card .lbl { margin: 4px 0 0; font-size: 0.85rem; color: var(--ink-soft); }
+.admin-table-wrap { overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.admin-table th, .admin-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--sage-soft); white-space: nowrap; }
+.admin-table th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+.admin-table td.email { max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+.pill-status { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+.pill-trialing { background: #e8f3ec; color: var(--forest); }
+.pill-active { background: var(--forest); color: #fff; }
+.pill-none { background: #f1efe9; color: var(--ink-soft); }
+.pill-past { background: #fbe9e7; color: #b3261e; }
+</style>
+</head>
+<body>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="images/logo-wordmark.png" alt="The Family Ground">
+    </a>
+    <nav>
+      <a class="nl" href="dashboard.html">My Home</a>
+      <a class="nl" href="index.html">Site</a>
+      <a class="btn btn-outline btn-sm" href="#" data-action="sign-out">Sign out</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="form-section" style="padding-top: 120px;">
+    <div class="wrap">
+
+      <div id="adminDenied" class="form-card" hidden>
+        <h1>Not allowed.</h1>
+        <p class="lead">This area is only for the site owner.</p>
+        <p class="muted small" id="adminDeniedEmail"></p>
+        <p><a class="btn btn-outline" href="#" data-action="sign-out">Sign out</a></p>
+      </div>
+
+      <div id="adminBody" hidden>
+        <h1 style="margin-bottom: 4px;">Admin dashboard</h1>
+        <p class="muted" style="margin-top: 0;">Signed in as <b id="adminEmail"></b></p>
+
+        <h2 class="mt-4">Numbers</h2>
+        <div class="stat-grid" id="statGrid">
+          <div class="stat-card"><p class="num" data-stat="parents">–</p><p class="lbl">Parents</p></div>
+          <div class="stat-card"><p class="num" data-stat="kids">–</p><p class="lbl">Kids</p></div>
+          <div class="stat-card"><p class="num" data-stat="trials">–</p><p class="lbl">Active trials</p></div>
+          <div class="stat-card"><p class="num" data-stat="trials_expiring_7d">–</p><p class="lbl">Trials ending in 7 days</p></div>
+          <div class="stat-card"><p class="num" data-stat="paid">–</p><p class="lbl">Paid members</p></div>
+          <div class="stat-card"><p class="num" data-stat="chores">–</p><p class="lbl">Chores created</p></div>
+          <div class="stat-card"><p class="num" data-stat="chores_done">–</p><p class="lbl">Chores approved</p></div>
+          <div class="stat-card"><p class="num" data-stat="agreements">–</p><p class="lbl">Agreements</p></div>
+          <div class="stat-card"><p class="num" data-stat="code_uses">–</p><p class="lbl">Invite code uses</p></div>
+        </div>
+        <p class="form-error" id="statError" style="margin: 12px 0 0;"></p>
+
+        <h2 class="mt-4">Parents</h2>
+        <div class="panel-card">
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Joined</th><th>Kids</th><th>Status</th><th>Trial ends</th><th></th></tr>
+              </thead>
+              <tbody id="usersBody">
+                <tr><td colspan="7" class="muted">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="form-error" id="usersError" style="margin: 12px 0 0;"></p>
+        </div>
+
+        <h2 class="mt-4">Invite codes</h2>
+        <div class="panel-card">
+          <p class="muted" style="margin-top: 0;">Hand a code to a parent — they get free full access for the days you set.</p>
+          <form id="adminCodeForm">
+            <div class="form-row">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="acText">Code</label>
+                <input class="form-input" type="text" id="acText" placeholder="e.g. FAMILY30" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="24">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="acDays">Free days</label>
+                <input class="form-input" type="number" id="acDays" value="30" min="1" max="365">
+              </div>
+            </div>
+            <div class="form-row mt-2" style="align-items: end;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="acUses">Max uses <span class="muted">(blank = unlimited)</span></label>
+                <input class="form-input" type="number" id="acUses" placeholder="Unlimited" min="1">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="acNote">Note</label>
+                <input class="form-input" type="text" id="acNote" placeholder="e.g. Cousins — October testers" maxlength="80">
+              </div>
+              <div>
+                <button type="submit" class="btn btn-forest btn-sm btn-block">Create code</button>
+              </div>
+            </div>
+            <p class="form-error" id="acError" style="margin: 16px 0 0;"></p>
+            <p class="form-success" id="acSuccess" style="margin: 16px 0 0;"></p>
+          </form>
+        </div>
+
+        <h3 class="mt-4">Your codes</h3>
+        <div id="adminCodesList" class="grid-2"></div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Owner area.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script>
+(function () {
+  function fmtDate(iso) {
+    if (!iso) return "–";
+    return new Date(iso).toLocaleDateString();
+  }
+  function statusPill(u) {
+    var s = u.mem_status;
+    if (s === "active") return '<span class="pill-status pill-active">Paid</span>';
+    if (s === "trialing") {
+      var expired = u.trial_ends_at && new Date(u.trial_ends_at).getTime() < Date.now();
+      return expired
+        ? '<span class="pill-status pill-past">Trial ended</span>'
+        : '<span class="pill-status pill-trialing">Trial</span>';
+    }
+    if (s === "past_due") return '<span class="pill-status pill-past">Past due</span>';
+    if (s === "canceled") return '<span class="pill-status pill-none">Canceled</span>';
+    return '<span class="pill-status pill-none">No membership</span>';
+  }
+
+  async function loadStats() {
+    var r = await TFG.adminStats();
+    if (r.error) {
+      var box = document.getElementById("statError");
+      box.textContent = r.error;
+      box.classList.add("visible");
+      return;
+    }
+    document.querySelectorAll("[data-stat]").forEach(function (el) {
+      var v = r.stats[el.getAttribute("data-stat")];
+      el.textContent = (v === null || v === undefined) ? "–" : v;
+    });
+  }
+
+  async function loadUsers() {
+    var body = document.getElementById("usersBody");
+    var r = await TFG.adminListUsers();
+    if (r.error) {
+      body.innerHTML = '<tr><td colspan="7" class="muted">Could not load users.</td></tr>';
+      var box = document.getElementById("usersError");
+      box.textContent = r.error;
+      box.classList.add("visible");
+      return;
+    }
+    if (!r.users.length) {
+      body.innerHTML = '<tr><td colspan="7" class="muted">No parents yet.</td></tr>';
+      return;
+    }
+    body.innerHTML = "";
+    r.users.forEach(function (u) {
+      var tr = document.createElement("tr");
+      var name = u.full_name || "–";
+      tr.innerHTML =
+        "<td>" + TFG.esc(name) + "</td>" +
+        '<td class="email">' + TFG.esc(u.email || "–") + "</td>" +
+        "<td>" + fmtDate(u.created_at) + "</td>" +
+        "<td>" + (u.kids || 0) + "</td>" +
+        "<td>" + statusPill(u) + "</td>" +
+        "<td>" + fmtDate(u.trial_ends_at) + "</td>";
+      var td = document.createElement("td");
+      if (u.mem_status === "trialing") {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn-outline btn-sm";
+        btn.textContent = "+30 days";
+        btn.addEventListener("click", async function () {
+          if (!confirm("Add 30 free days for " + (u.email || name) + "?")) return;
+          btn.disabled = true;
+          var x = await TFG.adminExtendTrial(u.id, 30);
+          if (x.error) { alert(TFG.friendlyError(x.error)); }
+          else { await loadUsers(); await loadStats(); }
+          btn.disabled = false;
+        });
+        td.appendChild(btn);
+      }
+      tr.appendChild(td);
+      body.appendChild(tr);
+    });
+  }
+
+  async function loadCodes() {
+    var list = document.getElementById("adminCodesList");
+    var r = await TFG.adminListBetaCodes();
+    if (r.error) {
+      list.innerHTML = '<p class="muted">Could not load codes: ' + TFG.esc(r.error) + "</p>";
+      return;
+    }
+    list.innerHTML = "";
+    if (!r.codes.length) {
+      list.innerHTML = "<p class='muted'>No codes yet. Create your first one above.</p>";
+      return;
+    }
+    r.codes.forEach(function (c) {
+      var card = document.createElement("div");
+      card.className = "panel-card";
+      var uses = c.max_uses ? (c.used_count + " / " + c.max_uses + " used") : (c.used_count + " used");
+      card.innerHTML =
+        "<p style='margin:0;'><b class='invite-code'>" + TFG.esc(c.code) + "</b></p>" +
+        "<p class='muted small' style='margin:8px 0 0;'>" + c.duration_days + " free days &middot; " +
+        TFG.esc(uses) + " &middot; " + (c.is_active ? "Active" : "Off") +
+        (c.note ? " &middot; " + TFG.esc(c.note) : "") + "</p>";
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn btn-outline btn-sm mt-2";
+      btn.textContent = c.is_active ? "Turn off" : "Turn on";
+      btn.addEventListener("click", async function () {
+        btn.disabled = true;
+        var t = await TFG.adminToggleBetaCode(c.id, !c.is_active);
+        if (t.error) { alert(TFG.friendlyError(t.error)); } else { loadCodes(); }
+        btn.disabled = false;
+      });
+      card.appendChild(btn);
+      list.appendChild(card);
+    });
+  }
+
+  (async function () {
+    var session = await TFG.requireParent();
+    if (!session) return;
+    var owner = await TFG.isOwner();
+    if (!owner) {
+      document.getElementById("adminDenied").hidden = false;
+      var user = await TFG.getUser();
+      if (user && user.email) {
+        document.getElementById("adminDeniedEmail").textContent = "Signed in as " + user.email;
+      }
+      return;
+    }
+    document.getElementById("adminBody").hidden = false;
+    var me = await TFG.getUser();
+    if (me && me.email) document.getElementById("adminEmail").textContent = me.email;
+
+    await loadStats();
+    await loadUsers();
+    await loadCodes();
+
+    document.getElementById("adminCodeForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var errBox = document.getElementById("acError");
+      var okBox = document.getElementById("acSuccess");
+      errBox.classList.remove("visible");
+      okBox.classList.remove("visible");
+      var code = document.getElementById("acText").value;
+      var days = parseInt(document.getElementById("acDays").value, 10) || 30;
+      var usesRaw = document.getElementById("acUses").value.trim();
+      var maxUses = usesRaw === "" ? null : (parseInt(usesRaw, 10) || null);
+      var note = document.getElementById("acNote").value.trim();
+      var r = await TFG.adminCreateBetaCode(code, days, maxUses, note);
+      if (r.error) {
+        errBox.textContent = TFG.friendlyError(r.error);
+        errBox.classList.add("visible");
+        return;
+      }
+      okBox.textContent = "Code " + (r.code && r.code.code) + " created — share it with a parent.";
+      okBox.classList.add("visible");
+      e.target.reset();
+      document.getElementById("acDays").value = "30";
+      loadCodes();
+      loadStats();
+    });
+  })();
+})();
+</script>
+</body>
+</html>

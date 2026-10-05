@@ -812,6 +812,39 @@
     }
   };
 
+  TFG.adminStats = async function () {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_stats");
+      if (res.error) return { error: friendlyError(res.error) };
+      return { stats: res.data || {} };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  TFG.adminListUsers = async function () {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_list_users");
+      if (res.error) return { error: friendlyError(res.error) };
+      return { users: res.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  TFG.adminExtendTrial = async function (userId, days) {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_extend_trial", { p_user_id: userId, p_days: days });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { trialEndsAt: res.data };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
   // Starts Stripe checkout. Wired up when Amam connects Stripe;
   // until then the paywall shows the honest "opening soon" state.
   TFG.startCheckout = async function () {
