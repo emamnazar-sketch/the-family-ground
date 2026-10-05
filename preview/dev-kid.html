@@ -18,6 +18,10 @@
 .badge.earned{background:var(--sage);color:var(--forest);border:3px solid var(--forest)}
 .badge.locked{background:#EDEAE0;color:#B9B4A6;border:3px dashed #C9C4B4}
 .score-input{font-size:2rem;text-align:center;max-width:160px;margin:0 auto;display:block}
+.chore-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:2px solid #E4E0D2;border-radius:14px;padding:14px 16px;margin:8px 0}
+.chore-row.done{opacity:.65}
+.chore-row .t{font-weight:800;font-size:1.05rem}
+.chore-row .m{font-size:.85rem;color:#6B7280}
 </style>
 </head>
 <body>
@@ -63,12 +67,41 @@
       <p class="mt-0"><b>&#10084; Play again</b></p>
       <p class="muted">Your favorite missions will live here. Play one you love and tap the heart to keep it.</p>
     </div>
+
+    <h2 class="mt-4">My chores</h2>
+    <p class="muted">Do a chore, tap the button, and your parent will check it.</p>
+
+    <h3>Things to do</h3>
+    <div id="demoTodo">
+      <div class="chore-row" id="chore1">
+        <div><div class="t">Make the bed</div><div class="m">Daily</div></div>
+        <button class="btn btn-forest btn-sm" type="button" onclick="finishChore('chore1','Make the bed')">Done</button>
+      </div>
+      <div class="chore-row" id="chore2">
+        <div><div class="t">Feed the dog</div><div class="m">Daily</div></div>
+        <button class="btn btn-forest btn-sm" type="button" onclick="finishChore('chore2','Feed the dog')">Done</button>
+      </div>
+    </div>
+
+    <h3 class="mt-4">Try again</h3>
+    <div class="chore-row">
+      <div><div class="t">Clean your room</div><div class="m">Your parent asked for a redo — check the note</div></div>
+    </div>
+
+    <h3 class="mt-4">Waiting for your parent</h3>
+    <div id="demoWaiting"><p class="muted">Nothing waiting right now.</p></div>
+
+    <h3 class="mt-4">All done</h3>
+    <div class="chore-row done">
+      <div><div class="t">Brush teeth</div><div class="m">&#10003; Approved</div></div>
+    </div>
   </div></section>
 </main>
 <script>
 document.getElementById("watchBtn").onclick=function(){var n=document.getElementById("watchNote");n.hidden=!n.hidden;};
 document.getElementById("playedBtn").onclick=function(){document.getElementById("missionCard").hidden=true;document.getElementById("scoreCard").hidden=false;};
 document.getElementById("doneBtn").onclick=function(){var t=document.getElementById("scoreTime").value;if(!t||t<1){alert("Type how many seconds it took you.");return;}document.getElementById("scoreCard").hidden=true;document.getElementById("winCard").hidden=false;window.scrollTo(0,0);};
+function finishChore(id,title){document.getElementById(id).remove();var w=document.getElementById("demoWaiting");if(w.querySelector("p"))w.innerHTML="";var d=document.createElement("div");d.className="chore-row";d.innerHTML='<div><div class="t">'+title+'</div><div class="m">Sent — waiting for your parent to check</div></div>';w.appendChild(d);}
 </script>
 </body>
 </html>
