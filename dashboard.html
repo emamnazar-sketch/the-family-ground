@@ -495,12 +495,20 @@
         err.classList.add("visible");
         return;
       }
-      document.getElementById("kidLabel").value = "";
+      // Keep the kid picked after adding a chore, so adding 10 chores for the
+      // same kid is fast: only the chore title clears each time.
+      var keepLabel = document.getElementById("kidLabel").value;
+      var keepAssign = document.getElementById("assignTo").value;
+      var keepFreq = document.getElementById("frequency").value;
+      var keepProof = document.getElementById("proofRequired").checked;
       document.getElementById("choreTitle").value = "";
-      document.getElementById("assignTo").value = "";
-      document.getElementById("proofRequired").checked = false;
+      document.getElementById("kidLabel").value = keepLabel;
+      document.getElementById("assignTo").value = keepAssign;
+      document.getElementById("frequency").value = keepFreq;
+      document.getElementById("proofRequired").checked = keepProof;
       await loadChores();
       await loadKids();
+      document.getElementById("choreTitle").focus();
     });
     await loadChores();
   }
