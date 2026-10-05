@@ -69,6 +69,12 @@
           <li><b>A family agreement builder</b> &mdash; an experiment I&rsquo;m trying with my own kids</li>
         </ul>
         <p class="muted small" style="margin-top:12px;">One price for the whole family. Cancel anytime. If your kids don&rsquo;t beg for a rematch after one weekend, cancel and keep the printables.</p>
+        <div class="form-group">
+          <label class="check-row" for="signupAgree">
+            <input type="checkbox" id="signupAgree">
+            <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
+          </label>
+        </div>
         <button type="button" class="btn btn-google btn-block" id="googleBtn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.3H12v4.3h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.1 3.5 2.7.2.1c2.2-2 3.8-5 3.8-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.1.1-3.7 2.9v.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.1-3.7-2.9-.1.1C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l3.9-3z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l3.9 3c1-2.9 3.7-4.9 6.8-4.9z"/></svg>
           Continue with Google
@@ -101,10 +107,16 @@
 (function () {
   var googleBtn = document.getElementById("googleBtn");
   var errBox = document.getElementById("signupError");
+  var agreeBox = document.getElementById("signupAgree");
 
   googleBtn.addEventListener("click", async function () {
     errBox.classList.remove("visible");
     errBox.textContent = "";
+    if (agreeBox && !agreeBox.checked) {
+      errBox.textContent = "Please agree to the Terms of Service and Privacy Policy first.";
+      errBox.classList.add("visible");
+      return;
+    }
     var original = googleBtn.innerHTML;
     googleBtn.disabled = true;
     googleBtn.textContent = "Connecting to Google\u2026";

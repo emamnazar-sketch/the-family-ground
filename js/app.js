@@ -705,6 +705,125 @@
     }
   };
 
+/* ---------------- Memberships: trial codes + paywall gate ----------------
+   Parents enter a beta invite code for free trial access.
+   The dashboard gate redirects: no membership -> welcome.html,
+   expired trial -> paywall.html.
+---------------------------------------------------------------------- */
+
+  // 'ok' | 'welcome' | 'paywall' | 'login'
+  TFG.membershipStatus = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return 'login';
+      var res = await sb.from("memberships").select("status, trial_ends_at")
+        .eq("user_id", user.id).maybeSingle();
+      if (res.error || !res.data) return 'welcome';
+      var m = res.data;
+      if (m.status === 'active') return 'ok';
+      if (m.status === 'trialing') {
+        if (m.trial_ends_at && new Date(m.trial_ends_at).getTime() < Date.now()) return 'paywall';
+        return 'ok';
+      }
+      return 'paywall';
+    } catch (e) {
+      return 'welcome';
+    }
+  };
+
+  // Enforces the gate on member pages. Call after requireParent().
+  // Redirects when the member cannot proceed; returns 'ok' otherwise.
+  // The site owner always passes (manages invite codes from the dashboard).
+  TFG.requireMembership = async function () {
+    var st = await TFG.membershipStatus();
+    if (st === 'login') { window.location.href = "login.html"; return null; }
+    if (st === 'ok') return st;
+    if (await TFG.isOwner()) return 'ok';
+    if (st === 'welcome') { window.location.href = "welcome.html"; return null; }
+    if (st === 'paywall') { window.location.href = "paywall.html"; return null; }
+    return st;
+  };
+
+  // Redeem a beta invite code -> trialing membership for the code's days.
+  TFG.redeemBetaCode = async function (rawCode) {
+    try {
+      var sb = getClient();
+      var code = String(rawCode || "").trim();
+      if (!code) return { error: "Please enter your invite code." };
+      var res = await sb.rpc("redeem_beta_code", { p_code: code });
+      if (res.error) {
+        var msg = String(res.error.message || "").toLowerCase();
+        if (msg.indexOf("invalid code") >= 0) return { error: "That code didn't work. Check it and try again." };
+        if (msg.indexOf("fully used") >= 0) return { error: "That code has already been used up." };
+        return { error: friendlyError(res.error) };
+      }
+      var row = res.data && res.data[0];
+      return { ok: true, trialEndsAt: row && row.trial_ends_at };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Owner-only helpers. Non-owners get "Not allowed" from the database.
+  TFG.isOwner = async function () {
+    try {
+      var user = await TFG.getUser();
+      if (!user || !user.email) return false;
+      var em = String(user.email).toLowerCase();
+      return em === "emamnazar@gmail.com" || em === "thefamilyground@gmail.com";
+    } catch (e) {
+      return false;
+    }
+  };
+
+  TFG.adminCreateBetaCode = async function (code, days, maxUses, note) {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_create_beta_code", {
+        p_code: code, p_days: days, p_max_uses: maxUses, p_note: note || ""
+      });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { code: res.data && res.data[0] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  TFG.adminListBetaCodes = async function () {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_list_beta_codes");
+      if (res.error) return { error: friendlyError(res.error) };
+      return { codes: res.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  TFG.adminToggleBetaCode = async function (id, active) {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_toggle_beta_code", { p_id: id, p_active: active });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Starts Stripe checkout. Wired up when Amam connects Stripe;
+  // until then the paywall shows the honest "opening soon" state.
+  TFG.startCheckout = async function () {
+    var key = (cfg.STRIPE_PUBLISHABLE_KEY || "");
+    if (!key || key.indexOf("PASTE_") === 0) {
+      return { error: "Payments aren't open yet — we'll let you know the moment they are." };
+    }
+    // TODO: create a Checkout Session via a secure backend endpoint and
+    // redirect to Stripe. Never put the secret key in this file.
+    return { error: "Checkout is being connected. Please try again soon." };
+  };
+
 /* ---------------- Date helpers ---------------- */
 
   function parseISO(s) {

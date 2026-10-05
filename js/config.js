@@ -17,5 +17,11 @@ window.TFG_CONFIG = {
 
   // Membership price — LOCKED by Amam 2026-09-29: $9.99/month.
   // Shown everywhere [data-price] appears (homepage, signup).
-  PRICE_PLACEHOLDER: "$9.99/month"
+  PRICE_PLACEHOLDER: "$9.99/month",
+
+  // Stripe publishable key for the paywall checkout.
+  // Amam connects Stripe when he's ready — until this is a real key,
+  // the paywall shows an honest "payments open soon" note instead
+  // of a dead checkout button.
+  STRIPE_PUBLISHABLE_KEY: ""
 };
