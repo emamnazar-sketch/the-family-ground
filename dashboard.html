@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Home — The Family Ground</title>
-<meta name="description" content="Your member home: track daily chores, build your family agreement, and work through your courses.">
+<meta name="description" content="Your member home: track daily chores, build your family agreement, and play weekend game missions.">
 <link rel="canonical" href="https://thefamilyground.com/dashboard.html">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:site_name" content="The Family Ground">
 <meta property="og:type" content="website">
 <meta property="og:title" content="My Home — The Family Ground">
-<meta property="og:description" content="Your member home: track daily chores, build your family agreement, and work through your courses.">
+<meta property="og:description" content="Your member home: track daily chores, build your family agreement, and play weekend game missions.">
 <meta property="og:url" content="https://thefamilyground.com/dashboard.html">
 <meta property="og:image" content="https://thefamilyground.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="My Home — The Family Ground">
-<meta name="twitter:description" content="Your member home: track daily chores, build your family agreement, and work through your courses.">
+<meta name="twitter:description" content="Your member home: track daily chores, build your family agreement, and play weekend game missions.">
 <meta name="twitter:image" content="https://thefamilyground.com/og-image.png">
 <meta name="theme-color" content="#12503F">
 <script type="application/ld+json">
@@ -74,7 +74,6 @@
         <div class="tabs" role="tablist">
           <button type="button" class="tab active" data-tab-target="panel-chores">Chore tracker</button>
           <button type="button" class="tab" data-tab-target="panel-agreement">Family agreement</button>
-          <button type="button" class="tab" data-tab-target="panel-courses">My courses</button>
           <button type="button" class="tab" data-tab-target="panel-kids">Kids</button>
         </div>
 
@@ -194,11 +193,6 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="tab-panel" id="panel-courses">
-          <p class="muted" style="margin-bottom: 24px;">Courses live here, inside your membership. Work through them at your own pace &mdash; your progress is saved.</p>
-          <div id="myCourses" class="grid-2"></div>
         </div>
 
         <div class="tab-panel" id="panel-kids">
@@ -560,12 +554,6 @@
     loadSavedAgreements();
   }
 
-  /* ---------------- Courses (inside membership) ---------------- */
-  async function initCourses() {
-    var el = document.getElementById("myCourses");
-    await TFG.renderMyCourses(el);
-  }
-
   /* ---------------- Kids ---------------- */
   var kidsCache = [];
 
@@ -789,7 +777,7 @@
   }
 
   /* ---------------- Init (guarded) ---------------- */
-  // Tab switching (Chore tracker / Family agreement / My courses / Kids).
+  // Tab switching (Chore tracker / Family agreement / Kids).
   document.querySelectorAll(".tab").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.querySelectorAll(".tab").forEach(function (b) { b.classList.remove("active"); });
@@ -814,7 +802,6 @@
 
     await initChores();
     initAgreement();
-    await initCourses();
     initKids();
   })();
 })();

@@ -511,136 +511,6 @@
     }
   };
 
-  /* ---------------- Course catalog data ----------------
-     Single source of truth for the dashboard "My Courses" tab.
-     Lesson bodies are DRAFT outlines — Amam will write the real lessons.
-  ------------------------------------------------------ */
-  TFG.COURSES = [
-    {
-      slug: "screen-reset",
-      title: "7-Day Family Screen Reset",
-      status: "members", // "members" | "coming-soon"
-      tagline: "One small step a day to take your evenings back.",
-      description: "A week of short, practical steps that help your family agree on screen limits — without the daily fights. Built for real homes with real kids, not perfect ones.",
-      lessons: [
-        { slug: "day-1", title: "Day 1 — See the real picture" },
-        { slug: "day-2", title: "Day 2 — Talk, don't lecture" },
-        { slug: "day-3", title: "Day 3 — Pick your phone-free times" },
-        { slug: "day-4", title: "Day 4 — Build the agreement together" },
-        { slug: "day-5", title: "Day 5 — Handle the pushback" },
-        { slug: "day-6", title: "Day 6 — Make the evenings yours again" },
-        { slug: "day-7", title: "Day 7 — Keep it going" }
-      ]
-    },
-    {
-      slug: "calm-mornings",
-      title: "Calm Mornings, Peaceful Bedtimes",
-      status: "coming-soon",
-      tagline: "Routines that end the yelling at both ends of the day.",
-      description: "Simple morning and bedtime routines your kids help build — so the day starts and ends with calm instead of chaos.",
-      lessons: [
-        { slug: "m-1", title: "Why routines beat reminders" },
-        { slug: "m-2", title: "Building the morning checklist together" },
-        { slug: "m-3", title: "The bedtime wind-down that actually works" },
-        { slug: "m-4", title: "When the routine falls apart" },
-        { slug: "m-5", title: "Keeping it alive past week two" }
-      ]
-    },
-    {
-      slug: "agreement-workshop",
-      title: "The Family Agreement Workshop",
-      status: "coming-soon",
-      tagline: "Write the agreement your whole family will actually follow.",
-      description: "A guided workshop that walks you through creating your family's own agreement — rules, rewards, consequences, and what to do when you disagree — with your kids at the table.",
-      lessons: [
-        { slug: "w-1", title: "Setting up the family meeting" },
-        { slug: "w-2", title: "Rules your kids help write" },
-        { slug: "w-3", title: "Rewards and consequences that are fair" },
-        { slug: "w-4", title: "Signing day and the weekly check-in" }
-      ]
-    }
-  ];
-
-  TFG.renderCourseCatalog = function (container) {
-    if (!container) return;
-    var html = TFG.COURSES.map(function (course, i) {
-      var isMembers = course.status === "members";
-      var badge = isMembers
-        ? '<span class="course-status status-members">Members only</span>'
-        : '<span class="course-status status-soon">Coming soon</span>';
-      var lessons = course.lessons.map(function (l, n) {
-        return '<li><span class="lesson-num">' + (n + 1) + '</span><span>' + esc(l.title) + '</span></li>';
-      }).join("");
-      var cta = isMembers
-        ? '<a class="btn btn-primary btn-sm" href="signup.html">Become a member to start</a>'
-        : '<p class="small muted" style="margin-top:16px;">This course is on its way. Members will get it first.</p>';
-      return (
-        '<div class="card course-card">' + badge +
-        '<h3>' + esc(course.title) + '</h3>' +
-        '<p class="muted">' + esc(course.tagline) + '</p>' +
-        '<p>' + esc(course.description) + '</p>' +
-        '<p class="lesson-count">' + course.lessons.length + ' lessons</p>' +
-        '<ul class="lesson-list">' + lessons + '</ul>' +
-        '<div class="mt-2">' + cta + '</div>' +
-        '</div>'
-      );
-    }).join("");
-    container.innerHTML = html;
-  };
-
-  TFG.renderMyCourses = async function (container) {
-    if (!container) return;
-    try {
-      var sb = getClient();
-      var user = await TFG.getUser();
-      if (!user) { container.innerHTML = "<p>Please log in to see your courses.</p>"; return; }
-      var progressRes = await sb.from("course_progress").select("course_slug, lesson_slug").eq("user_id", user.id);
-      var done = {};
-      (progressRes.data || []).forEach(function (r) { done[r.course_slug + "|" + r.lesson_slug] = true; });
-
-      container.innerHTML = TFG.COURSES.map(function (course) {
-        if (course.status !== "members") {
-          return '<div class="card course-card"><span class="course-status status-soon">Coming soon</span>' +
-            '<h3>' + esc(course.title) + '</h3><p>' + esc(course.description) + '</p>' +
-            '<p class="small muted">Members will get this course first.</p></div>';
-        }
-        var total = course.lessons.length;
-        var completed = course.lessons.filter(function (l) { return done[course.slug + "|" + l.slug]; }).length;
-        var pct = total ? Math.round((completed / total) * 100) : 0;
-        var lessons = course.lessons.map(function (l) {
-          var key = course.slug + "|" + l.slug;
-          var isDone = !!done[key];
-          return '<label class="lesson-check"><input type="checkbox" data-course="' + esc(course.slug) +
-            '" data-lesson="' + esc(l.slug) + '"' + (isDone ? " checked" : "") + '>' +
-            '<span class="' + (isDone ? "done" : "") + '">' + esc(l.title) + '</span></label>';
-        }).join("");
-        return '<div class="card course-card"><span class="course-status status-members">Members only</span>' +
-          '<h3>' + esc(course.title) + '</h3><p>' + esc(course.description) + '</p>' +
-          '<div class="progress"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
-          '<p class="progress-label">' + completed + ' of ' + total + ' lessons complete</p>' +
-          '<div class="mt-2">' + lessons + '</div></div>';
-      }).join("");
-
-      // Wire lesson checkboxes (event delegation).
-      container.querySelectorAll('input[type="checkbox"][data-course]').forEach(function (box) {
-        box.addEventListener("change", async function () {
-          var res = await TFG.toggleLesson(box.getAttribute("data-course"), box.getAttribute("data-lesson"));
-          if (res.error) {
-            box.checked = !box.checked;
-            alert(res.error);
-            return;
-          }
-          var label = box.closest(".lesson-check").querySelector("span");
-          if (label) label.classList.toggle("done", box.checked);
-          // Refresh progress bars.
-          TFG.renderMyCourses(container);
-        });
-      });
-    } catch (e) {
-      container.innerHTML = '<p class="muted">Could not load your courses: ' + esc(friendlyError(e)) + '</p>';
-    }
-  };
-
   /* ---------------- Chores ---------------- */
 
   TFG.getChores = async function () {
@@ -778,30 +648,7 @@
     }
   };
 
-  /* ---------------- Course progress ---------------- */
-
-  TFG.toggleLesson = async function (courseSlug, lessonSlug) {
-    try {
-      var sb = getClient();
-      var user = await TFG.getUser();
-      if (!user) return { error: "Please log in first." };
-      var existing = await sb.from("course_progress")
-        .select("id").eq("user_id", user.id).eq("course_slug", courseSlug).eq("lesson_slug", lessonSlug).maybeSingle();
-      if (existing.error) return { error: friendlyError(existing.error) };
-      if (existing.data) {
-        var del = await sb.from("course_progress").delete().eq("id", existing.data.id);
-        if (del.error) return { error: friendlyError(del.error) };
-        return { done: false };
-      }
-      var ins = await sb.from("course_progress").insert({ user_id: user.id, course_slug: courseSlug, lesson_slug: lessonSlug });
-      if (ins.error) return { error: friendlyError(ins.error) };
-      return { done: true };
-    } catch (e) {
-      return { error: friendlyError(e) };
-    }
-  };
-
-  /* ---------------- Date helpers ---------------- */
+/* ---------------- Date helpers ---------------- */
 
   function parseISO(s) {
     var parts = s.split("-").map(Number);
@@ -883,9 +730,5 @@
         ? cfg.PRICE_PLACEHOLDER
         : "Founding member pricing announced at launch";
     });
-
-    // Public course catalog.
-    var catalog = document.getElementById("courseCatalog");
-    if (catalog) TFG.renderCourseCatalog(catalog);
   });
 })();
