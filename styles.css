@@ -417,6 +417,21 @@ a { color: var(--forest); }
 .signature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
 .signature-line { border-top: 2px solid var(--ink); padding-top: 8px; font-size: 0.9rem; }
 .signature-line strong { display: block; font-size: 1.02rem; }
+/* Family promise quote at the top of the agreement preview. */
+.agreement-quote {
+  text-align: center; font-family: var(--font-head); font-weight: 700;
+  font-size: 1.15rem; line-height: 1.55; color: var(--forest);
+  max-width: 34em; margin: 14px auto 4px;
+}
+/* Dynamic signer rows in the builder form. */
+.signer-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.signer-row .signer-input { flex: 1; margin-bottom: 0; }
+.signer-row .chore-delete { flex: none; position: static; }
+/* Print version of the quote. */
+.pa-quote {
+  text-align: center; font-size: 13pt; font-style: italic;
+  max-width: 36em; margin: 12px auto 4px; color: #222;
+}
 .agreement-date { text-align: center; margin-top: 20px; color: var(--ink-soft); font-size: 0.92rem; }
 
 .saved-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
@@ -538,8 +553,8 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
   }
   #printArea ol, #printArea ul { padding-left: 1.4em; }
   #printArea li { margin-bottom: 0.35em; }
-  #printArea .pa-sigs { display: flex; gap: 40px; margin-top: 40px; }
-  #printArea .pa-sig { flex: 1; border-top: 2px solid #000; padding-top: 6px; font-size: 10pt; }
+  #printArea .pa-sigs { display: flex; flex-wrap: wrap; gap: 32px 40px; margin-top: 40px; }
+  #printArea .pa-sig { flex: 1 1 180px; border-top: 2px solid #000; padding-top: 6px; font-size: 10pt; }
   #printArea .pa-sig strong { display: block; font-size: 12pt; }
   #printArea .pa-date { text-align: center; margin-top: 28px; color: #333; }
 }

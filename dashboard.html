@@ -212,9 +212,30 @@
                   <input class="form-input" type="text" id="agTitle" value="Our Family Agreement">
                 </div>
                 <div class="form-group">
+                  <label class="form-label" for="agQuote">Our family promise</label>
+                  <select class="form-select" id="agQuote">
+                    <option value="0">Our home keeps us safe. We keep it clean, we treat each other with respect, and we are thankful for what we have.</option>
+                    <option value="1">A strong family is not a perfect family. It is a family that keeps trying, together.</option>
+                    <option value="2">In this home we speak with kindness, and we help without being asked.</option>
+                    <option value="3">The way we treat our home shows the way we treat each other.</option>
+                    <option value="4">We do not have to be perfect. We just have to show up for each other, every day.</option>
+                  </select>
+                  <p class="form-hint">Pick the promise that sounds most like your family. It goes at the top of the agreement.</p>
+                </div>
+                <div class="form-group">
                   <label class="form-label" for="agRules">Our rules</label>
                   <textarea class="form-textarea" id="agRules" placeholder="One rule per line, e.g.&#10;No phones at the dinner table&#10;Bedtime is 9 pm on school nights"></textarea>
                   <p class="form-hint">Write one rule per line.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agHome">Our home</label>
+                  <textarea class="form-textarea" id="agHome" placeholder="One per line, e.g.&#10;We clean up after ourselves&#10;We take care of what we have and waste nothing"></textarea>
+                  <p class="form-hint">How we keep our home clean, respect it, and stay grateful for it — together.</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="agTreat">How we treat each other</label>
+                  <textarea class="form-textarea" id="agTreat" placeholder="One per line, e.g.&#10;We speak with respect, even when we are upset&#10;We say sorry when we hurt someone"></textarea>
+                  <p class="form-hint">The way family members talk to and treat one another.</p>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="agRewards">Rewards</label>
@@ -230,15 +251,11 @@
                   <label class="form-label" for="agDisagree">When we disagree</label>
                   <textarea class="form-textarea" id="agDisagree" placeholder="e.g. We take a 10-minute break, then talk it through calmly."></textarea>
                 </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label" for="agSig1">Signed by</label>
-                    <input class="form-input" type="text" id="agSig1" placeholder="Name">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="agSig2">Signed by</label>
-                    <input class="form-input" type="text" id="agSig2" placeholder="Name">
-                  </div>
+                <div class="form-group">
+                  <label class="form-label">Signed by</label>
+                  <div id="agSigners"></div>
+                  <button type="button" class="btn btn-outline btn-sm" id="agAddSigner">+ Add another person</button>
+                  <p class="form-hint">Add everyone in the family — kids too. Everyone who signs owns the agreement.</p>
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="agDate">Date</label>
@@ -491,19 +508,77 @@
   /* ---------------- Agreement ---------------- */
   var editingId = null;
 
+  var AG_QUOTES = [
+    "Our home keeps us safe. We keep it clean, we treat each other with respect, and we are thankful for what we have.",
+    "A strong family is not a perfect family. It is a family that keeps trying, together.",
+    "In this home we speak with kindness, and we help without being asked.",
+    "The way we treat our home shows the way we treat each other.",
+    "We do not have to be perfect. We just have to show up for each other, every day."
+  ];
+
+  function agQuoteText(idx) {
+    var i = parseInt(idx, 10);
+    if (isNaN(i) || i < 0 || i >= AG_QUOTES.length) i = 0;
+    return AG_QUOTES[i];
+  }
+
+  // Dynamic signer rows: add as many family members as needed.
+  function addSignerRow(name) {
+    var wrap = document.getElementById("agSigners");
+    var row = document.createElement("div");
+    row.className = "signer-row";
+    var input = document.createElement("input");
+    input.className = "form-input signer-input";
+    input.type = "text";
+    input.placeholder = "Name";
+    input.maxLength = 60;
+    if (name) input.value = name;
+    input.addEventListener("input", renderPreview);
+    var rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "chore-delete";
+    rm.setAttribute("aria-label", "Remove signer");
+    rm.textContent = "\u00d7";
+    rm.addEventListener("click", function () {
+      var rows = wrap.querySelectorAll(".signer-row");
+      if (rows.length <= 1) { input.value = ""; renderPreview(); return; }
+      row.remove();
+      renderPreview();
+    });
+    row.appendChild(input);
+    row.appendChild(rm);
+    wrap.appendChild(row);
+  }
+
+  function getSignerNames() {
+    var names = [];
+    document.querySelectorAll("#agSigners .signer-input").forEach(function (el) {
+      var v = el.value.trim();
+      if (v) names.push(v);
+    });
+    return names;
+  }
+
+  function setSignerNames(names) {
+    document.getElementById("agSigners").innerHTML = "";
+    if (!names || !names.length) { addSignerRow(""); addSignerRow(""); return; }
+    names.forEach(function (n) { addSignerRow(n); });
+  }
+
   function readBuilder() {
+    var date = document.getElementById("agDate").value;
     return {
       title: document.getElementById("agTitle").value.trim() || "Our Family Agreement",
       body: {
+        quote: agQuoteText(document.getElementById("agQuote").value),
         rules: lines(document.getElementById("agRules").value),
+        home: lines(document.getElementById("agHome").value),
+        treat: lines(document.getElementById("agTreat").value),
         rewards: lines(document.getElementById("agRewards").value),
         consequences: lines(document.getElementById("agConsequences").value),
         disagree: document.getElementById("agDisagree").value.trim(),
-        signatures: [
-          { name: document.getElementById("agSig1").value.trim(), date: document.getElementById("agDate").value },
-          { name: document.getElementById("agSig2").value.trim(), date: document.getElementById("agDate").value }
-        ],
-        date: document.getElementById("agDate").value
+        signatures: getSignerNames().map(function (n) { return { name: n, date: date }; }),
+        date: date
       }
     };
   }
@@ -514,9 +589,14 @@
     return "<" + tag + ">" + items.map(function (i) { return "<li>" + TFG.esc(i) + "</li>"; }).join("") + "</" + tag + ">";
   }
 
+  function sectionHTML(title, items, ordered) {
+    return "<h4>" + TFG.esc(title) + "</h4>" + listHTML(items, ordered);
+  }
+
   function renderPreview() {
     var data = readBuilder();
     var preview = document.getElementById("agreementPreview");
+    if (!preview) return;
     var sigs = data.body.signatures.filter(function (s) { return s.name; });
     var sigHTML = sigs.length
       ? '<div class="signature-block">' + sigs.map(function (s) {
@@ -525,10 +605,13 @@
       : "";
     preview.innerHTML =
       "<h2>" + TFG.esc(data.title) + "</h2>" +
+      '<p class="agreement-quote">&ldquo;' + TFG.esc(data.body.quote) + "&rdquo;</p>" +
       '<p class="agreement-date">An agreement made by our whole family</p>' +
-      "<h4>Our rules</h4>" + listHTML(data.body.rules, true) +
-      "<h4>Rewards</h4>" + listHTML(data.body.rewards, false) +
-      "<h4>Consequences</h4>" + listHTML(data.body.consequences, false) +
+      sectionHTML("Our rules", data.body.rules, true) +
+      sectionHTML("Our home", data.body.home, false) +
+      sectionHTML("How we treat each other", data.body.treat, false) +
+      sectionHTML("Rewards", data.body.rewards, false) +
+      sectionHTML("Consequences", data.body.consequences, false) +
       "<h4>When we disagree</h4>" +
       (data.body.disagree ? "<p>" + TFG.esc(data.body.disagree) + "</p>" : '<p class="muted small">Nothing added yet.</p>') +
       sigHTML +
@@ -541,14 +624,20 @@
       var tag = ordered ? "ol" : "ul";
       return "<" + tag + ">" + itemsArr.map(function (i) { return "<li>" + TFG.esc(i) + "</li>"; }).join("") + "</" + tag + ">";
     }
+    function sec(t, arr, ordered) {
+      return "<h4>" + TFG.esc(t) + "</h4>" + items(arr || [], ordered);
+    }
     var sigs = (body.signatures || []).filter(function (s) { return s.name; });
     return (
       '<div class="pa-doc">' +
         "<h2>" + TFG.esc(title) + "</h2>" +
-        '<p class="pa-sub">Signed by our family</p>' +
-        "<h4>Our rules</h4>" + items(body.rules || [], true) +
-        "<h4>Rewards</h4>" + items(body.rewards || [], false) +
-        "<h4>Consequences</h4>" + items(body.consequences || [], false) +
+        (body.quote ? '<p class="pa-quote">&ldquo;' + TFG.esc(body.quote) + "&rdquo;</p>" : "") +
+        '<p class="pa-sub">An agreement made by our whole family</p>' +
+        sec("Our rules", body.rules, true) +
+        sec("Our home", body.home, false) +
+        sec("How we treat each other", body.treat, false) +
+        sec("Rewards", body.rewards, false) +
+        sec("Consequences", body.consequences, false) +
         "<h4>When we disagree</h4>" + (body.disagree ? "<p>" + TFG.esc(body.disagree) + "</p>" : "<p>\u2014</p>") +
         '<div class="pa-sigs">' + sigs.map(function (s) {
           return '<div class="pa-sig"><strong>' + TFG.esc(s.name) + "</strong>Signature</div>";
@@ -583,13 +672,16 @@
         editingId = a.id;
         var body = a.body || {};
         document.getElementById("agTitle").value = a.title || "";
+        // Quote: match a saved quote, else fall back to the first one.
+        var qIdx = AG_QUOTES.indexOf(body.quote || "");
+        document.getElementById("agQuote").value = String(qIdx >= 0 ? qIdx : 0);
         document.getElementById("agRules").value = (body.rules || []).join("\n");
+        document.getElementById("agHome").value = (body.home || []).join("\n");
+        document.getElementById("agTreat").value = (body.treat || []).join("\n");
         document.getElementById("agRewards").value = (body.rewards || []).join("\n");
         document.getElementById("agConsequences").value = (body.consequences || []).join("\n");
         document.getElementById("agDisagree").value = body.disagree || "";
-        var sigs = body.signatures || [];
-        document.getElementById("agSig1").value = (sigs[0] && sigs[0].name) || "";
-        document.getElementById("agSig2").value = (sigs[1] && sigs[1].name) || "";
+        setSignerNames((body.signatures || []).map(function (s) { return s.name || ""; }));
         document.getElementById("agDate").value = body.date || TFG.dates.isoDate(new Date());
         renderPreview();
         document.getElementById("panel-agreement").scrollIntoView();
@@ -627,10 +719,16 @@
 
   function initAgreement() {
     document.getElementById("agDate").value = TFG.dates.isoDate(new Date());
+    setSignerNames([]);
 
-    var inputs = ["agTitle", "agRules", "agRewards", "agConsequences", "agDisagree", "agSig1", "agSig2", "agDate"];
+    var inputs = ["agTitle", "agRules", "agHome", "agTreat", "agRewards", "agConsequences", "agDisagree", "agDate"];
     inputs.forEach(function (id) {
       document.getElementById(id).addEventListener("input", renderPreview);
+    });
+    document.getElementById("agQuote").addEventListener("change", renderPreview);
+    document.getElementById("agAddSigner").addEventListener("click", function () {
+      addSignerRow("");
+      renderPreview();
     });
     document.getElementById("previewBtn").addEventListener("click", renderPreview);
 
@@ -1089,27 +1187,33 @@
     });
   });
 
+  // The agreement builder is pure DOM (preview, print) — wire it FIRST and
+  // synchronously, so it works even if a network call below stalls.
+  // Each async step below is isolated: one failure can never kill the rest.
+  try { initAgreement(); } catch (e) { /* preview stays usable; save needs login */ }
+
   (async function () {
-    var session = await TFG.requireParent();
-    if (!session) return;
-    await TFG.ensureProfile(); // OAuth members skip email sign-up, so their profile row may not exist yet.
+    try {
+      var session = await TFG.requireParent();
+      if (!session) return;
+      await TFG.ensureProfile(); // OAuth members skip email sign-up, so their profile row may not exist yet.
 
-    // Paywall gate: no trial -> welcome.html (invite code), expired -> paywall.html.
-    var mem = await TFG.requireMembership();
-    if (!mem) return;
+      // Paywall gate: no trial -> welcome.html (invite code), expired -> paywall.html.
+      var mem = await TFG.requireMembership();
+      if (!mem) return;
 
-    var user = session.user || {};
-    var name = user.user_metadata && user.user_metadata.full_name
-      ? user.user_metadata.full_name
-      : (user.email || "Member");
-    document.getElementById("memberName").textContent = name;
-    document.getElementById("memberAvatar").textContent = name.trim().charAt(0).toUpperCase() || "M";
+      var user = session.user || {};
+      var name = user.user_metadata && user.user_metadata.full_name
+        ? user.user_metadata.full_name
+        : (user.email || "Member");
+      document.getElementById("memberName").textContent = name;
+      document.getElementById("memberAvatar").textContent = name.trim().charAt(0).toUpperCase() || "M";
+    } catch (e) { return; }
 
-    await initStartHere();
-    await initChores();
-    initAgreement();
-    initKids();
-    initBetaCodes();
+    try { await initStartHere(); } catch (e) { /* non-fatal */ }
+    try { await initChores(); } catch (e) { /* non-fatal */ }
+    try { initKids(); } catch (e) { /* non-fatal */ }
+    try { initBetaCodes(); } catch (e) { /* non-fatal */ }
   })();
 })();
 </script>
