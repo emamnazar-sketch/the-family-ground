@@ -6,6 +6,7 @@
 <title>DEV: New member start-here — The Family Ground</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 .dev-banner{background:#232A24;color:#F7F3EA;text-align:center;padding:8px;font-weight:800;font-size:.85rem}
 </style>
@@ -50,9 +51,9 @@
             <p class="small muted" style="margin:10px 0 0;"><b>2-minute dad brief:</b> hand each kid the sheet, set a 5-minute timer, loser picks up the pencils. That&apos;s it.</p>
           </div>
           <div id="kidCodesBox" hidden>
-            <h3>Kid tablets — their join codes</h3>
-            <p class="muted">Each kid opens the kid login on their tablet and types their code. No email or phone needed.</p>
-            <div id="kidCodes"></div>
+            <h3>How your kids join</h3>
+            <p class="muted">On your kid&apos;s device, open the camera and point it at their square. It opens their dashboard right in the browser — no typing, no app to install, no email or phone needed.</p>
+            <div id="kidCodes" class="qr-grid"></div>
           </div>
           <div class="mt-2"><button type="button" class="btn btn-forest" id="obFinish">Start my first week</button></div>
         </div>
@@ -68,7 +69,7 @@ document.getElementById("obNext1").onclick=function(){ages=[];document.querySele
 var struggle="";
 document.querySelectorAll(".struggle-card").forEach(function(b){b.onclick=function(){document.querySelectorAll(".struggle-card").forEach(function(x){x.classList.remove("picked");});b.classList.add("picked");struggle=b.getAttribute("data-s");};});
 document.getElementById("obBack2").onclick=function(){obShow(1);};
-document.getElementById("obNext2").onclick=function(){if(!struggle){document.getElementById("obErr2").textContent="Pick the one that fits best.";return;}document.getElementById("obErr2").textContent="";var codes=["XK42QM","QZ79PL","MN31RT","BW88VD"];var box=document.getElementById("kidCodes");box.innerHTML="";ages.forEach(function(a,i){var s=document.createElement("span");s.className="kid-code-chip";s.textContent="Age "+a+": "+codes[i%codes.length];box.appendChild(s);});document.getElementById("kidCodesBox").hidden=false;obShow(3);};
+document.getElementById("obNext2").onclick=function(){if(!struggle){document.getElementById("obErr2").textContent="Pick the one that fits best.";return;}document.getElementById("obErr2").textContent="";var codes=["XK42QM","QZ79PL","MN31RT","BW88VD"];var box=document.getElementById("kidCodes");box.innerHTML="";ages.forEach(function(a,i){var code=codes[i%codes.length];var d=document.createElement("div");d.className="qr-block";d.innerHTML="<p><b>Age "+a+"</b></p><div class='qr-slot'></div><p class='small muted'>or type: "+code+"</p>";box.appendChild(d);new QRCode(d.querySelector(".qr-slot"),{text:"https://thefamilyground.com/kid-login.html?code="+code,width:140,height:140});});document.getElementById("kidCodesBox").hidden=false;obShow(3);};
 document.getElementById("obFinish").onclick=function(){alert("DEV PREVIEW — in the real dashboard this takes you to the 'This weekend' view.");};
 </script>
 </body>

@@ -209,6 +209,27 @@
     }
   };
 
+  /* ---------------- Kid join QR codes ----------------
+     Kids join in the browser (it's a web app, not a native app):
+     the QR opens kid-login.html?code=XXXXXX which signs them in. */
+  TFG.kidJoinUrl = function (code) {
+    return "https://thefamilyground.com/kid-login.html?code=" + encodeURIComponent(code);
+  };
+
+  TFG.renderKidQR = function (el, code, size) {
+    if (!el || typeof window.QRCode === "undefined") return false;
+    el.innerHTML = "";
+    try {
+      new window.QRCode(el, {
+        text: TFG.kidJoinUrl(code),
+        width: size || 160,
+        height: size || 160,
+        correctLevel: window.QRCode.CorrectLevel.M
+      });
+      return true;
+    } catch (e) { return false; }
+  };
+
   // Creates the profiles row for OAuth members (Google sign-in skips
   // the email sign-up path that normally creates it).
   TFG.ensureProfile = async function () {

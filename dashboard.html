@@ -111,9 +111,9 @@
               <p class="small muted" style="margin:10px 0 0;"><b>2-minute dad brief:</b> hand each kid the sheet, set a 5-minute timer, loser picks up the pencils. That&apos;s it.</p>
             </div>
             <div id="kidCodesBox" hidden>
-              <h3>Kid tablets — their join codes</h3>
-              <p class="muted">Each kid opens the kid login on their tablet and types their code. No email or phone needed.</p>
-              <div id="kidCodes"></div>
+              <h3>How your kids join</h3>
+              <p class="muted">On your kid&apos;s device, open the camera and point it at their square. It opens their dashboard right in the browser — no typing, no app to install, no email or phone needed.</p>
+              <div id="kidCodes" class="qr-grid"></div>
             </div>
             <div class="mt-2"><button type="button" class="btn btn-forest" id="obFinish">Start my first week</button></div>
             <p class="form-error" id="obErr3"></p>
@@ -281,9 +281,10 @@
               <p class="form-error" id="kidError" style="margin: 16px 0 0;"></p>
             </form>
             <div id="newCodeBox" hidden class="code-reveal">
-              <p class="muted small" style="margin: 0 0 4px;">Read this code to your kid:</p>
+              <p class="muted small" style="margin: 0 0 4px;">Have your kid scan this with their camera:</p>
+              <div class="qr-slot" id="newCodeQR" style="margin: 8px 0;"></div>
               <p class="invite-code" id="newCodeValue" aria-live="polite"></p>
-              <p class="muted small" style="margin: 8px 0 0;">They type it on the kid login page. Each code works once.</p>
+              <p class="muted small" style="margin: 8px 0 0;">Opens their dashboard in the browser — no typing, no app. Each code works once.</p>
             </div>
           </div>
 
@@ -310,6 +311,7 @@
 <div id="printArea"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
 <script>
@@ -680,7 +682,8 @@
     }
 
     var codeBlock = activeCode
-      ? '<p class="muted small" style="margin: 12px 0 2px;">Unused code (works once):</p>' +
+      ? '<p class="muted small" style="margin: 12px 0 2px;">Have them scan this (works once):</p>' +
+        '<div class="qr-slot" data-code="' + TFG.esc(activeCode.code) + '"></div>' +
         '<p class="invite-code sm">' + TFG.esc(activeCode.code) + "</p>"
       : '<p class="muted small" style="margin: 12px 0;">No unused code for this kid.</p>';
 
@@ -730,7 +733,7 @@
 
     var html = "";
     if (!kids.length && !pendingCodes.length) {
-      html = '<p class="muted">No kids yet. Create a code above and read it to your kid.</p>';
+      html = '<p class="muted">No kids yet. Create a code above and have your kid scan it with their camera.</p>';
     } else {
       html = kids.map(function (kid) {
         var activeCode = codes.filter(function (cd) { return (cd.kid_label || "") === (kid.kid_label || ""); })[0] || null;
@@ -740,14 +743,20 @@
         return (
           '<div class="panel-card kid-card">' +
             "<h3>" + TFG.esc(cd.kid_label || "Kid") + ' <span class="muted small">· not joined yet</span></h3>' +
-            '<p class="muted small" style="margin: 12px 0 2px;">Unused code (works once):</p>' +
+            '<p class="muted small" style="margin: 12px 0 2px;">Have them scan this with their camera (works once):</p>' +
+            '<div class="qr-slot" data-code="' + TFG.esc(cd.code) + '"></div>' +
             '<p class="invite-code sm">' + TFG.esc(cd.code) + "</p>" +
-            '<p class="muted small">Read this code to your kid so they can join.</p>' +
+            '<p class="muted small">Opens their dashboard in the browser — no typing needed.</p>' +
           "</div>"
         );
       }).join("");
     }
     list.innerHTML = html;
+
+    // Render kid join QR codes.
+    list.querySelectorAll(".qr-slot").forEach(function (slot) {
+      TFG.renderKidQR(slot, slot.getAttribute("data-code"), 120);
+    });
 
     // Resolve proof photo URLs.
     list.querySelectorAll("img[data-proof-path]").forEach(function (img) {
@@ -781,6 +790,7 @@
       }
       document.getElementById("newKidLabel").value = "";
       val.textContent = result.invite.code;
+      TFG.renderKidQR(document.getElementById("newCodeQR"), result.invite.code, 140);
       box.hidden = false;
       await loadKids();
       await loadAssignOptions();
@@ -809,6 +819,7 @@
         var r2 = await TFG.newInviteCodeForKid(newCodeBtn.getAttribute("data-kid-newcode"));
         if (r2 && r2.error) { alert(TFG.friendlyError(r2.error)); return; }
         document.getElementById("newCodeValue").textContent = r2.invite.code;
+        TFG.renderKidQR(document.getElementById("newCodeQR"), r2.invite.code, 140);
         document.getElementById("newCodeBox").hidden = false;
         await loadKids();
         return;
@@ -922,10 +933,13 @@
         var r = await TFG.createInviteCode("Age " + obAges[i]);
         if (r && r.invite) {
           ok++;
-          var chip = document.createElement("span");
-          chip.className = "kid-code-chip";
-          chip.textContent = "Age " + obAges[i] + ": " + r.invite.code;
-          box.appendChild(chip);
+          var block = document.createElement("div");
+          block.className = "qr-block";
+          block.innerHTML = "<p><b>Age " + obAges[i] + "</b></p>" +
+            '<div class="qr-slot" data-code="' + TFG.esc(r.invite.code) + '"></div>' +
+            '<p class="small muted">or type: ' + TFG.esc(r.invite.code) + "</p>";
+          box.appendChild(block);
+          TFG.renderKidQR(block.querySelector(".qr-slot"), r.invite.code, 140);
         }
       }
       if (ok) document.getElementById("kidCodesBox").hidden = false;

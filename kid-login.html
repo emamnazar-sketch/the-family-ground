@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kid login — The Family Ground</title>
-<meta name="description" content="Kids: type the one-time code your parent gave you to open your own chore dashboard. No email or phone needed.">
+<meta name="description" content="Kids: scan the square your parent shows you (or type the code) to open your dashboard. No email or phone needed.">
 <link rel="canonical" href="https://thefamilyground.com/kid-login.html">
 <meta property="og:site_name" content="The Family Ground">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Kid login — The Family Ground">
-<meta property="og:description" content="Kids: type the one-time code your parent gave you to open your own chore dashboard. No email or phone needed.">
+<meta property="og:description" content="Kids: scan the square your parent shows you (or type the code) to open your dashboard. No email or phone needed.">
 <meta property="og:url" content="https://thefamilyground.com/kid-login.html">
 <meta property="og:image" content="https://thefamilyground.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Kid login — The Family Ground">
-<meta name="twitter:description" content="Kids: type the one-time code your parent gave you to open your own chore dashboard. No email or phone needed.">
+<meta name="twitter:description" content="Kids: scan the square your parent shows you (or type the code) to open your dashboard. No email or phone needed.">
 <meta name="twitter:image" content="https://thefamilyground.com/og-image.png">
 <meta name="theme-color" content="#12503F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@
           </g>
         </svg>
         <h1>Hi there!</h1>
-        <p class="lead">Type the code your parent gave you.</p>
+        <p class="lead">Scan the square your parent shows you — or type the code below.</p>
         <form id="kidCodeForm" novalidate>
           <div class="form-error"></div>
           <div class="form-group">
@@ -112,9 +112,17 @@
   // Already joined on this device? Go straight to the kid dashboard.
   (async function () {
     var session = await TFG.getSession();
-    if (!session) return;
-    var kp = await TFG.getKidProfile();
-    if (kp && kp.kid) window.location.href = "kid-dashboard.html";
+    if (session) {
+      var kp = await TFG.getKidProfile();
+      if (kp && kp.kid) { window.location.href = "kid-dashboard.html"; return; }
+    }
+    // QR scan landing (?code=XXXXXX): fill the code and join automatically.
+    var params = new URLSearchParams(window.location.search || "");
+    var qrCode = (params.get("code") || "").trim().toUpperCase();
+    if (qrCode) {
+      input.value = qrCode;
+      form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event("submit", { cancelable: true }));
+    }
   })();
 
   form.addEventListener("submit", async function (e) {

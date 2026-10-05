@@ -619,3 +619,10 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 .mission-reveal { background: var(--cream); border: 2px dashed var(--sage); border-radius: 16px; padding: 18px; margin: 14px 0; }
 .kid-code-chip { display: inline-block; background: #fff; border: 2px solid var(--forest); border-radius: 12px; padding: 8px 14px; margin: 4px 6px 4px 0; font-weight: 800; }
 @media (max-width: 640px) { .struggle-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Kid join QR codes ---------- */
+.qr-grid { display: flex; gap: 18px; flex-wrap: wrap; margin: 12px 0; }
+.qr-block { text-align: center; }
+.qr-block p { margin: 4px 0; }
+.qr-slot { display: inline-block; background: #fff; padding: 8px; border-radius: 12px; border: 2px solid #E4E0D2; }
+.qr-slot img, .qr-slot canvas { display: block; }
