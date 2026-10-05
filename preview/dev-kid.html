@@ -6,6 +6,7 @@
 <title>DEV: Kid view (browser) — The Family Ground</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="../styles.css">
+<script src="../js/demo.js"></script>
 <style>
 .dev-banner{background:#232A24;color:#F7F3EA;text-align:center;padding:8px;font-weight:800;font-size:.85rem}
 .kid-hero{background:var(--forest);color:var(--cream);border-radius:20px;padding:24px;text-align:center;margin-bottom:16px}
@@ -38,7 +39,10 @@
       <p>Left hand traces the smooth spiral. Right hand traces the sharp lightning. <b>Both at the same time!</b></p>
       <button class="big-btn sage" id="watchBtn" type="button">&#9654; Watch how it works</button>
       <button class="big-btn forest" id="playedBtn" type="button">&#10003; I played it — log my score</button>
-      <p class="small muted" id="watchNote" hidden style="text-align:center;">(Demo video goes here — one short clip showing a kid playing it.)</p>
+      <div id="demoPanel" hidden style="margin-top:10px;">
+        <div id="demoBox"></div>
+        <div style="text-align:center;margin-top:8px;"><button class="btn btn-outline btn-sm" id="replayBtn" type="button">&#8635; Replay</button></div>
+      </div>
     </div>
 
     <div class="card" id="scoreCard" hidden>
@@ -98,7 +102,20 @@
   </div></section>
 </main>
 <script>
-document.getElementById("watchBtn").onclick=function(){var n=document.getElementById("watchNote");n.hidden=!n.hidden;};
+var demoLoaded=false;
+document.getElementById("watchBtn").onclick=function(){
+  var p=document.getElementById("demoPanel");
+  p.hidden=!p.hidden;
+  if(!p.hidden&&!demoLoaded){
+    demoLoaded=true;
+    fetch("../missions/paths/spiral-vs-lightning-7-9.json").then(function(r){return r.json();}).then(function(data){
+      TFGDemo.render(document.getElementById("demoBox"),data);
+    }).catch(function(){document.getElementById("demoBox").innerHTML="<p class='muted'>Demo could not load.</p>";});
+  }
+};
+document.getElementById("replayBtn").onclick=function(){
+  document.querySelectorAll("#demoBox svg").forEach(function(svg){svg.setCurrentTime(0);});
+};
 document.getElementById("playedBtn").onclick=function(){document.getElementById("missionCard").hidden=true;document.getElementById("scoreCard").hidden=false;};
 document.getElementById("doneBtn").onclick=function(){var t=document.getElementById("scoreTime").value;if(!t||t<1){alert("Type how many seconds it took you.");return;}document.getElementById("scoreCard").hidden=true;document.getElementById("winCard").hidden=false;window.scrollTo(0,0);};
 function finishChore(id,title){document.getElementById(id).remove();var w=document.getElementById("demoWaiting");if(w.querySelector("p"))w.innerHTML="";var d=document.createElement("div");d.className="chore-row";d.innerHTML='<div><div class="t">'+title+'</div><div class="m">Sent — waiting for your parent to check</div></div>';w.appendChild(d);}
