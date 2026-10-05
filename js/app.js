@@ -176,6 +176,39 @@
     }
   };
 
+  /* ---------------- Onboarding (welcome questionnaire) ---------------- */
+  TFG.getOnboarding = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { data: null };
+      var res = await sb.from("onboarding").select("kids_ages, struggle, completed_at")
+        .eq("user_id", user.id).maybeSingle();
+      if (res.error) return { data: null };
+      return { data: res.data };
+    } catch (e) {
+      return { data: null };
+    }
+  };
+
+  TFG.saveOnboarding = async function (kidsAges, struggle) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var res = await sb.from("onboarding").upsert({
+        user_id: user.id,
+        kids_ages: kidsAges,
+        struggle: struggle,
+        completed_at: new Date().toISOString()
+      }, { onConflict: "user_id" });
+      if (res.error) return { error: "Couldn't save — please try again." };
+      return { ok: true };
+    } catch (e) {
+      return { error: "Couldn't save — please try again." };
+    }
+  };
+
   // Creates the profiles row for OAuth members (Google sign-in skips
   // the email sign-up path that normally creates it).
   TFG.ensureProfile = async function () {

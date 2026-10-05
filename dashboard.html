@@ -70,6 +70,74 @@
         </div>
       </div>
 
+      <!-- START HERE: first-week onboarding + this weekend -->
+      <section id="startHere" class="start-here" hidden>
+        <!-- Questionnaire (first run) -->
+        <div id="obCard" class="panel-card" hidden>
+          <h2 class="mt-0">Welcome! Let&apos;s set up your first week</h2>
+          <p class="muted">Three quick questions — about a minute. Then tonight&apos;s mission is ready.</p>
+          <div class="ob-steps"><span class="ob-dot on" id="obDot1"></span><span class="ob-dot" id="obDot2"></span><span class="ob-dot" id="obDot3"></span></div>
+
+          <div id="obStep1">
+            <h3>How old are your kids?</h3>
+            <p class="muted">We&apos;ll use this to show each kid the right games. No names — ages only.</p>
+            <div id="ageRows"><div class="age-row"><input class="form-input age-input" type="number" min="2" max="21" placeholder="Age"></div></div>
+            <button type="button" class="btn btn-outline btn-sm" id="addAgeBtn">+ Add another kid</button>
+            <div class="mt-2"><button type="button" class="btn btn-forest" id="obNext1">Next</button></div>
+            <p class="form-error" id="obErr1"></p>
+          </div>
+
+          <div id="obStep2" hidden>
+            <h3>What&apos;s the biggest struggle right now?</h3>
+            <p class="muted">Pick one — we&apos;ll put the right starting mission in front of you.</p>
+            <div class="struggle-grid" id="struggleGrid">
+              <button type="button" class="struggle-card" data-s="screens">Screen time<small>Too much phone, not enough family</small></button>
+              <button type="button" class="struggle-card" data-s="chores">Chores &amp; responsibilities<small>Getting help without the fights</small></button>
+              <button type="button" class="struggle-card" data-s="calm">Calm evenings<small>Ending the day without yelling</small></button>
+              <button type="button" class="struggle-card" data-s="close">Staying close<small>Keeping teens talking to me</small></button>
+            </div>
+            <div class="mt-2">
+              <button type="button" class="btn btn-outline btn-sm" id="obBack2">Back</button>
+              <button type="button" class="btn btn-forest" id="obNext2">Next</button>
+            </div>
+            <p class="form-error" id="obErr2"></p>
+          </div>
+
+          <div id="obStep3" hidden>
+            <h3>Tonight&apos;s mission is ready</h3>
+            <div class="mission-reveal">
+              <p class="mt-0"><b>Mission: Spiral vs Lightning</b> — left hand traces the smooth spiral, right hand traces the sharp lightning. Both at the same time!</p>
+              <a class="btn btn-forest btn-sm" href="missions/spiral-vs-lightning.pdf" target="_blank" rel="noopener">Print tonight&apos;s sheet</a>
+              <p class="small muted" style="margin:10px 0 0;"><b>2-minute dad brief:</b> hand each kid the sheet, set a 5-minute timer, loser picks up the pencils. That&apos;s it.</p>
+            </div>
+            <div id="kidCodesBox" hidden>
+              <h3>Kid tablets — their join codes</h3>
+              <p class="muted">Each kid opens the kid login on their tablet and types their code. No email or phone needed.</p>
+              <div id="kidCodes"></div>
+            </div>
+            <div class="mt-2"><button type="button" class="btn btn-forest" id="obFinish">Start my first week</button></div>
+            <p class="form-error" id="obErr3"></p>
+          </div>
+        </div>
+
+        <!-- This weekend (returning members) -->
+        <div id="weekendCard" hidden>
+          <h2 class="mt-0">This weekend</h2>
+          <div class="grid-2">
+            <div class="card">
+              <p class="mt-0"><b>Saturday — Mission day</b></p>
+              <p><b>Mission: Spiral vs Lightning.</b> Kids play screen-free, then log their score on their tablet.</p>
+              <a class="btn btn-forest btn-sm" href="missions/spiral-vs-lightning.pdf" target="_blank" rel="noopener">Print the mission pack</a>
+            </div>
+            <div class="card">
+              <p class="mt-0"><b>Sunday — Family tournament</b></p>
+              <p>Same sheet, but parents play too. Kids log everyone&apos;s time. Winner picks dessert. Loser does the victory dance.</p>
+              <p class="small muted" style="margin:0;">Silly awards included: Most Dramatic Pencil Drop, Best Comeback.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div data-tabs>
         <div class="tabs" role="tablist">
           <button type="button" class="tab active" data-tab-target="panel-chores">Chore tracker</button>
@@ -776,6 +844,107 @@
     loadKids();
   }
 
+  /* ---------------- Start here: onboarding + this weekend ---------------- */
+  var obAges = [];
+  var obStruggle = "";
+
+  function obShow(n) {
+    [1, 2, 3].forEach(function (i) {
+      document.getElementById("obStep" + i).hidden = (i !== n);
+      document.getElementById("obDot" + i).classList.toggle("on", i <= n);
+    });
+  }
+
+  async function initStartHere() {
+    var wrap = document.getElementById("startHere");
+    var obCard = document.getElementById("obCard");
+    var weekendCard = document.getElementById("weekendCard");
+    var user;
+    try {
+      user = await TFG.getUser();
+    } catch (e) { return; }
+    if (!user) return;
+
+    var ob = await TFG.getOnboarding();
+    var done = !!(ob.data && ob.data.completed_at);
+
+    wrap.hidden = false;
+    if (done) {
+      weekendCard.hidden = false;
+      return;
+    }
+    obCard.hidden = false;
+    obShow(1);
+
+    document.getElementById("addAgeBtn").addEventListener("click", function () {
+      var div = document.createElement("div");
+      div.className = "age-row";
+      div.innerHTML = '<input class="form-input age-input" type="number" min="2" max="21" placeholder="Age">';
+      document.getElementById("ageRows").appendChild(div);
+    });
+
+    document.getElementById("obNext1").addEventListener("click", function () {
+      var ages = [];
+      document.querySelectorAll(".age-input").forEach(function (el) {
+        var v = parseInt(el.value, 10);
+        if (v >= 2 && v <= 21) ages.push(v);
+      });
+      if (!ages.length) {
+        document.getElementById("obErr1").textContent = "Add at least one age to continue.";
+        return;
+      }
+      document.getElementById("obErr1").textContent = "";
+      obAges = ages;
+      obShow(2);
+    });
+
+    document.querySelectorAll(".struggle-card").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        document.querySelectorAll(".struggle-card").forEach(function (b) { b.classList.remove("picked"); });
+        btn.classList.add("picked");
+        obStruggle = btn.getAttribute("data-s");
+      });
+    });
+
+    document.getElementById("obBack2").addEventListener("click", function () { obShow(1); });
+
+    document.getElementById("obNext2").addEventListener("click", async function () {
+      if (!obStruggle) {
+        document.getElementById("obErr2").textContent = "Pick the one that fits best.";
+        return;
+      }
+      document.getElementById("obErr2").textContent = "";
+      // Create a join code per kid so tablets are ready tonight.
+      var box = document.getElementById("kidCodes");
+      box.innerHTML = "";
+      var ok = 0;
+      for (var i = 0; i < obAges.length; i++) {
+        var r = await TFG.createInviteCode("Age " + obAges[i]);
+        if (r && r.invite) {
+          ok++;
+          var chip = document.createElement("span");
+          chip.className = "kid-code-chip";
+          chip.textContent = "Age " + obAges[i] + ": " + r.invite.code;
+          box.appendChild(chip);
+        }
+      }
+      if (ok) document.getElementById("kidCodesBox").hidden = false;
+      obShow(3);
+    });
+
+    document.getElementById("obFinish").addEventListener("click", async function () {
+      var btn = document.getElementById("obFinish");
+      btn.disabled = true;
+      var saved = await TFG.saveOnboarding(obAges, obStruggle);
+      if (saved.error) {
+        document.getElementById("obErr3").textContent = saved.error + " You can still start — your answers just won't be saved.";
+      }
+      obCard.hidden = true;
+      weekendCard.hidden = false;
+      btn.disabled = false;
+    });
+  }
+
   /* ---------------- Init (guarded) ---------------- */
   // Tab switching (Chore tracker / Family agreement / Kids).
   document.querySelectorAll(".tab").forEach(function (btn) {
@@ -800,6 +969,7 @@
     document.getElementById("memberName").textContent = name;
     document.getElementById("memberAvatar").textContent = name.trim().charAt(0).toUpperCase() || "M";
 
+    await initStartHere();
     await initChores();
     initAgreement();
     initKids();

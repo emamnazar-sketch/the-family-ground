@@ -52,6 +52,15 @@ create table if not exists public.course_progress (
   unique (user_id, course_slug, lesson_slug)
 );
 
+-- ---------- onboarding (welcome questionnaire) ----------
+create table if not exists public.onboarding (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  kids_ages jsonb not null default '[]'::jsonb,  -- e.g. [9, 9, 13]
+  struggle text,                                  -- 'screens' | 'chores' | 'calm' | 'close'
+  completed_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
 -- ============================================================
 -- Row Level Security: members can only touch their own rows.
 -- ============================================================
@@ -87,6 +96,14 @@ create policy "Members manage own completions"
 drop policy if exists "Members manage own agreements" on public.agreements;
 create policy "Members manage own agreements"
   on public.agreements for all
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+-- onboarding: members manage their own row.
+alter table public.onboarding enable row level security;
+drop policy if exists "Members manage own onboarding" on public.onboarding;
+create policy "Members manage own onboarding"
+  on public.onboarding for all
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 
