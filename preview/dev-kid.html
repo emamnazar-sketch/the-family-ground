@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV: Kid tablet view — The Family Ground</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.dev-banner{background:#232A24;color:#F7F3EA;text-align:center;padding:8px;font-weight:800;font-size:.85rem}
+.kid-hero{background:var(--forest);color:var(--cream);border-radius:20px;padding:24px;text-align:center;margin-bottom:16px}
+.kid-hero h1{color:var(--cream);margin:0 0 6px}
+.big-btn{display:block;width:100%;padding:20px;font-size:1.25rem;font-weight:900;border-radius:18px;border:none;cursor:pointer;margin:10px 0}
+.big-btn.forest{background:var(--forest);color:var(--cream)}
+.big-btn.sage{background:var(--sage-soft);color:var(--forest);border:3px solid var(--sage)}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap}
+.badge{width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900}
+.badge.earned{background:var(--sage);color:var(--forest);border:3px solid var(--forest)}
+.badge.locked{background:#EDEAE0;color:#B9B4A6;border:3px dashed #C9C4B4}
+.score-input{font-size:2rem;text-align:center;max-width:160px;margin:0 auto;display:block}
+</style>
+</head>
+<body>
+<div class="dev-banner">DEV PREVIEW — design mock for the kid tablet view (Week 2 build). Nothing here saves.</div>
+<main>
+  <section class="dash-wrap"><div class="wrap" style="max-width:640px;">
+    <div class="kid-hero">
+      <h1>Hi, champ!</h1>
+      <p style="margin:0;opacity:.9;">Tonight&apos;s mission is waiting for you.</p>
+    </div>
+
+    <div class="card" id="missionCard">
+      <p class="mt-0" style="font-size:1.4rem;"><b>Mission: Spiral vs Lightning</b></p>
+      <p>Left hand traces the smooth spiral. Right hand traces the sharp lightning. <b>Both at the same time!</b></p>
+      <button class="big-btn sage" id="watchBtn" type="button">&#9654; Watch how it works</button>
+      <button class="big-btn forest" id="playedBtn" type="button">&#10003; I played it — log my score</button>
+      <p class="small muted" id="watchNote" hidden style="text-align:center;">(Demo video goes here — one short clip showing a kid playing it.)</p>
+    </div>
+
+    <div class="card" id="scoreCard" hidden>
+      <p class="mt-0" style="font-size:1.3rem;text-align:center;"><b>How fast did you finish?</b></p>
+      <input class="form-input score-input" id="scoreTime" type="number" min="1" placeholder="seconds">
+      <button class="big-btn forest" id="doneBtn" type="button">Done!</button>
+    </div>
+
+    <div class="card" id="winCard" hidden>
+      <p class="mt-0" style="font-size:1.5rem;text-align:center;"><b>&#127881; Nice work!</b></p>
+      <p style="text-align:center;">You earned the <b>First Mission</b> badge.</p>
+      <div class="badge-row" style="justify-content:center;"><div class="badge earned">&#9733;</div></div>
+    </div>
+
+    <div class="card">
+      <p class="mt-0"><b>My badges</b></p>
+      <div class="badge-row">
+        <div><div class="badge earned">&#9733;</div><p class="small" style="text-align:center;">First Mission</p></div>
+        <div><div class="badge locked">?</div><p class="small" style="text-align:center;">Speedster</p></div>
+        <div><div class="badge locked">?</div><p class="small" style="text-align:center;">Rematch King</p></div>
+        <div><div class="badge locked">?</div><p class="small" style="text-align:center;">Tournament Star</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="mt-0"><b>&#10084; Play again</b></p>
+      <p class="muted">Your favorite missions will live here. Play one you love and tap the heart to keep it.</p>
+    </div>
+  </div></section>
+</main>
+<script>
+document.getElementById("watchBtn").onclick=function(){var n=document.getElementById("watchNote");n.hidden=!n.hidden;};
+document.getElementById("playedBtn").onclick=function(){document.getElementById("missionCard").hidden=true;document.getElementById("scoreCard").hidden=false;};
+document.getElementById("doneBtn").onclick=function(){var t=document.getElementById("scoreTime").value;if(!t||t<1){alert("Type how many seconds it took you.");return;}document.getElementById("scoreCard").hidden=true;document.getElementById("winCard").hidden=false;window.scrollTo(0,0);};
+</script>
+</body>
+</html>

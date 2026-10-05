@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV: New member start-here — The Family Ground</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.dev-banner{background:#232A24;color:#F7F3EA;text-align:center;padding:8px;font-weight:800;font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="dev-banner">DEV PREVIEW — design mock only, nothing here saves. The real one is inside the member dashboard.</div>
+<main>
+  <section class="dash-wrap"><div class="wrap">
+    <div class="dashboard-head">
+      <div><h1>Welcome back</h1><p class="muted" style="margin:0;">This is your home. Everything lives here.</p></div>
+    </div>
+    <section class="start-here">
+      <div class="panel-card">
+        <h2 class="mt-0">Welcome! Let&apos;s set up your first week</h2>
+        <p class="muted">Three quick questions — about a minute. Then tonight&apos;s mission is ready.</p>
+        <div class="ob-steps"><span class="ob-dot on" id="obDot1"></span><span class="ob-dot" id="obDot2"></span><span class="ob-dot" id="obDot3"></span></div>
+        <div id="obStep1">
+          <h3>How old are your kids?</h3>
+          <p class="muted">We&apos;ll use this to show each kid the right games. No names — ages only.</p>
+          <div id="ageRows"><div class="age-row"><input class="form-input age-input" type="number" min="2" max="21" placeholder="Age" value="9"></div></div>
+          <button type="button" class="btn btn-outline btn-sm" id="addAgeBtn">+ Add another kid</button>
+          <div class="mt-2"><button type="button" class="btn btn-forest" id="obNext1">Next</button></div>
+          <p class="form-error" id="obErr1"></p>
+        </div>
+        <div id="obStep2" hidden>
+          <h3>What&apos;s the biggest struggle right now?</h3>
+          <p class="muted">Pick one — we&apos;ll put the right starting mission in front of you.</p>
+          <div class="struggle-grid" id="struggleGrid">
+            <button type="button" class="struggle-card" data-s="screens">Screen time<small>Too much phone, not enough family</small></button>
+            <button type="button" class="struggle-card" data-s="chores">Chores &amp; responsibilities<small>Getting help without the fights</small></button>
+            <button type="button" class="struggle-card" data-s="calm">Calm evenings<small>Ending the day without yelling</small></button>
+            <button type="button" class="struggle-card" data-s="close">Staying close<small>Keeping teens talking to me</small></button>
+          </div>
+          <div class="mt-2"><button type="button" class="btn btn-outline btn-sm" id="obBack2">Back</button> <button type="button" class="btn btn-forest" id="obNext2">Next</button></div>
+          <p class="form-error" id="obErr2"></p>
+        </div>
+        <div id="obStep3" hidden>
+          <h3>Tonight&apos;s mission is ready</h3>
+          <div class="mission-reveal">
+            <p class="mt-0"><b>Mission: Spiral vs Lightning</b> — left hand traces the smooth spiral, right hand traces the sharp lightning. Both at the same time!</p>
+            <a class="btn btn-forest btn-sm" href="../missions/spiral-vs-lightning.pdf" target="_blank" rel="noopener">Print tonight&apos;s sheet</a>
+            <p class="small muted" style="margin:10px 0 0;"><b>2-minute dad brief:</b> hand each kid the sheet, set a 5-minute timer, loser picks up the pencils. That&apos;s it.</p>
+          </div>
+          <div id="kidCodesBox" hidden>
+            <h3>Kid tablets — their join codes</h3>
+            <p class="muted">Each kid opens the kid login on their tablet and types their code. No email or phone needed.</p>
+            <div id="kidCodes"></div>
+          </div>
+          <div class="mt-2"><button type="button" class="btn btn-forest" id="obFinish">Start my first week</button></div>
+        </div>
+      </div>
+    </section>
+  </div></section>
+</main>
+<script>
+function obShow(n){[1,2,3].forEach(function(i){document.getElementById("obStep"+i).hidden=(i!==n);document.getElementById("obDot"+i).classList.toggle("on",i<=n);});}
+var ages=[];
+document.getElementById("addAgeBtn").onclick=function(){var d=document.createElement("div");d.className="age-row";d.innerHTML='<input class="form-input age-input" type="number" min="2" max="21" placeholder="Age">';document.getElementById("ageRows").appendChild(d);};
+document.getElementById("obNext1").onclick=function(){ages=[];document.querySelectorAll(".age-input").forEach(function(el){var v=parseInt(el.value,10);if(v>=2&&v<=21)ages.push(v);});if(!ages.length){document.getElementById("obErr1").textContent="Add at least one age to continue.";return;}document.getElementById("obErr1").textContent="";obShow(2);};
+var struggle="";
+document.querySelectorAll(".struggle-card").forEach(function(b){b.onclick=function(){document.querySelectorAll(".struggle-card").forEach(function(x){x.classList.remove("picked");});b.classList.add("picked");struggle=b.getAttribute("data-s");};});
+document.getElementById("obBack2").onclick=function(){obShow(1);};
+document.getElementById("obNext2").onclick=function(){if(!struggle){document.getElementById("obErr2").textContent="Pick the one that fits best.";return;}document.getElementById("obErr2").textContent="";var codes=["XK42QM","QZ79PL","MN31RT","BW88VD"];var box=document.getElementById("kidCodes");box.innerHTML="";ages.forEach(function(a,i){var s=document.createElement("span");s.className="kid-code-chip";s.textContent="Age "+a+": "+codes[i%codes.length];box.appendChild(s);});document.getElementById("kidCodesBox").hidden=false;obShow(3);};
+document.getElementById("obFinish").onclick=function(){alert("DEV PREVIEW — in the real dashboard this takes you to the 'This weekend' view.");};
+</script>
+</body>
+</html>
