@@ -48,6 +48,9 @@
   TFG.esc = esc;
 
   function friendlyError(err) {
+    // Already-friendly strings pass through untouched (prevents double-wrapping
+    // which used to collapse every message into the generic fallback).
+    if (typeof err === "string") return err || "Something went wrong. Please try again.";
     var msg = (err && err.message) ? err.message : "Something went wrong. Please try again.";
     if (/invalid login credentials/i.test(msg)) return "That email and password do not match. Please try again.";
     if (/user already registered/i.test(msg)) return "An account with this email already exists. Try logging in instead.";
