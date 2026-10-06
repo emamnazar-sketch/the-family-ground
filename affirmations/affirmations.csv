@@ -1,0 +1,1333 @@
+text,age_band,pillar,sort_order
+I can do it.,4-6,confidence,0
+I am special.,4-6,self-worth,1
+I do it myself.,4-6,independence,2
+I can try again.,4-6,resilience,3
+I can take a breath.,4-6,emotional-calm,4
+I am kind.,4-6,kindness-character,5
+I can join in.,4-6,friendship,6
+I am thankful.,4-6,gratitude,7
+I like to learn.,4-6,curiosity,8
+I am loved.,4-6,belonging,9
+We help each other.,4-6,teamwork,10
+I love my sister.,4-6,sibling-love,11
+I do my chores.,4-6,responsibility,12
+I can try.,4-6,confidence,13
+I am enough.,4-6,self-worth,14
+I can zip my coat.,4-6,independence,15
+My mistakes are okay.,4-6,resilience,16
+I can breathe slow.,4-6,emotional-calm,17
+I can share my toys.,4-6,kindness-character,18
+I can make friends.,4-6,friendship,19
+I am glad for my toys.,4-6,gratitude,20
+I can ask questions.,4-6,curiosity,21
+My family loves me.,4-6,belonging,22
+I share my toys.,4-6,teamwork,23
+I love my brother.,4-6,sibling-love,24
+I clean my room.,4-6,responsibility,25
+I am brave.,4-6,confidence,26
+I am good.,4-6,self-worth,27
+I can put shoes on.,4-6,independence,28
+I can start over.,4-6,resilience,29
+I feel my feelings.,4-6,emotional-calm,30
+I can say sorry.,4-6,kindness-character,31
+I can say hello.,4-6,friendship,32
+I love my family.,4-6,gratitude,33
+I wonder why.,4-6,curiosity,34
+I belong here.,4-6,belonging,35
+We clean up together.,4-6,teamwork,36
+My brother is my friend.,4-6,sibling-love,37
+I finish my work.,4-6,responsibility,38
+I can say it.,4-6,confidence,39
+I am me.,4-6,self-worth,40
+I can pour my milk.,4-6,independence,41
+"I fall, I get up.",4-6,resilience,42
+My feelings are okay.,4-6,emotional-calm,43
+I say please and thanks.,4-6,kindness-character,44
+I can play with others.,4-6,friendship,45
+I smile at the sun.,4-6,gratitude,46
+I love to read.,4-6,curiosity,47
+I am safe at home.,4-6,belonging,48
+I do my part.,4-6,teamwork,49
+I am gentle with my brother.,4-6,sibling-love,50
+I keep my promise.,4-6,responsibility,51
+I can use my voice.,4-6,confidence,52
+I like me.,4-6,self-worth,53
+I can brush my teeth.,4-6,independence,54
+I keep going.,4-6,resilience,55
+It is okay to feel sad.,4-6,emotional-calm,56
+I can help at home.,4-6,kindness-character,57
+I can start a game.,4-6,friendship,58
+I like rainy days.,4-6,gratitude,59
+I love story time.,4-6,curiosity,60
+My family is my team.,4-6,belonging,61
+We are a team.,4-6,teamwork,62
+I help my little brother.,4-6,sibling-love,63
+I do my best.,4-6,responsibility,64
+I can stand tall.,4-6,confidence,65
+I am a gift.,4-6,self-worth,66
+I can pick my shirt.,4-6,independence,67
+I don't give up.,4-6,resilience,68
+It is okay to feel mad.,4-6,emotional-calm,69
+I can help my teacher.,4-6,kindness-character,70
+I can invite a friend.,4-6,friendship,71
+My bed is cozy.,4-6,gratitude,72
+I can count high.,4-6,curiosity,73
+I am never alone.,4-6,belonging,74
+I help my sister.,4-6,teamwork,75
+My sister makes me laugh.,4-6,sibling-love,76
+I help at home.,4-6,responsibility,77
+I can start now.,4-6,confidence,78
+I am wonderful.,4-6,self-worth,79
+I can carry my bag.,4-6,independence,80
+I can fix it.,4-6,resilience,81
+I can calm my body.,4-6,emotional-calm,82
+I tell the truth.,4-6,kindness-character,83
+I can pass the ball.,4-6,friendship,84
+My breakfast tastes good.,4-6,gratitude,85
+I know my ABCs.,4-6,curiosity,86
+Mom loves me.,4-6,belonging,87
+I help my brother.,4-6,teamwork,88
+I hug my brother.,4-6,sibling-love,89
+I put toys away.,4-6,responsibility,90
+I can be me.,4-6,confidence,91
+I am important.,4-6,self-worth,92
+I can open the door.,4-6,independence,93
+I dust myself off.,4-6,resilience,94
+I can hug my pillow.,4-6,emotional-calm,95
+I do what I say.,4-6,kindness-character,96
+I have friends.,4-6,friendship,97
+I love hugs.,4-6,gratitude,98
+I can learn new words.,4-6,curiosity,99
+Dad loves me.,4-6,belonging,100
+We take turns.,4-6,teamwork,101
+I am nice to my sister.,4-6,sibling-love,102
+I try hard.,4-6,responsibility,103
+I am strong.,4-6,confidence,104
+I am just right.,4-6,self-worth,105
+I can wash my hands.,4-6,independence,106
+I am still learning.,4-6,resilience,107
+I can sit still.,4-6,emotional-calm,108
+I am gentle.,4-6,kindness-character,109
+I am fun to play with.,4-6,friendship,110
+My books are fun.,4-6,gratitude,111
+I like to draw.,4-6,curiosity,112
+I get lots of hugs.,4-6,belonging,113
+I can share.,4-6,teamwork,114
+My siblings are the best.,4-6,sibling-love,115
+I do it myself.,4-6,responsibility,116
+I can ask why.,4-6,confidence,117
+I am great as me.,4-6,self-worth,118
+I can clean up toys.,4-6,independence,119
+I get a new day.,4-6,resilience,120
+I can close my eyes.,4-6,emotional-calm,121
+I use kind words.,4-6,kindness-character,122
+I can laugh with friends.,4-6,friendship,123
+I am thankful for mom.,4-6,gratitude,124
+I build tall towers.,4-6,curiosity,125
+I am part of us.,4-6,belonging,126
+We play together.,4-6,teamwork,127
+I play with my brother.,4-6,sibling-love,128
+I take care of things.,4-6,responsibility,129
+I can show them.,4-6,confidence,130
+I am funny.,4-6,self-worth,131
+I can make my bed.,4-6,independence,132
+I can be patient.,4-6,resilience,133
+I can count to ten.,4-6,emotional-calm,134
+I can take turns.,4-6,kindness-character,135
+I can be a good friend.,4-6,friendship,136
+I am thankful for dad.,4-6,gratitude,137
+I can try new foods.,4-6,curiosity,138
+We stick together.,4-6,belonging,139
+I help set the table.,4-6,teamwork,140
+My sister helps me.,4-6,sibling-love,141
+I finish what I start.,4-6,responsibility,142
+I can go first.,4-6,confidence,143
+I am sweet.,4-6,self-worth,144
+I can help set the table.,4-6,independence,145
+I can take my time.,4-6,resilience,146
+I can hug myself.,4-6,emotional-calm,147
+I can give a hug.,4-6,kindness-character,148
+I can ask to play.,4-6,friendship,149
+I like being home.,4-6,gratitude,150
+I can explore outside.,4-6,curiosity,151
+My home is cozy.,4-6,belonging,152
+We pick up together.,4-6,teamwork,153
+I can say sorry to my brother.,4-6,sibling-love,154
+I do my part.,4-6,responsibility,155
+I can climb high.,4-6,confidence,156
+I am a good kid.,4-6,self-worth,157
+I can get my cup.,4-6,independence,158
+It is okay to cry.,4-6,resilience,159
+I can find quiet.,4-6,emotional-calm,160
+I can say good morning.,4-6,kindness-character,161
+I can share the swing.,4-6,friendship,162
+I am glad for my friends.,4-6,gratitude,163
+I like little bugs.,4-6,curiosity,164
+I am wanted here.,4-6,belonging,165
+I listen to friends.,4-6,teamwork,166
+My brother keeps me safe.,4-6,sibling-love,167
+I am helpful.,4-6,responsibility,168
+I can run fast.,4-6,confidence,169
+I am proud of me.,4-6,self-worth,170
+I can climb the stairs.,4-6,independence,171
+"I can rest, then try.",4-6,resilience,172
+I can rest my head.,4-6,emotional-calm,173
+I clean up my mess.,4-6,kindness-character,174
+I listen to friends.,4-6,friendship,175
+I like today.,4-6,gratitude,176
+I can plant a seed.,4-6,curiosity,177
+I am welcomed home.,4-6,belonging,178
+We work together.,4-6,teamwork,179
+My sister sings with me.,4-6,sibling-love,180
+I do it right.,4-6,responsibility,181
+I can sing out.,4-6,confidence,182
+I smile at me.,4-6,self-worth,183
+I can buckle my seat.,4-6,independence,184
+I am tougher than tough.,4-6,resilience,185
+I can be still and breathe.,4-6,emotional-calm,186
+I use manners.,4-6,kindness-character,187
+I can hold hands.,4-6,friendship,188
+I love playtime.,4-6,gratitude,189
+I watch clouds go by.,4-6,curiosity,190
+I love family time.,4-6,belonging,191
+I help my family.,4-6,teamwork,192
+I take turns with my sister.,4-6,sibling-love,193
+I remember my jobs.,4-6,responsibility,194
+I can dance big.,4-6,confidence,195
+I am one of a kind.,4-6,self-worth,196
+I can pack my backpack.,4-6,independence,197
+I can handle it.,4-6,resilience,198
+I can name my feeling.,4-6,emotional-calm,199
+I can let it go.,4-6,kindness-character,200
+I can sit by someone new.,4-6,friendship,201
+I dance to music.,4-6,gratitude,202
+I can learn to swim.,4-6,curiosity,203
+I fit right in.,4-6,belonging,204
+I am a helper.,4-6,teamwork,205
+My family sticks together.,4-6,sibling-love,206
+I work hard.,4-6,responsibility,207
+I can make noise.,4-6,confidence,208
+I am happy to be me.,4-6,self-worth,209
+I can find my socks.,4-6,independence,210
+I bounce back.,4-6,resilience,211
+I can say I am sad.,4-6,emotional-calm,212
+I let everyone play.,4-6,kindness-character,213
+I can learn names.,4-6,friendship,214
+Animals make me smile.,4-6,gratitude,215
+I can learn to ride.,4-6,curiosity,216
+They are my people.,4-6,belonging,217
+We share our snacks.,4-6,teamwork,218
+I comfort my crying sister.,4-6,sibling-love,219
+I tidy up.,4-6,responsibility,220
+I feel brave.,4-6,confidence,221
+I feel good inside.,4-6,self-worth,222
+I can wipe the table.,4-6,independence,223
+I am not finished.,4-6,resilience,224
+I can cry softly.,4-6,emotional-calm,225
+I am a good listener.,4-6,kindness-character,226
+I can say nice things.,4-6,friendship,227
+I like big trees.,4-6,gratitude,228
+I can sing new songs.,4-6,curiosity,229
+I am their kid.,4-6,belonging,230
+I wait my turn.,4-6,teamwork,231
+My sister is special.,4-6,sibling-love,232
+I do it now.,4-6,responsibility,233
+I can say hi.,4-6,confidence,234
+I am a star.,4-6,self-worth,235
+I can water the plant.,4-6,independence,236
+I will get there.,4-6,resilience,237
+I can shake it off.,4-6,emotional-calm,238
+I can say thank you.,4-6,kindness-character,239
+I can play fair.,4-6,friendship,240
+I am glad for water.,4-6,gratitude,241
+I can do a twirl.,4-6,curiosity,242
+They love me lots.,4-6,belonging,243
+We build it together.,4-6,teamwork,244
+I cheer for my brother.,4-6,sibling-love,245
+I am responsible.,4-6,responsibility,246
+I can raise my hand.,4-6,confidence,247
+I am bright.,4-6,self-worth,248
+I can choose my snack.,4-6,independence,249
+I can ask for help.,4-6,resilience,250
+I can smile again.,4-6,emotional-calm,251
+I help without being asked.,4-6,kindness-character,252
+I can cheer for friends.,4-6,friendship,253
+I am thankful for my hands.,4-6,gratitude,254
+I can mix colors.,4-6,curiosity,255
+I am cuddled lots.,4-6,belonging,256
+I cheer for friends.,4-6,teamwork,257
+My brother loves me.,4-6,sibling-love,258
+I care for my things.,4-6,responsibility,259
+I can choose.,4-6,confidence,260
+I am growing well.,4-6,self-worth,261
+I can do tricky things.,4-6,independence,262
+My big feelings pass.,4-6,resilience,263
+I can feel better soon.,4-6,emotional-calm,264
+I am fair.,4-6,kindness-character,265
+I like playing together.,4-6,friendship,266
+I wake up happy.,4-6,gratitude,267
+I find out how.,4-6,curiosity,268
+I matter to them.,4-6,belonging,269
+We do it together.,4-6,teamwork,270
+Sisters and brothers are forever.,4-6,sibling-love,271
+I do my share.,4-6,responsibility,272
+I can march.,4-6,confidence,273
+I like my laugh.,4-6,self-worth,274
+I can try alone first.,4-6,independence,275
+I can breathe and try.,4-6,resilience,276
+My heart can slow down.,4-6,emotional-calm,277
+I can hug a sad friend.,4-6,kindness-character,278
+I can build with friends.,4-6,friendship,279
+I am thankful for my teacher.,4-6,gratitude,280
+I ask and ask.,4-6,curiosity,281
+I am one of them.,4-6,belonging,282
+I can jump in.,4-6,confidence,283
+My smile is nice.,4-6,self-worth,284
+I am a big kid now.,4-6,independence,285
+I learn from oops.,4-6,resilience,286
+I can listen to birds.,4-6,emotional-calm,287
+I do the right thing.,4-6,kindness-character,288
+I can color beside you.,4-6,friendship,289
+Colors make me happy.,4-6,gratitude,290
+I ask why lots.,4-6,curiosity,291
+I am home.,4-6,belonging,292
+I can play too.,4-6,confidence,293
+I am good inside and out.,4-6,self-worth,294
+I can snap it shut.,4-6,independence,295
+I am growing stronger.,4-6,resilience,296
+I can be gentle with me.,4-6,emotional-calm,297
+I think of others.,4-6,kindness-character,298
+We can dance together.,4-6,friendship,299
+My bike goes fast.,4-6,gratitude,300
+I can remember things.,4-6,curiosity,301
+I live in love.,4-6,belonging,302
+I count.,4-6,confidence,303
+I am a happy kid.,4-6,self-worth,304
+I can hang my coat.,4-6,independence,305
+I can do it slowly.,4-6,resilience,306
+I can take a break.,4-6,emotional-calm,307
+I can make someone smile.,4-6,kindness-character,308
+I love to giggle.,4-6,friendship,309
+I notice good things.,4-6,gratitude,310
+I am getting smarter.,4-6,curiosity,311
+I am their sunshine.,4-6,belonging,312
+I can shine.,4-6,confidence,313
+I love being me.,4-6,self-worth,314
+I can turn off the light.,4-6,independence,315
+I like going slow.,4-6,resilience,316
+I can find my calm.,4-6,emotional-calm,317
+I am a good neighbor.,4-6,kindness-character,318
+I can say I missed you.,4-6,friendship,319
+I am glad I woke up.,4-6,gratitude,320
+My brain is growing.,4-6,curiosity,321
+I am always welcome.,4-6,belonging,322
+I can do hard things.,4-6,confidence,323
+I am glad I'm me.,4-6,self-worth,324
+I get ready myself.,4-6,independence,325
+I never stay down.,4-6,resilience,326
+I am safe right now.,4-6,emotional-calm,327
+I have a kind heart.,4-6,kindness-character,328
+I can be friendly.,4-6,friendship,329
+I am lucky to be me.,4-6,gratitude,330
+I have fun learning.,4-6,curiosity,331
+I am loved no matter what.,4-6,belonging,332
+I am brave enough to try new things.,7-9,confidence,0
+I am enough just the way I am.,7-9,self-worth,1
+I can figure things out on my own.,7-9,independence,2
+Mistakes help me learn.,7-9,resilience,3
+All my feelings are okay to feel.,7-9,emotional-calm,4
+I treat others the way I want to be treated.,7-9,kindness-character,5
+I can make a new friend today.,7-9,friendship,6
+I am thankful for my family today.,7-9,gratitude,7
+I love learning new things.,7-9,curiosity,8
+I am loved no matter what.,7-9,belonging,9
+I do my part for the team.,7-9,teamwork,10
+I look out for my little brother.,7-9,sibling-love,11
+I finish my homework before I play.,7-9,responsibility,12
+My voice matters when I speak up.,7-9,confidence,13
+I don't have to be like anyone else.,7-9,self-worth,14
+I can get myself ready in the morning.,7-9,independence,15
+I can try again tomorrow.,7-9,resilience,16
+I can take a deep breath when I'm upset.,7-9,emotional-calm,17
+I can share even when it's hard.,7-9,kindness-character,18
+I listen when my friends talk.,7-9,friendship,19
+I notice the good things around me.,7-9,gratitude,20
+"I can ask ""why"" as many times as I want.",7-9,curiosity,21
+My family is my team.,7-9,belonging,22
+I help my brother when he needs me.,7-9,teamwork,23
+My sister and I make a good team.,7-9,sibling-love,24
+I do my chores without being asked.,7-9,responsibility,25
+I can raise my hand even if I feel shy.,7-9,confidence,26
+I like who I am becoming.,7-9,self-worth,27
+Trying by myself helps me grow.,7-9,independence,28
+Falling down doesn't mean staying down.,7-9,resilience,29
+It's okay to feel angry sometimes.,7-9,emotional-calm,30
+Kind words make people feel good.,7-9,kindness-character,31
+I can invite someone to play with me.,7-9,friendship,32
+I am grateful for my warm bed.,7-9,gratitude,33
+I wonder about how the world works.,7-9,curiosity,34
+I belong right here with my family.,7-9,belonging,35
+We finish faster when we work together.,7-9,teamwork,36
+I can share my toys with my brother.,7-9,sibling-love,37
+"I keep my promises, even small ones.",7-9,responsibility,38
+Trying is more important than being perfect.,7-9,confidence,39
+I am special and so is everyone else.,7-9,self-worth,40
+I can solve small problems without help.,7-9,independence,41
+I can get through hard days.,7-9,resilience,42
+I can calm my body down when I need to.,7-9,emotional-calm,43
+I help at home without being asked.,7-9,kindness-character,44
+Good friends take turns.,7-9,friendship,45
+Saying thank you makes me feel happy.,7-9,gratitude,46
+Reading takes me to new places.,7-9,curiosity,47
+Home is where I am safe.,7-9,belonging,48
+I share what I have.,7-9,teamwork,49
+"When my sister is sad, I try to help.",7-9,sibling-love,50
+I take care of my things.,7-9,responsibility,51
+I trust what I think.,7-9,confidence,52
+My worth isn't about grades or scores.,7-9,self-worth,53
+I am in charge of my own choices.,7-9,independence,54
+"When something breaks, I can fix it or start over.",7-9,resilience,55
+Feelings come and feelings go.,7-9,emotional-calm,56
+I tell the truth even when it's scary.,7-9,kindness-character,57
+I can say hi to someone new.,7-9,friendship,58
+I am thankful for food on my table.,7-9,gratitude,59
+I can learn from everyone I meet.,7-9,curiosity,60
+I am loved even when I make mistakes.,7-9,belonging,61
+I listen when my friends talk.,7-9,teamwork,62
+I am lucky to have my brother.,7-9,sibling-love,63
+I put real effort into my work.,7-9,responsibility,64
+I can ask a question when I don't understand.,7-9,confidence,65
+I matter even on my bad days.,7-9,self-worth,66
+I can pack my own bag for school.,7-9,independence,67
+I don't quit when it gets tough.,7-9,resilience,68
+I can name what I'm feeling.,7-9,emotional-calm,69
+I can cheer up someone who is sad.,7-9,kindness-character,70
+I share the game and let others choose too.,7-9,friendship,71
+I notice when someone helps me.,7-9,gratitude,72
+Questions make my brain stronger.,7-9,curiosity,73
+My family cheers for me.,7-9,belonging,74
+I help with chores without being asked.,7-9,teamwork,75
+"We fight sometimes, but we always make up.",7-9,sibling-love,76
+I clean up my own mess.,7-9,responsibility,77
+It's okay to be the first one to start.,7-9,confidence,78
+I don't need to win to be valuable.,7-9,self-worth,79
+"When I don't know, I can find out.",7-9,independence,80
+"Bad days end, and good days come back.",7-9,resilience,81
+"When I'm mad, I can use words, not fists.",7-9,emotional-calm,82
+I clean up after myself to help my family.,7-9,kindness-character,83
+I can ask my friend how they feel.,7-9,friendship,84
+I am grateful for my healthy body.,7-9,gratitude,85
+I like figuring out how things work.,7-9,curiosity,86
+I have a place at the table.,7-9,belonging,87
+My family is my team.,7-9,teamwork,88
+I like teaching my little sister new things.,7-9,sibling-love,89
+I remember what I am supposed to do.,7-9,responsibility,90
+I believe I can do hard things.,7-9,confidence,91
+I am a good person inside.,7-9,self-worth,92
+I can do hard homework by myself first.,7-9,independence,93
+I am stronger than my worst day.,7-9,resilience,94
+I can sit quietly until I feel better.,7-9,emotional-calm,95
+I say please and thank you and mean it.,7-9,kindness-character,96
+Playing fair keeps friends close.,7-9,friendship,97
+I can find three good things about today.,7-9,gratitude,98
+I can try a new hobby this month.,7-9,curiosity,99
+I am part of something bigger than me.,7-9,belonging,100
+I take turns and I am fair.,7-9,teamwork,101
+My brother knows all my secrets.,7-9,sibling-love,102
+"I finish what I start, even when it's boring.",7-9,responsibility,103
+My ideas are worth sharing.,7-9,confidence,104
+It's okay to be different from my friends.,7-9,self-worth,105
+I am responsible for my own stuff.,7-9,independence,106
+I can feel sad and still keep going.,7-9,resilience,107
+Being scared is normal and it passes.,7-9,emotional-calm,108
+I can forgive when someone says sorry.,7-9,kindness-character,109
+I can join a game that's already started.,7-9,friendship,110
+I am thankful for my teachers.,7-9,gratitude,111
+Mistakes in learning are just steps.,7-9,curiosity,112
+My family loves me on good days and bad.,7-9,belonging,113
+"I cheer for my friends, not just myself.",7-9,teamwork,114
+I stand up for my sister.,7-9,sibling-love,115
+I help around the house.,7-9,responsibility,116
+I can stand tall even when I'm nervous.,7-9,confidence,117
+I am proud of who I am.,7-9,self-worth,118
+I can make my own breakfast.,7-9,independence,119
+Losing a game doesn't make me a loser.,7-9,resilience,120
+I can ask for a hug when I need one.,7-9,emotional-calm,121
+I don't laugh when someone gets hurt.,7-9,kindness-character,122
+I keep my friend's secrets safe.,7-9,friendship,123
+I notice the sunshine and the rain.,7-9,gratitude,124
+I wonder what I'll discover today.,7-9,curiosity,125
+I belong at my school too.,7-9,belonging,126
+I say sorry when I mess up.,7-9,teamwork,127
+Having a brother means never being bored.,7-9,sibling-love,128
+I do my homework carefully.,7-9,responsibility,129
+I don't need everyone to agree with me.,7-9,confidence,130
+I deserve good things too.,7-9,self-worth,131
+I don't need someone to watch me do it right.,7-9,independence,132
+I can learn from what went wrong.,7-9,resilience,133
+My tears are allowed.,7-9,emotional-calm,134
+I can be kind to the new kid at school.,7-9,kindness-character,135
+"I can laugh with my friends, not at them.",7-9,friendship,136
+I am grateful for books and stories.,7-9,gratitude,137
+I can read one more chapter.,7-9,curiosity,138
+I am never alone in my heart.,7-9,belonging,139
+We clean our room together.,7-9,teamwork,140
+"I can say sorry first, even when it is hard.",7-9,sibling-love,141
+I put things back where they belong.,7-9,responsibility,142
+Speaking up gets easier each time I do it.,7-9,confidence,143
+I don't have to change to be loved.,7-9,self-worth,144
+I can think before I act.,7-9,independence,145
+I bend but I don't break.,7-9,resilience,146
+I can count to ten when I'm frustrated.,7-9,emotional-calm,147
+I keep my promises.,7-9,kindness-character,148
+I am a good friend to have.,7-9,friendship,149
+I can thank someone who helped me today.,7-9,gratitude,150
+Learning is like building with blocks.,7-9,curiosity,151
+My family needs me just as I am.,7-9,belonging,152
+I help my sister with her homework.,7-9,teamwork,153
+My sister makes the best partner in crime.,7-9,sibling-love,154
+I am someone people can count on.,7-9,responsibility,155
+I can start even when I feel unsure.,7-9,confidence,156
+I am important to my family.,7-9,self-worth,157
+My choices are mine to make.,7-9,independence,158
+Tomorrow is a fresh start.,7-9,resilience,159
+It's okay to need some alone time.,7-9,emotional-calm,160
+I can share my toys with my brother or sister.,7-9,kindness-character,161
+I can work well in a team.,7-9,friendship,162
+I am thankful for my home.,7-9,gratitude,163
+I am curious about people who are different from me.,7-9,curiosity,164
+I am held by love every day.,7-9,belonging,165
+I ask for help when I need it.,7-9,teamwork,166
+My brother counts on me.,7-9,sibling-love,167
+I do the hard thing first.,7-9,responsibility,168
+I am allowed to take up space.,7-9,confidence,169
+What I think of myself counts the most.,7-9,self-worth,170
+I can clean up my own mess.,7-9,independence,171
+I can handle disappointment.,7-9,resilience,172
+I can tell someone how I feel inside.,7-9,emotional-calm,173
+Doing the right thing feels good inside.,7-9,kindness-character,174
+"When we disagree, I can talk it out.",7-9,friendship,175
+Small things can make me smile.,7-9,gratitude,176
+I can learn a new word every day.,7-9,curiosity,177
+We stick together in my family.,7-9,belonging,178
+I am patient when others are slow.,7-9,teamwork,179
+We laugh at the same silly jokes.,7-9,sibling-love,180
+I take pride in a job well done.,7-9,responsibility,181
+"When I try, I learn something new.",7-9,confidence,182
+I am not my mistakes.,7-9,self-worth,183
+I can remember what I need to do.,7-9,independence,184
+"When I fail, I find another way.",7-9,resilience,185
+"Worrying doesn't fix anything, breathing helps.",7-9,emotional-calm,186
+I can stand up for someone being picked on.,7-9,kindness-character,187
+I can cheer for my friend even when I lose.,7-9,friendship,188
+I am grateful for my friends.,7-9,gratitude,189
+I like when school teaches me something cool.,7-9,curiosity,190
+I am my parents' pride and joy.,7-9,belonging,191
+"Everyone's job matters, including mine.",7-9,teamwork,192
+Nobody makes me laugh like my brother does.,7-9,sibling-love,193
+I don't quit when it's tough.,7-9,responsibility,194
+I can tell someone what I need.,7-9,confidence,195
+I can like myself even when I mess up.,7-9,self-worth,196
+I am capable of more than I think.,7-9,independence,197
+Hard times don't last forever.,7-9,resilience,198
+I can let go of the mad feeling.,7-9,emotional-calm,199
+I say sorry when I hurt someone.,7-9,kindness-character,200
+Friends don't have to agree on everything.,7-9,friendship,201
+I notice the good in a hard day too.,7-9,gratitude,202
+I can watch and learn before I try.,7-9,curiosity,203
+I belong wherever I am kind.,7-9,belonging,204
+I share the game controller.,7-9,teamwork,205
+I help my sister when mom asks me to.,7-9,sibling-love,206
+I pack my own bag for school.,7-9,responsibility,207
+Being brave means feeling scared and trying anyway.,7-9,confidence,208
+I am worth the same as everybody else.,7-9,self-worth,209
+I can start my work without being asked.,7-9,independence,210
+I can be upset and still be okay.,7-9,resilience,211
+My heart can feel many things at once.,7-9,emotional-calm,212
+I can give a compliment every day.,7-9,kindness-character,213
+I can sit with someone who is alone.,7-9,friendship,214
+I am thankful for clean water to drink.,7-9,gratitude,215
+My brain grows when I practice.,7-9,curiosity,216
+My family is proud of who I am.,7-9,belonging,217
+I help set the table for dinner.,7-9,teamwork,218
+Nobody understands me like my sibling does.,7-9,sibling-love,219
+I do my share of the work.,7-9,responsibility,220
+I can join in even if I don't know everyone.,7-9,confidence,221
+I don't need to be the best to matter.,7-9,self-worth,222
+I can handle being on my own for a little while.,7-9,independence,223
+I keep going even when it's not fun.,7-9,resilience,224
+I can be still and listen to my breath.,7-9,emotional-calm,225
+I help my teacher by listening well.,7-9,kindness-character,226
+I remember to include everyone.,7-9,friendship,227
+I can write down what I'm thankful for.,7-9,gratitude,228
+I wonder why the sky changes color.,7-9,curiosity,229
+I am connected to the people who love me.,7-9,belonging,230
+We solve problems together.,7-9,teamwork,231
+I save the last cookie for my brother.,7-9,sibling-love,232
+I follow through on what I say.,7-9,responsibility,233
+My opinion counts.,7-9,confidence,234
+I am a one-of-a-kind person.,7-9,self-worth,235
+I can tie my shoes and zip my own coat.,7-9,independence,236
+One bad grade doesn't change who I am.,7-9,resilience,237
+Crying when I'm sad is perfectly fine.,7-9,emotional-calm,238
+I am gentle with animals and little kids.,7-9,kindness-character,239
+"I can say ""let's play something you like.""",7-9,friendship,240
+I am grateful for music and songs.,7-9,gratitude,241
+I can ask the teacher when I'm curious.,7-9,curiosity,242
+Home goes with me wherever I go.,7-9,belonging,243
+I am kind to the new kid.,7-9,teamwork,244
+My sister believes in me.,7-9,sibling-love,245
+I keep my room tidy.,7-9,responsibility,246
+I can do things that felt scary yesterday.,7-9,confidence,247
+I can be happy being me.,7-9,self-worth,248
+I make my bed because it's my job.,7-9,independence,249
+I can rebuild what fell apart.,7-9,resilience,250
+I can choose a calm voice.,7-9,emotional-calm,251
+I can let someone else go first.,7-9,kindness-character,252
+A good friend shows up.,7-9,friendship,253
+I notice when Mom or Dad does something nice.,7-9,gratitude,254
+I like solving puzzles and riddles.,7-9,curiosity,255
+I am an important part of my family.,7-9,belonging,256
+I do my chores so my family can rest.,7-9,teamwork,257
+"We are different, and that is okay.",7-9,sibling-love,258
+I handle my business.,7-9,responsibility,259
+I am proud when I speak my mind kindly.,7-9,confidence,260
+I don't have to earn love by being perfect.,7-9,self-worth,261
+I can choose what to do with my free time.,7-9,independence,262
+I am tougher than I look.,7-9,resilience,263
+Big feelings don't last forever.,7-9,emotional-calm,264
+Honesty is always the best choice.,7-9,kindness-character,265
+I can make up with a friend after a fight.,7-9,friendship,266
+I am thankful for my eyes that see colors.,7-9,gratitude,267
+Every book teaches me something.,7-9,curiosity,268
+Love finds me even on lonely days.,7-9,belonging,269
+"When my friend is sad, I sit with them.",7-9,teamwork,270
+Home is better with my siblings in it.,7-9,sibling-love,271
+I show up and do my part.,7-9,responsibility,272
+I can lead and I can follow.,7-9,confidence,273
+I am good enough right now.,7-9,self-worth,274
+I can finish what I started.,7-9,independence,275
+"Crying is okay, and then I wipe my tears.",7-9,resilience,276
+I can squeeze my pillow when I'm upset.,7-9,emotional-calm,277
+I can make my family smile today.,7-9,kindness-character,278
+I listen more than I talk sometimes.,7-9,friendship,279
+I can say thank you before I eat.,7-9,gratitude,280
+I can learn to do what my hero does.,7-9,curiosity,281
+I fit in my family like a puzzle piece.,7-9,belonging,282
+Asking for help is a brave thing to do.,7-9,confidence,283
+My opinion of me matters most of all.,7-9,self-worth,284
+I don't give up just because no one is helping.,7-9,independence,285
+I can start over as many times as I need.,7-9,resilience,286
+I am safe even when I feel wobbly inside.,7-9,emotional-calm,287
+"I don't say mean things, even as a joke.",7-9,kindness-character,288
+I can make room for one more.,7-9,friendship,289
+I am grateful for weekends with my family.,7-9,gratitude,290
+I am excited to know more tomorrow.,7-9,curiosity,291
+My family listens to me.,7-9,belonging,292
+I can try a different way when the first way fails.,7-9,confidence,293
+I am allowed to feel proud of myself.,7-9,self-worth,294
+I can be on my own and feel okay.,7-9,independence,295
+Problems are just puzzles I haven't solved yet.,7-9,resilience,296
+I can pause before I react.,7-9,emotional-calm,297
+I can share my snack with a friend.,7-9,kindness-character,298
+Friends help each other get better.,7-9,friendship,299
+I notice the stars and the moon.,7-9,gratitude,300
+I can explore outside and find new things.,7-9,curiosity,301
+I am rooted like a strong tree.,7-9,belonging,302
+I am getting stronger at being me.,7-9,confidence,303
+"Nobody else can be me, and that's great.",7-9,self-worth,304
+I am learning to take care of myself.,7-9,independence,305
+I don't let one bad moment ruin my day.,7-9,resilience,306
+It's okay to feel nervous before new things.,7-9,emotional-calm,307
+I am the kind of person others can trust.,7-9,kindness-character,308
+I can be patient when my friend is slow.,7-9,friendship,309
+I am thankful for my school.,7-9,gratitude,310
+I don't have to know everything right now.,7-9,curiosity,311
+We take care of each other.,7-9,belonging,312
+I can show what I know.,7-9,confidence,313
+I treat myself like I treat my friends.,7-9,self-worth,314
+I can say no when something isn't right.,7-9,independence,315
+I can wait out the storm.,7-9,resilience,316
+I can find my calm place inside me.,7-9,emotional-calm,317
+I can do a secret good deed today.,7-9,kindness-character,318
+I tell my friends what I appreciate about them.,7-9,friendship,319
+I can thank my body for what it does.,7-9,gratitude,320
+I can teach someone what I just learned.,7-9,curiosity,321
+I am somebody's whole world.,7-9,belonging,322
+Confidence grows a little every day.,7-9,confidence,323
+"I am loved for who I am, not what I do.",7-9,self-worth,324
+I trust myself to make good choices.,7-9,independence,325
+Every day I get a little stronger.,7-9,resilience,326
+Feelings are visitors; they don't stay forever.,7-9,emotional-calm,327
+Being kind is being strong.,7-9,kindness-character,328
+I can start a conversation with a smile.,7-9,friendship,329
+I end my day by naming one good thing.,7-9,gratitude,330
+Being curious makes life fun.,7-9,curiosity,331
+I carry my family's love with me.,7-9,belonging,332
+I can speak up even when my voice shakes.,10-12,confidence,0
+"I am enough, exactly as I am right now.",10-12,self-worth,1
+I can figure this out on my own.,10-12,independence,2
+I get back up. That's what I do.,10-12,resilience,3
+"My feelings are allowed, all of them.",10-12,emotional-calm,4
+How I treat people matters more than being right.,10-12,kindness-character,5
+I can start a conversation with someone new.,10-12,friendship,6
+"I notice the good stuff, not just the bad.",10-12,gratitude,7
+"I wonder about things, and I chase the answers.",10-12,curiosity,8
+"I am loved, no matter what kind of day I have.",10-12,belonging,9
+A team wins when everyone does their job.,10-12,teamwork,10
+My siblings annoy me sometimes and I still love them.,10-12,sibling-love,11
+Doing my best matters more than being the best.,10-12,responsibility,12
+Trying matters more than being good at it right away.,10-12,confidence,13
+I don't have to be perfect to be good.,10-12,self-worth,14
+I don't need someone to hold my hand through everything.,10-12,independence,15
+"A bad day is just a day, not my whole life.",10-12,resilience,16
+I can feel angry without acting angry.,10-12,emotional-calm,17
+I am kind even when no one is watching.,10-12,kindness-character,18
+Being a good friend starts with listening.,10-12,friendship,19
+I am thankful for the people who show up for me.,10-12,gratitude,20
+"Questions make me smarter, not slower.",10-12,curiosity,21
+My family is my team.,10-12,belonging,22
+I don't have to be the star. I just have to show up.,10-12,teamwork,23
+"I have my brother's back, no matter what.",10-12,sibling-love,24
+I finish my homework even when I'd rather do something else.,10-12,responsibility,25
+My ideas are worth saying out loud.,10-12,confidence,26
+My worth isn't measured by grades or likes.,10-12,self-worth,27
+I can make my own decisions and live with them.,10-12,independence,28
+I have survived every hard day so far.,10-12,resilience,29
+It's okay to need a minute.,10-12,emotional-calm,30
+I stand up for people who can't stand up for themselves.,10-12,kindness-character,31
+I don't need a huge group; real friends are enough.,10-12,friendship,32
+Today has something in it worth appreciating.,10-12,gratitude,33
+I don't have to love every subject to learn from it.,10-12,curiosity,34
+"I belong here, exactly as I am.",10-12,belonging,35
+Helping my sibling is not losing. It is what family does.,10-12,teamwork,36
+My sister gets me in a way nobody else does.,10-12,sibling-love,37
+People can count on me because I follow through.,10-12,responsibility,38
+I don't have to be the loudest to be heard.,10-12,confidence,39
+I like who I am becoming.,10-12,self-worth,40
+"Asking for help is my choice, not my weakness.",10-12,independence,41
+Falling down doesn't make me a failure.,10-12,resilience,42
+I breathe in and out until I feel steady.,10-12,emotional-calm,43
+"I do the right thing when it's hard, not just when it's easy.",10-12,kindness-character,44
+I check in on my friends when they're quiet.,10-12,friendship,45
+I don't take the small things for granted.,10-12,gratitude,46
+Being curious is cooler than pretending to know.,10-12,curiosity,47
+Home is where I don't have to pretend.,10-12,belonging,48
+"I listen first, then I talk.",10-12,teamwork,49
+We don't have to like the same things to be close.,10-12,sibling-love,50
+"I do my chores well, not just fast.",10-12,responsibility,51
+I can start before I feel ready.,10-12,confidence,52
+I don't need to be like anyone else.,10-12,self-worth,53
+I can handle the small stuff without a reminder.,10-12,independence,54
+I can start over as many times as I need to.,10-12,resilience,55
+Feelings are visitors; they don't move in forever.,10-12,emotional-calm,56
+"I apologize when I'm wrong, and I mean it.",10-12,kindness-character,57
+I can join in without waiting for an invitation sometimes.,10-12,friendship,58
+I say thanks out loud instead of just thinking it.,10-12,gratitude,59
+I learn something new every day on purpose.,10-12,curiosity,60
+"I am wanted, not just tolerated.",10-12,belonging,61
+"When I do my chores, the whole house feels better.",10-12,teamwork,62
+I can forgive my sibling and mean it.,10-12,sibling-love,63
+"When I say I'll do something, I do it.",10-12,responsibility,64
+Being nervous doesn't mean I can't do it.,10-12,confidence,65
+"There is no one else exactly like me, and that's fine.",10-12,self-worth,66
+I think for myself.,10-12,independence,67
+Hard seasons end. I keep going.,10-12,resilience,68
+I don't have to fix my mood instantly.,10-12,emotional-calm,69
+I don't laugh at jokes that hurt people.,10-12,kindness-character,70
+Good friends tell the truth kindly.,10-12,friendship,71
+I am grateful for a body that lets me move and play.,10-12,gratitude,72
+I read because it takes me places.,10-12,curiosity,73
+My family has my back.,10-12,belonging,74
+I can disagree without being mean about it.,10-12,teamwork,75
+Being the oldest means setting the example.,10-12,sibling-love,76
+I take care of my things so they last.,10-12,responsibility,77
+I trust myself to handle what comes today.,10-12,confidence,78
+I deserve the same kindness I give others.,10-12,self-worth,79
+I can start something without being told to.,10-12,independence,80
+I don't quit on myself.,10-12,resilience,81
+It's okay to cry. It doesn't make me weak.,10-12,emotional-calm,82
+Being honest is worth the awkward moment.,10-12,kindness-character,83
+I make room for people.,10-12,friendship,84
+Even a regular day has good in it.,10-12,gratitude,85
+I am not afraid to look dumb while learning.,10-12,curiosity,86
+Love here isn't something I have to earn.,10-12,belonging,87
+"Fair means everyone gets a turn, including me.",10-12,teamwork,88
+Being the youngest doesn't mean being the weakest.,10-12,sibling-love,89
+Hard work feels good when it's done.,10-12,responsibility,90
+It's okay to take up space.,10-12,confidence,91
+I am not a problem to be fixed.,10-12,self-worth,92
+My choices are mine to make.,10-12,independence,93
+Disappointment won't break me.,10-12,resilience,94
+"I can name what I feel, and that helps.",10-12,emotional-calm,95
+I share credit when things go well.,10-12,kindness-character,96
+I remember the little things about my friends.,10-12,friendship,97
+I appreciate what I have instead of only wanting more.,10-12,gratitude,98
+Mistakes in class mean my brain is working.,10-12,curiosity,99
+I am part of something bigger than myself.,10-12,belonging,100
+I ask for help instead of struggling alone.,10-12,teamwork,101
+I listen when my brother needs to talk.,10-12,sibling-love,102
+I don't wait to be told twice.,10-12,responsibility,103
+I don't need permission to be myself.,10-12,confidence,104
+What makes me different makes me interesting.,10-12,self-worth,105
+I can solve problems without waiting to be rescued.,10-12,independence,106
+I can feel sad and still keep moving.,10-12,resilience,107
+I am not my worst feeling.,10-12,emotional-calm,108
+"I keep my promises, big and small.",10-12,kindness-character,109
+I can disagree with a friend and still be friends.,10-12,friendship,110
+"I thank people who help me, even for little things.",10-12,gratitude,111
+"I ask ""why"" until I actually get it.",10-12,curiosity,112
+"Even when we fight, we still choose each other.",10-12,belonging,113
+"My friends count on me, and I count on them.",10-12,teamwork,114
+My sister and I are stronger together.,10-12,sibling-love,115
+"My best effort is enough, and I give it.",10-12,responsibility,116
+"My opinion counts, even when it's different.",10-12,confidence,117
+I can be a work in progress and still be great.,10-12,self-worth,118
+"I learn by doing, not just by watching.",10-12,independence,119
+What went wrong today teaches me something.,10-12,resilience,120
+I can calm my body to calm my mind.,10-12,emotional-calm,121
+I treat the new kid the way I'd want to be treated.,10-12,kindness-character,122
+I don't ditch people to look cool.,10-12,friendship,123
+I am lucky in ways I sometimes forget.,10-12,gratitude,124
+Learning isn't just for school.,10-12,curiosity,125
+I matter to my family in ways I can't always see.,10-12,belonging,126
+I clean up my mess so others don't have to.,10-12,teamwork,127
+It's okay to need space from my siblings sometimes.,10-12,sibling-love,128
+I clean up after myself without making it someone else's job.,10-12,responsibility,129
+I can ask the question everyone else is scared to ask.,10-12,confidence,130
+I don't have to prove myself to anyone today.,10-12,self-worth,131
+I can take care of my own responsibilities.,10-12,independence,132
+I am stronger than my worst moment.,10-12,resilience,133
+"Being upset is human, not shameful.",10-12,emotional-calm,134
+Character is who I am when the teacher isn't looking.,10-12,kindness-character,135
+I am someone others feel safe around.,10-12,friendship,136
+Gratitude turns an okay day into a good one.,10-12,gratitude,137
+I try things I might be bad at.,10-12,curiosity,138
+"I am accepted here, mess and all.",10-12,belonging,139
+Being a good teammate matters more than being the best player.,10-12,teamwork,140
+I celebrate my brother's wins like they're mine.,10-12,sibling-love,141
+I plan my time so homework gets done.,10-12,responsibility,142
+I am allowed to change my mind.,10-12,confidence,143
+Being me is not too much.,10-12,self-worth,144
+I don't need a crowd to know what's right.,10-12,independence,145
+I give myself more than one chance.,10-12,resilience,146
+I give myself time to cool down before I speak.,10-12,emotional-calm,147
+"I don't gossip, even when everyone else is.",10-12,kindness-character,148
+I ask questions because I'm actually interested.,10-12,friendship,149
+I notice when someone does something kind for me.,10-12,gratitude,150
+I pay attention to how things work.,10-12,curiosity,151
+My place in this family can't be taken away.,10-12,belonging,152
+I give credit when someone else does good work.,10-12,teamwork,153
+We share a history nobody else has.,10-12,sibling-love,154
+Small jobs done well build trust.,10-12,responsibility,155
+Doing it badly the first time still counts as doing it.,10-12,confidence,156
+I respect myself enough to rest when I need it.,10-12,self-worth,157
+I can be alone without being lonely.,10-12,independence,158
+Setbacks are part of getting better.,10-12,resilience,159
+I don't have to smile when I don't feel like it.,10-12,emotional-calm,160
+I help without being asked sometimes.,10-12,kindness-character,161
+I give compliments that I actually mean.,10-12,friendship,162
+I am thankful for second chances.,10-12,gratitude,163
+I don't need to be the smartest; I need to keep growing.,10-12,curiosity,164
+I bring something to this family that no one else can.,10-12,belonging,165
+At home I pull my weight. No one should do it all.,10-12,teamwork,166
+"I tell my sister the truth, kindly.",10-12,sibling-love,167
+I take responsibility when I mess up.,10-12,responsibility,168
+I don't have to wait until I'm sure.,10-12,confidence,169
+I am allowed to take care of myself first sometimes.,10-12,self-worth,170
+I do what I say I'll do.,10-12,independence,171
+"I can handle ""no"" and keep going.",10-12,resilience,172
+It's okay to feel two things at once.,10-12,emotional-calm,173
+I say thank you and I mean it.,10-12,kindness-character,174
+I can handle it when plans don't include me.,10-12,friendship,175
+I appreciate my home and the people in it.,10-12,gratitude,176
+I explore ideas that challenge me.,10-12,curiosity,177
+It's okay to need my people.,10-12,belonging,178
+I am patient when my sibling gets on my nerves.,10-12,teamwork,179
+My siblings saw me at my worst and stayed.,10-12,sibling-love,180
+"I do the boring parts too, not just the fun ones.",10-12,responsibility,181
+My best is enough for today.,10-12,confidence,182
+My value doesn't go down when I mess up.,10-12,self-worth,183
+I can plan my own time.,10-12,independence,184
+I bend without breaking.,10-12,resilience,185
+I can sit still with a big feeling.,10-12,emotional-calm,186
+I include people instead of leaving them out.,10-12,kindness-character,187
+I don't keep score in friendships.,10-12,friendship,188
+I don't need something new to feel good.,10-12,gratitude,189
+I finish what I start learning.,10-12,curiosity,190
+"I am rooted, even when life feels shaky.",10-12,belonging,191
+We figure it out together instead of fighting about it.,10-12,teamwork,192
+I make room for my little brother.,10-12,sibling-love,193
+Being reliable is something I choose every day.,10-12,responsibility,194
+I can stand by what I believe.,10-12,confidence,195
+I don't compare my behind-the-scenes to their highlight reel.,10-12,self-worth,196
+I don't fall apart when plans change.,10-12,independence,197
+Tomorrow is a clean page.,10-12,resilience,198
+"My feelings give me information, not orders.",10-12,emotional-calm,199
+I can be competitive without being cruel.,10-12,kindness-character,200
+I make time for the people who matter.,10-12,friendship,201
+I am grateful for the food on my table.,10-12,gratitude,202
+"I take notes on life, not just in class.",10-12,curiosity,203
+"My family believes in me, and I borrow that belief.",10-12,belonging,204
+I help the new kid feel welcome at school.,10-12,teamwork,205
+Arguing doesn't mean we stopped loving each other.,10-12,sibling-love,206
+"I keep my word, even when it's inconvenient.",10-12,responsibility,207
+It's fine to not know the answer yet.,10-12,confidence,208
+I am on my own timeline.,10-12,self-worth,209
+I can speak for myself.,10-12,independence,210
+I don't let one bad grade define me.,10-12,resilience,211
+I let the wave pass instead of fighting it.,10-12,emotional-calm,212
+I own my mistakes instead of blaming others.,10-12,kindness-character,213
+"I can say ""that hurt"" instead of going silent.",10-12,friendship,214
+Saying thank you makes me feel good too.,10-12,gratitude,215
+"I am curious about people, not just topics.",10-12,curiosity,216
+I don't have to face hard things alone.,10-12,belonging,217
+Doing my homework is my part of the deal.,10-12,teamwork,218
+I am proud of who my sister is becoming.,10-12,sibling-love,219
+I put in the work before I expect the result.,10-12,responsibility,220
+"Showing up counts, and I notice when I do.",10-12,confidence,221
+I like my own company.,10-12,self-worth,222
+I take responsibility for my part.,10-12,independence,223
+Losing a game doesn't make me a loser.,10-12,resilience,224
+I am allowed to have an off day.,10-12,emotional-calm,225
+I give people the benefit of the doubt.,10-12,kindness-character,226
+I respect when a friend needs space.,10-12,friendship,227
+I look for one good thing every single day.,10-12,gratitude,228
+I don't give up when something is confusing at first.,10-12,curiosity,229
+Love in my house isn't earned; it's just there.,10-12,belonging,230
+I say thank you when someone helps me.,10-12,teamwork,231
+We look out for each other when parents aren't around.,10-12,sibling-love,232
+"My room, my mess, my job.",10-12,responsibility,233
+I can be quiet and still be strong.,10-12,confidence,234
+I don't need everyone to like me.,10-12,self-worth,235
+I can try a new route and find my own way.,10-12,independence,236
+I can sit with discomfort and come out fine.,10-12,resilience,237
+"Counting to ten actually works, and I use it.",10-12,emotional-calm,238
+"Small kindnesses add up, and I do them.",10-12,kindness-character,239
+I keep my friends' private things private.,10-12,friendship,240
+I am thankful for friends who make me laugh.,10-12,gratitude,241
+I look things up instead of just guessing.,10-12,curiosity,242
+Someone is always glad I came home.,10-12,belonging,243
+A good team talks things out. I use my words.,10-12,teamwork,244
+I can be patient with my younger sibling.,10-12,sibling-love,245
+"I ask for help when I need it, then I finish the job.",10-12,responsibility,246
+What I think about me matters more than what they think.,10-12,confidence,247
+It's okay to outgrow things that don't fit anymore.,10-12,self-worth,248
+I don't need constant check-ins to stay on track.,10-12,independence,249
+I rebuild. I always rebuild.,10-12,resilience,250
+I don't make big decisions when I'm upset.,10-12,emotional-calm,251
+I don't need a reason to be decent.,10-12,kindness-character,252
+Making one new friend is a win.,10-12,friendship,253
+I appreciate teachers who actually try.,10-12,gratitude,254
+I learn from people who disagree with me.,10-12,curiosity,255
+I fit in my family like a piece that was made for it.,10-12,belonging,256
+I share what I know when a friend is stuck.,10-12,teamwork,257
+My brother pushes me to be better.,10-12,sibling-love,258
+Excuses don't get things done. I do.,10-12,responsibility,259
+I am allowed to be proud of myself.,10-12,confidence,260
+I am worth the effort it takes to grow.,10-12,self-worth,261
+I can get myself ready without being chased.,10-12,independence,262
+Pain now doesn't mean pain forever.,10-12,resilience,263
+"It's fine to say ""I'm not okay right now.""",10-12,emotional-calm,264
+"I stand by my friends, especially when it's unpopular.",10-12,kindness-character,265
+I am patient with people who are different from me.,10-12,friendship,266
+I am grateful I get to learn new things.,10-12,gratitude,267
+"Every expert was once a beginner, including me.",10-12,curiosity,268
+"I am held, even when I push away.",10-12,belonging,269
+Family first means I show up for them.,10-12,teamwork,270
+One day we'll laugh about the fights we have now.,10-12,sibling-love,271
+"I treat my commitments like they matter, because they do.",10-12,responsibility,272
+I don't have to earn the right to try.,10-12,confidence,273
+Nobody gets to decide who I am but me.,10-12,self-worth,274
+"I learn from my own mistakes, not just other people's warnings.",10-12,independence,275
+Tears don't stop me for long.,10-12,resilience,276
+I treat my bad moods like weather: they pass.,10-12,emotional-calm,277
+"I am fair, even when I could get away with more.",10-12,kindness-character,278
+"I laugh with people, not at them.",10-12,friendship,279
+I try to complain less and notice more.,10-12,gratitude,280
+I practice until it clicks.,10-12,curiosity,281
+My family sees the real me and stays.,10-12,belonging,282
+I can walk into a room like I belong there.,10-12,confidence,283
+I forgive myself for yesterday.,10-12,self-worth,284
+I can say no when I need to.,10-12,independence,285
+Being told no just means not this way.,10-12,resilience,286
+I can be frustrated without taking it out on people.,10-12,emotional-calm,287
+I listen before I judge.,10-12,kindness-character,288
+I can be the one who says hi first.,10-12,friendship,289
+I am thankful for mornings I get to start fresh.,10-12,gratitude,290
+I am allowed to be interested in weird things.,10-12,curiosity,291
+I belong to people who want the best for me.,10-12,belonging,292
+"Saying ""I don't know"" takes guts, and I have them.",10-12,confidence,293
+I am allowed to want good things for myself.,10-12,self-worth,294
+I trust my own judgment.,10-12,independence,295
+I keep my head up when things go sideways.,10-12,resilience,296
+Quiet time is not wasted time.,10-12,emotional-calm,297
+I leave people better than I found them.,10-12,kindness-character,298
+I don't need to be the center of the group.,10-12,friendship,299
+"I appreciate the quiet moments, not just the exciting ones.",10-12,gratitude,300
+I connect what I learn to real life.,10-12,curiosity,301
+Home is my reset button.,10-12,belonging,302
+I decide what kind of day I'm going to have.,10-12,confidence,303
+I don't shrink myself to make others comfortable.,10-12,self-worth,304
+I can do hard things without an audience.,10-12,independence,305
+I have made it through 100% of my hardest days.,10-12,resilience,306
+I check in with myself the way I'd check on a friend.,10-12,emotional-calm,307
+Doing the right thing is its own reward.,10-12,kindness-character,308
+I forgive my friends when they mess up.,10-12,friendship,309
+I am grateful for my health today.,10-12,gratitude,310
+I don't rush past the interesting parts.,10-12,curiosity,311
+I am never too much for the people who love me.,10-12,belonging,312
+I can disagree without being mean about it.,10-12,confidence,313
+"I matter, even on the days I feel invisible.",10-12,self-worth,314
+I clean up my own messes.,10-12,independence,315
+I don't need everything to go right to be okay.,10-12,resilience,316
+I don't have to explain my feelings to deserve them.,10-12,emotional-calm,317
+I don't tear others down to feel taller.,10-12,kindness-character,318
+I choose friends who bring out my best.,10-12,friendship,319
+"I thank my family, even when they annoy me.",10-12,gratitude,320
+My brain grows when I use it.,10-12,curiosity,321
+My family's love doesn't run out.,10-12,belonging,322
+I am more capable than I give myself credit for.,10-12,confidence,323
+I am proud of how far I've already come.,10-12,self-worth,324
+I am becoming someone I can count on.,10-12,independence,325
+"I am still here, and that counts for a lot.",10-12,resilience,326
+I can find my calm again. I always do.,10-12,emotional-calm,327
+The kind of person I am matters more than what I achieve.,10-12,kindness-character,328
+"A good friend is someone I am becoming, too.",10-12,friendship,329
+There is always something. I look for it.,10-12,gratitude,330
+I stay curious even when the answer is hard.,10-12,curiosity,331
+I carry my family with me wherever I go.,10-12,belonging,332
+I trust myself to figure things out.,13+,confidence,0
+"I am enough, exactly as I am right now.",13+,self-worth,1
+I can handle this on my own.,13+,independence,2
+I get back up. Every time.,13+,resilience,3
+"My feelings are valid, even the uncomfortable ones.",13+,emotional-calm,4
+The kind of person I am matters more than what I achieve.,13+,kindness-character,5
+I can start a conversation with someone new.,13+,friendship,6
+"I notice the good, even on ordinary days.",13+,gratitude,7
+"I wonder about things, and that's a strength.",13+,curiosity,8
+"I am loved, even when I mess up.",13+,belonging,9
+I don't have to do everything. I have to do my part.,13+,teamwork,10
+One day my siblings will be my oldest friends.,13+,sibling-love,11
+Discipline is doing what needs doing even when I don't feel like it.,13+,responsibility,12
+My voice matters even when it shakes.,13+,confidence,13
+My value isn't measured in likes or grades.,13+,self-worth,14
+I figure things out instead of waiting to be rescued.,13+,independence,15
+A bad day is not a bad life.,13+,resilience,16
+I can feel angry without acting angry.,13+,emotional-calm,17
+I treat people the way I want to be remembered.,13+,kindness-character,18
+I listen more than I talk.,13+,friendship,19
+I am thankful for people who show up for me.,13+,gratitude,20
+Questions make me smarter than answers do.,13+,curiosity,21
+My family is my team — we win and lose together.,13+,belonging,22
+Asking for help is not weakness. It is how teams work.,13+,teamwork,23
+I don't have to like my brother to love him — but I do both.,13+,sibling-love,24
+I handle my responsibilities before I chase my wants.,13+,responsibility,25
+I don't need permission to start.,13+,confidence,26
+I don't have to earn the right to take up space.,13+,self-worth,27
+I make my own decisions and stand by them.,13+,independence,28
+I have survived every hard thing so far — that's a perfect record.,13+,resilience,29
+This emotion will pass — all of them do.,13+,emotional-calm,30
+Being kind costs me nothing and means everything.,13+,kindness-character,31
+Good friends are made by being a good friend first.,13+,friendship,32
+I have more than I give myself credit for.,13+,gratitude,33
+I love learning things nobody assigned me.,13+,curiosity,34
+I belong here exactly as I am.,13+,belonging,35
+I pull my weight at home without being asked twice.,13+,teamwork,36
+My sister is the only person who remembers my whole childhood.,13+,sibling-love,37
+"Nobody's coming to do it for me, and that's fine. I can handle it.",13+,responsibility,38
+Trying is already a kind of courage.,13+,confidence,39
+I am not a project to be fixed.,13+,self-worth,40
+I don't need someone else to tell me what to do.,13+,independence,41
+"Failure is information, not identity.",13+,resilience,42
+I don't have to fix my feelings; I just have to feel them.,13+,emotional-calm,43
+I do the right thing even when no one is watching.,13+,kindness-character,44
+I don't need a huge circle — a few real ones is enough.,13+,friendship,45
+Gratitude turns what I have into enough.,13+,gratitude,46
+Being wrong is how I get righter.,13+,curiosity,47
+"Home is people, not a place — and I have people.",13+,belonging,48
+"My siblings and I are on the same side, even when we fight.",13+,teamwork,49
+I show up for my siblings even when it's inconvenient.,13+,sibling-love,50
+My word means something because I back it up.,13+,responsibility,51
+I can speak up without apologizing for existing.,13+,confidence,52
+Who I am matters more than what I produce.,13+,self-worth,53
+I take responsibility for my own life.,13+,independence,54
+I bend without breaking.,13+,resilience,55
+"I breathe, and the storm gets smaller.",13+,emotional-calm,56
+I stand up for people who can't stand up for themselves.,13+,kindness-character,57
+I can join a group without waiting for an invitation.,13+,friendship,58
+I appreciate the small things — they add up.,13+,gratitude,59
+"I read, watch, and ask — I feed my mind.",13+,curiosity,60
+I don't have to earn my family's love.,13+,belonging,61
+"I listen to understand, not just to reply.",13+,teamwork,62
+I respect my brother's choices even when I'd choose differently.,13+,sibling-love,63
+I do the unglamorous work without needing applause.,13+,responsibility,64
+What I think is worth saying out loud.,13+,confidence,65
+I deserve the same kindness I give others.,13+,self-worth,66
+I can solve problems without panicking.,13+,independence,67
+What knocked me down taught me something.,13+,resilience,68
+It's okay to not be okay for a while.,13+,emotional-calm,69
+My character is what I do when it's inconvenient.,13+,kindness-character,70
+"I remember small things about people, and it matters to them.",13+,friendship,71
+I say thank you and mean it.,13+,gratitude,72
+I don't have to know everything to start learning something.,13+,curiosity,73
+I am part of something bigger than myself.,13+,belonging,74
+Credit shared is credit doubled. I don't need to be the hero.,13+,teamwork,75
+I can be honest with my sister without being harsh.,13+,sibling-love,76
+Being reliable is a reputation I build one kept promise at a time.,13+,responsibility,77
+I give myself the same chance I'd give a friend.,13+,confidence,78
+I can like myself without being arrogant.,13+,self-worth,79
+"Asking for help is a choice, not a failure of independence.",13+,independence,80
+I can start again without shame.,13+,resilience,81
+"I name what I feel, and it loses some power over me.",13+,emotional-calm,82
+I apologize when I'm wrong — quickly and sincerely.,13+,kindness-character,83
+I am easy to be around because I pay attention.,13+,friendship,84
+"Someone, somewhere, made my life easier today.",13+,gratitude,85
+Curiosity got me further than fear ever did.,13+,curiosity,86
+"My family wants me to succeed, not to be perfect.",13+,belonging,87
+Doing the boring job well is what makes me reliable.,13+,teamwork,88
+Nobody can tease my sister except me.,13+,sibling-love,89
+"I take care of my space, my work, and my people.",13+,responsibility,90
+Being nervous doesn't mean I'm not ready.,13+,confidence,91
+My worth doesn't drop when I make a mistake.,13+,self-worth,92
+I manage my own time like it belongs to me — because it does.,13+,independence,93
+"Tough seasons don't last, but tough people adapt.",13+,resilience,94
+I can pause before I react.,13+,emotional-calm,95
+I don't gossip; I don't need to tear others down to feel tall.,13+,kindness-character,96
+I can disagree with a friend and still keep the friendship.,13+,friendship,97
+I don't take the people I love for granted.,13+,gratitude,98
+I learn from people who disagree with me.,13+,curiosity,99
+I can come home — always.,13+,belonging,100
+I respect people who do the work nobody sees.,13+,teamwork,101
+I want my siblings to know I'm proud of them.,13+,sibling-love,102
+I'd rather be tired from effort than restless from avoidance.,13+,responsibility,103
+I stop rehearsing and just begin.,13+,confidence,104
+I don't need to prove myself to be valuable.,13+,self-worth,105
+"I learn by doing, not by being shown every step.",13+,independence,106
+I am allowed to fall apart and still put myself back together.,13+,resilience,107
+Sadness is not weakness; it's honesty.,13+,emotional-calm,108
+"Honesty is my default, even when it's uncomfortable.",13+,kindness-character,109
+"I check on my friends, not just when I need something.",13+,friendship,110
+"I am grateful for my health, whatever shape it's in.",13+,gratitude,111
+I try new things even if I might be bad at them.,13+,curiosity,112
+Being known deeply by my family is a gift.,13+,belonging,113
+Family is a team sport. I show up for practice.,13+,teamwork,114
+The bond with my siblings outlasts every argument.,13+,sibling-love,115
+I finish things. That's what separates intentions from results.,13+,responsibility,116
+My ideas don't have to be perfect to matter.,13+,confidence,117
+I am more than my worst moment.,13+,self-worth,118
+I can be alone without feeling lonely.,13+,independence,119
+Rejection redirects me; it doesn't define me.,13+,resilience,120
+I give myself permission to have a bad day.,13+,emotional-calm,121
+I help without keeping score.,13+,kindness-character,122
+It's okay to outgrow friendships that no longer fit.,13+,friendship,123
+Even hard days have one good moment — I look for it.,13+,gratitude,124
+"I am a beginner at many things, and that's exciting.",13+,curiosity,125
+I add something to my family that no one else can.,13+,belonging,126
+I can be right without making someone else feel small.,13+,teamwork,127
+I check on my sister for no reason.,13+,sibling-love,128
+Owning my mistakes is part of owning my life.,13+,responsibility,129
+I can ask for what I need.,13+,confidence,130
+I respect myself enough to say no.,13+,self-worth,131
+"My choices are mine, and I own the results.",13+,independence,132
+"I keep going when it's boring, not just when it's exciting.",13+,resilience,133
+I don't have to earn rest by being productive first.,13+,emotional-calm,134
+I am the same person in every room.,13+,kindness-character,135
+I make people feel heard.,13+,friendship,136
+"I thank people specifically, not generically.",13+,gratitude,137
+"I ask ""why"" without embarrassment.",13+,curiosity,138
+"I am rooted, even when I roam.",13+,belonging,139
+"When the group struggles, I step in instead of stepping back.",13+,teamwork,140
+My siblings knew me before I knew myself.,13+,sibling-love,141
+"I don't need motivation to start. I start, and motivation follows.",13+,responsibility,142
+"Confidence is built, not born — and I'm building it.",13+,confidence,143
+Being different from the crowd isn't a flaw.,13+,self-worth,144
+I don't follow the crowd just to feel safe.,13+,independence,145
+My scars are proof I kept trying.,13+,resilience,146
+My nervous system is not my enemy.,13+,emotional-calm,147
+I give people the benefit of the doubt first.,13+,kindness-character,148
+I don't have to be the funniest person in the room to belong.,13+,friendship,149
+I am lucky in ways I forget to count.,13+,gratitude,150
+I learn something new every week on purpose.,13+,curiosity,151
+"My family's story includes me, and I'm proud of that.",13+,belonging,152
+I keep my promises to my friends.,13+,teamwork,153
+I forgive the dumb stuff we did as kids.,13+,sibling-love,154
+"The standard I hold is mine, and I don't lower it when no one's watching.",13+,responsibility,155
+I refuse to shrink myself to make others comfortable.,13+,confidence,156
+I am allowed to take care of myself first sometimes.,13+,self-worth,157
+"I can cook, clean, plan, and handle my business.",13+,independence,158
+I don't quit on myself.,13+,resilience,159
+I can calm myself down — I have done it before.,13+,emotional-calm,160
+Respect isn't earned by titles — I give it freely.,13+,kindness-character,161
+I reach out first sometimes.,13+,friendship,162
+"A roof, food, people who care — that's a lot.",13+,gratitude,163
+My brain grows when I challenge it.,13+,curiosity,164
+I don't have to face hard things alone.,13+,belonging,165
+Tolerance means giving people room to be different from me.,13+,teamwork,166
+Being a good sibling is a choice I make daily.,13+,sibling-love,167
+I do my part without keeping score.,13+,responsibility,168
+I can handle being seen.,13+,confidence,169
+My body is not a problem to solve.,13+,self-worth,170
+I think for myself before I check what others think.,13+,independence,171
+Hard things make me stronger only if I let them — and I choose to.,13+,resilience,172
+I don't let a feeling make my decisions for me.,13+,emotional-calm,173
+"I clean up my own messes, literal and otherwise.",13+,kindness-character,174
+I respect other people's boundaries the way I want mine respected.,13+,friendship,175
+"I appreciate what my parents do, even when we disagree.",13+,gratitude,176
+I don't memorize — I understand.,13+,curiosity,177
+Love in my family isn't conditional on achievement.,13+,belonging,178
+I do my homework because my education is my job right now.,13+,teamwork,179
+I don't take my sister for granted.,13+,sibling-love,180
+"Homework, chores, commitments — I handle what's mine.",13+,responsibility,181
+"Doubt can ride along, but it doesn't get to drive.",13+,confidence,182
+I don't compare my behind-the-scenes to someone else's highlight reel.,13+,self-worth,183
+I am becoming someone I can rely on.,13+,independence,184
+I can sit with discomfort without running from it.,13+,resilience,185
+It's fine to cry. It doesn't undo my strength.,13+,emotional-calm,186
+"I keep my promises, especially the small ones.",13+,kindness-character,187
+I can be myself around the right people.,13+,friendship,188
+I notice beauty without needing to photograph it.,13+,gratitude,189
+I explore ideas the way others explore places.,13+,curiosity,190
+I belong to people who would drop everything for me.,13+,belonging,191
+Chores are not punishment. They are my share of the house.,13+,teamwork,192
+"We don't talk every day, but I'd drop everything for them.",13+,sibling-love,193
+I prepare today so tomorrow isn't a scramble.,13+,responsibility,194
+I choose to show up instead of hiding.,13+,confidence,195
+"I am worthy of good things, not just hard things.",13+,self-worth,196
+I don't wait for the perfect moment — I make a plan and go.,13+,independence,197
+"A setback is just a plot twist, not the ending.",13+,resilience,198
+I check in with myself the way I'd check on a friend.,13+,emotional-calm,199
+I choose patience over being right in an argument.,13+,kindness-character,200
+"Loneliness is temporary; connection takes effort, and I put it in.",13+,friendship,201
+I am thankful for second chances.,13+,gratitude,202
+I am allowed to change my mind when I learn more.,13+,curiosity,203
+I carry my family's strength with me wherever I go.,13+,belonging,204
+I celebrate my friends' wins like they are mine.,13+,teamwork,205
+My brother's success doesn't take away from mine.,13+,sibling-love,206
+"Doing my best is a habit, not a mood.",13+,responsibility,207
+My opinion is allowed to take up space.,13+,confidence,208
+I can be proud of myself quietly.,13+,self-worth,209
+I can navigate unfamiliar places and situations.,13+,independence,210
+"I recover at my own pace, and that's fine.",13+,resilience,211
+"Anxiety is a signal, not a sentence.",13+,emotional-calm,212
+I don't laugh at jokes that punch down.,13+,kindness-character,213
+I celebrate my friends' wins like they're my own.,13+,friendship,214
+Gratitude is my reset button.,13+,gratitude,215
+I seek out perspectives different from mine.,13+,curiosity,216
+"I am accepted here — the real me, not the polished version.",13+,belonging,217
+A team is only as strong as its weakest moment. I don't quit on mine.,13+,teamwork,218
+"I tell my siblings I love them, even if it's awkward.",13+,sibling-love,219
+I take pride in being someone others can lean on.,13+,responsibility,220
+I don't need everyone to agree with me.,13+,confidence,221
+I don't need a reason to deserve rest.,13+,self-worth,222
+I take care of my own responsibilities without being asked.,13+,independence,223
+I don't have to be okay right now to be okay eventually.,13+,resilience,224
+I can hold two feelings at once and still be fine.,13+,emotional-calm,225
+I make room for people who are different from me.,13+,kindness-character,226
+I don't compete with my friends — I grow with them.,13+,friendship,227
+I don't need more to be happy right now.,13+,gratitude,228
+Learning is not just for school — it's for life.,13+,curiosity,229
+"My family sees me trying, and that counts.",13+,belonging,230
+"I apologize when I am wrong, even when it is uncomfortable.",13+,teamwork,231
+"Growing up, my siblings were my first real friends.",13+,sibling-love,232
+"If it's my job, it's done right. No shortcuts.",13+,responsibility,233
+I can do hard things while scared.,13+,confidence,234
+"I am not ""too much"" — I am exactly right for the right people.",13+,self-worth,235
+Independence means I get to choose my direction.,13+,independence,236
+Pain passes. I remain.,13+,resilience,237
+I slow down when everything feels too fast.,13+,emotional-calm,238
+Integrity means my words and actions match.,13+,kindness-character,239
+I can handle small talk; it often leads somewhere real.,13+,friendship,240
+"I appreciate my own effort, not just results.",13+,gratitude,241
+I pay attention; the world is interesting if I look.,13+,curiosity,242
+"I have a seat at this table, no matter what.",13+,belonging,243
+I make room for the quiet kid. Everyone deserves a seat.,13+,teamwork,244
+I protect my little sister without making her feel small.,13+,sibling-love,245
+I respect my own time by not wasting it.,13+,responsibility,246
+I give myself credit for how far I've come.,13+,confidence,247
+My existence doesn't require justification.,13+,self-worth,248
+I learn from my own mistakes instead of fearing them.,13+,independence,249
+I learn the lesson and leave the regret.,13+,resilience,250
+I don't have to smile through everything.,13+,emotional-calm,251
+I am kind to strangers and rivals alike.,13+,kindness-character,252
+I am loyal without losing myself.,13+,friendship,253
+I am grateful for the friends who stayed.,13+,gratitude,254
+I take things apart to see how they work.,13+,curiosity,255
+We look out for each other — that's what we do.,13+,belonging,256
+"Leadership is serving the team, not bossing it.",13+,teamwork,257
+Family is the team I never get traded from.,13+,sibling-love,258
+Responsibility isn't a burden. It's proof I'm growing up.,13+,responsibility,259
+I am capable of more than my worst day suggested.,13+,confidence,260
+I treat myself like someone I'm responsible for.,13+,self-worth,261
+I can stand alone when my values require it.,13+,independence,262
+I am harder to break than I look.,13+,resilience,263
+Peace is something I can practice.,13+,emotional-calm,264
+I tell the truth even when a lie would be easier.,13+,kindness-character,265
+I give compliments freely and mean them.,13+,friendship,266
+Today I choose to focus on what went right.,13+,gratitude,267
+"I am curious about people, not just topics.",13+,curiosity,268
+I am someone's favorite person to come home to.,13+,belonging,269
+"At the end of the day, I want people to say I was solid.",13+,teamwork,270
+I hope my siblings know they can always call me.,13+,sibling-love,271
+I earn trust by doing what I said I'd do.,13+,responsibility,272
+I walk into rooms like I belong there.,13+,confidence,273
+I am allowed to outgrow people who make me feel small.,13+,self-worth,274
+I build my own life one decision at a time.,13+,independence,275
+"When plans fall apart, I make new ones.",13+,resilience,276
+I let go of what I can't control — starting today.,13+,emotional-calm,277
+I forgive people — mostly for my own peace.,13+,kindness-character,278
+I can eat alone and be perfectly fine — and still enjoy company.,13+,friendship,279
+I thank my past self for getting me here.,13+,gratitude,280
+I don't need to be the smartest — I need to stay curious.,13+,curiosity,281
+Knowing where I come from helps me know where I'm going.,13+,belonging,282
+I can disagree with someone I respect.,13+,confidence,283
+What I feel inside counts more than how I look outside.,13+,self-worth,284
+I don't need constant approval to move forward.,13+,independence,285
+I can cry about it and still handle it.,13+,resilience,286
+My mind can race; I don't have to chase it.,13+,emotional-calm,287
+I leave places better than I found them.,13+,kindness-character,288
+I choose friends who make me want to be better.,13+,friendship,289
+"I notice when someone is kind to me, and I remember it.",13+,gratitude,290
+I learn from failure faster than from success.,13+,curiosity,291
+I don't have to be far from home to feel its pull.,13+,belonging,292
+My potential isn't decided by anyone else's opinion.,13+,confidence,293
+I choose people who see my worth clearly.,13+,self-worth,294
+I am capable of running my own day.,13+,independence,295
+I don't let one loss decide the whole game.,13+,resilience,296
+I am allowed to step away and reset.,13+,emotional-calm,297
+I don't need credit to do good.,13+,kindness-character,298
+I don't chase people who don't choose me back.,13+,friendship,299
+I am grateful I get to try again tomorrow.,13+,gratitude,300
+I follow my interests even when they're unusual.,13+,curiosity,301
+"I am loved in my worst moments, not just my best.",13+,belonging,302
+I start before I feel ready.,13+,confidence,303
+I am not behind; I'm on my own timeline.,13+,self-worth,304
+I trust my judgment even when it's unpopular.,13+,independence,305
+I have been through worse and came out wiser.,13+,resilience,306
+"Feelings are visitors, not residents.",13+,emotional-calm,307
+I treat my family with the same respect I show my friends.,13+,kindness-character,308
+I show up for the people I care about.,13+,friendship,309
+Contentment is a skill I practice daily.,13+,gratitude,310
+I ask better questions than I did last year.,13+,curiosity,311
+Family means I never start from zero.,13+,belonging,312
+I am allowed to want big things.,13+,confidence,313
+I can love who I'm becoming while accepting who I am.,13+,self-worth,314
+I can start over somewhere new and be fine.,13+,independence,315
+"Giving up is the only real failure, and I don't do that.",13+,resilience,316
+"I treat my bad moods with patience, not punishment.",13+,emotional-calm,317
+"Being a good person is a daily practice, not a title.",13+,kindness-character,318
+Vulnerability with the right people builds real closeness.,13+,friendship,319
+I appreciate the quiet moments too.,13+,gratitude,320
+Knowledge compounds — small learning adds up.,13+,curiosity,321
+"I bring my whole self home, and it's welcome.",13+,belonging,322
+What I bring to the table is enough.,13+,confidence,323
+"I matter, even on ordinary days.",13+,self-worth,324
+My life is mine to shape.,13+,independence,325
+Tomorrow gets a clean slate from me.,13+,resilience,326
+"Calm is a skill, and I'm getting better at it.",13+,emotional-calm,327
+I am someone others can count on.,13+,kindness-character,328
+I am a friend worth having.,13+,friendship,329
+"I end today thankful, whatever it brought.",13+,gratitude,330
+"I stay teachable, no matter how much I know.",13+,curiosity,331
+"Wherever I go, I carry belonging with me.",13+,belonging,332

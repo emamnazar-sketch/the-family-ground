@@ -286,7 +286,7 @@
       var sb = getClient();
       var user = await TFG.getUser();
       if (!user) return { kid: null };
-      var res = await sb.from("kid_profiles").select("id, parent_id, kid_label").eq("id", user.id).maybeSingle();
+      var res = await sb.from("kid_profiles").select("id, parent_id, kid_label, age_band").eq("id", user.id).maybeSingle();
       if (res.error) return { error: friendlyError(res.error) };
       return { kid: res.data || null };
     } catch (e) {
@@ -368,7 +368,7 @@
       var user = await TFG.getUser();
       if (!user) return { error: "Please log in first." };
       var kidsRes = await sb.from("kid_profiles")
-        .select("id, kid_label, created_at").eq("parent_id", user.id).order("created_at", { ascending: true });
+        .select("id, kid_label, age_band, created_at").eq("parent_id", user.id).order("created_at", { ascending: true });
       if (kidsRes.error) return { error: friendlyError(kidsRes.error) };
       var codesRes = await sb.from("invite_codes")
         .select("id, code, kid_label, is_active, created_at").eq("parent_id", user.id).eq("is_active", true)
@@ -842,6 +842,140 @@
       return { trialEndsAt: res.data };
     } catch (e) {
       return { error: friendlyError(e) };
+    }
+  };
+
+  /* ---------------- Daily affirmations ---------------- */
+
+  TFG.AFFIRMATION_BANDS = ["4-6", "7-9", "10-12", "13+"];
+
+  // Guess a band from a free-text kid label like "Age 9". Returns null if no number found.
+  TFG.bandForLabel = function (label) {
+    var m = String(label || "").match(/\d+/);
+    if (!m) return null;
+    var age = parseInt(m[0], 10);
+    if (age <= 6) return "4-6";
+    if (age <= 9) return "7-9";
+    if (age <= 12) return "10-12";
+    return "13+";
+  };
+
+  // Whole-day index, stable across the day in any timezone.
+  TFG.todayIndex = function () {
+    return Math.floor(Date.now() / 86400000);
+  };
+
+  // Deterministic daily pick: 3 consecutive items from the band's rotation,
+  // wrapping around. Same 3 all day for every kid in the band.
+  TFG.pickDailyAffirmations = function (list, count) {
+    list = list || [];
+    count = count || 3;
+    if (!list.length) return [];
+    var out = [];
+    var start = (TFG.todayIndex() * count) % list.length;
+    for (var i = 0; i < count && i < list.length; i++) {
+      out.push(list[(start + i) % list.length]);
+    }
+    return out;
+  };
+
+  TFG.getAffirmations = async function (band) {
+    try {
+      var sb = getClient();
+      var res = await sb.from("affirmations")
+        .select("id, text, pillar, sort_order")
+        .eq("age_band", band)
+        .order("sort_order", { ascending: true });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { affirmations: res.data || [] };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Kid taps "I said it".
+  TFG.sayAffirmation = async function (affirmationId) {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var today = new Date().toISOString().slice(0, 10);
+      var res = await sb.from("affirmation_checkins").upsert(
+        { kid_id: user.id, affirmation_id: affirmationId, said_on: today },
+        { onConflict: "kid_id,affirmation_id,said_on" }
+      );
+      if (res.error) return { error: friendlyError(res.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Kid's own check-ins for today: { affirmationId: true }.
+  TFG.getMyAffirmationCheckins = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { said: {} };
+      var today = new Date().toISOString().slice(0, 10);
+      var res = await sb.from("affirmation_checkins")
+        .select("affirmation_id").eq("kid_id", user.id).eq("said_on", today);
+      if (res.error) return { error: friendlyError(res.error) };
+      var said = {};
+      (res.data || []).forEach(function (r) { said[r.affirmation_id] = true; });
+      return { said: said };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Parent sets a kid's age band.
+  TFG.setKidAgeBand = async function (kidId, band) {
+    try {
+      var sb = getClient();
+      var res = await sb.from("kid_profiles").update({ age_band: band || null }).eq("id", kidId);
+      if (res.error) return { error: friendlyError(res.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Parent view: today's check-ins across all their kids: { kidId: { affirmationId: true } }.
+  TFG.getKidsAffirmationStatus = async function () {
+    try {
+      var sb = getClient();
+      var user = await TFG.getUser();
+      if (!user) return { error: "Please log in first." };
+      var kidsRes = await sb.from("kid_profiles").select("id").eq("parent_id", user.id);
+      if (kidsRes.error) return { error: friendlyError(kidsRes.error) };
+      var ids = (kidsRes.data || []).map(function (k) { return k.id; });
+      if (!ids.length) return { status: {} };
+      var today = new Date().toISOString().slice(0, 10);
+      var res = await sb.from("affirmation_checkins")
+        .select("kid_id, affirmation_id").in("kid_id", ids).eq("said_on", today);
+      if (res.error) return { error: friendlyError(res.error) };
+      var status = {};
+      (res.data || []).forEach(function (r) {
+        (status[r.kid_id] = status[r.kid_id] || {})[r.affirmation_id] = true;
+      });
+      return { status: status };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Read one aloud (for little kids who can't read yet).
+  TFG.speakAffirmation = function (text) {
+    try {
+      if (!("speechSynthesis" in window)) return false;
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+      return true;
+    } catch (e) {
+      return false;
     }
   };
 

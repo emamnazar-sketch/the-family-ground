@@ -651,3 +651,19 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 .why-box li::before { content: "\2713"; position: absolute; left: 0; color: var(--sage); font-weight: 900; font-size: 1.2rem; }
 .why-box .why-fine { color: var(--cream); opacity: .85; font-size: .95rem; margin: 12px 0 0; }
 .why-box .why-dad { color: var(--cream); margin: 12px 0 0; font-style: italic; }
+
+/* ---------- Daily affirmations ---------- */
+.affirm-card {
+  background: linear-gradient(135deg, var(--forest) 0%, #1a6b52 100%);
+  color: var(--cream); border-radius: 20px;
+  padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow);
+}
+.affirm-card.said { opacity: 0.75; }
+.affirm-text {
+  font-family: var(--font-head); font-weight: 800; font-size: 1.25rem;
+  line-height: 1.45; margin: 0;
+}
+.affirm-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.affirm-card .btn-outline { border-color: var(--sage); color: var(--cream); }
+.affirm-card .btn[disabled] { background: var(--sage); color: var(--forest); border-color: var(--sage); }
+.link-btn { background: none; border: none; color: var(--forest); font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 0.95rem; padding: 0; }

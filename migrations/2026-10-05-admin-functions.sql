@@ -63,7 +63,7 @@ begin
   end if;
   return query
     select u.id,
-           u.email,
+           u.email::text,
            p.full_name,
            u.created_at,
            u.last_sign_in_at,

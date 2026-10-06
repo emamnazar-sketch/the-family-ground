@@ -335,8 +335,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="js/config.js?v=20261005b"></script>
-<script src="js/app.js?v=20261005b"></script>
+<script src="js/config.js?v=20261005c"></script>
+<script src="js/app.js?v=20261005c"></script>
 <script>
 (function () {
   function lines(value) {
@@ -767,7 +767,7 @@
       }).join("");
   }
 
-  function kidCardHTML(kid, activeCode, chores) {
+  function kidCardHTML(kid, activeCode, chores, affirm) {
     var waiting = chores.filter(function (c) { return c.status === "submitted"; });
     var doing = chores.filter(function (c) { return c.status === "assigned" || c.status === "resubmit"; });
     var done = chores.filter(function (c) { return c.status === "approved"; });
@@ -810,6 +810,31 @@
         '<p class="invite-code sm">' + TFG.esc(activeCode.code) + "</p>"
       : '<p class="muted small" style="margin: 12px 0;">No unused code for this kid.</p>';
 
+    function bandOptions(selected) {
+      var opts = [["", "Auto"], ["4-6", "Ages 4–6"], ["7-9", "Ages 7–9"], ["10-12", "Ages 10–12"], ["13+", "Ages 13+"]];
+      return opts.map(function (o) {
+        return '<option value="' + o[0] + '"' + (String(selected || "") === o[0] ? " selected" : "") + ">" + o[1] + "</option>";
+      }).join("");
+    }
+
+    var affirmBlock = "";
+    if (affirm) {
+      affirmBlock =
+        '<h4 class="mt-2">Today\'s affirmations</h4>' +
+        '<p class="muted small" style="margin: 0 0 6px;">Age group: ' +
+          '<select class="form-input" style="width:auto;display:inline-block;padding:4px 8px;" data-age-band-for="' + TFG.esc(kid.id) + '">' +
+            bandOptions(kid.age_band) +
+          "</select>" +
+          (kid.age_band ? "" : ' <span class="muted small">(auto-detected)</span>') +
+        "</p>" +
+        (affirm.daily.length
+          ? affirm.daily.map(function (a) {
+              var said = affirm.said[a.id];
+              return '<p class="muted small" style="margin:4px 0;">' + (said ? "✓ " : "○ ") + TFG.esc(a.text) + "</p>";
+            }).join("")
+          : '<p class="muted small">No affirmations in this age group yet.</p>');
+    }
+
     return (
       '<div class="panel-card kid-card">' +
         '<div class="kid-card-head">' +
@@ -819,6 +844,7 @@
         "</div>" +
         codeBlock +
         '<button type="button" class="btn btn-outline btn-sm" data-kid-newcode="' + TFG.esc(kid.kid_label || "") + '">New code</button>' +
+        affirmBlock +
         '<h4 class="mt-2">Waiting for review (' + waiting.length + ")</h4>" +
         (waiting.length ? waiting.map(function (c) { return choreRow(c, true); }).join("")
           : '<p class="muted small">Nothing waiting right now.</p>') +
@@ -843,6 +869,22 @@
     var codes = res.codes || [];
     kidsCache = kids;
 
+    // Affirmations: today's 3 per kid + said status (non-fatal if it fails).
+    var affStatus = {};
+    var affirmByBand = {};
+    try {
+      var stRes = await TFG.getKidsAffirmationStatus();
+      affStatus = (stRes && stRes.status) || {};
+      var bandsNeeded = {};
+      kids.forEach(function (k) {
+        bandsNeeded[k.age_band || TFG.bandForLabel(k.kid_label) || "7-9"] = true;
+      });
+      for (var bnd in bandsNeeded) {
+        var ar = await TFG.getAffirmations(bnd);
+        affirmByBand[bnd] = (ar && ar.affirmations) || [];
+      }
+    } catch (e) { /* affirmations are optional; chores still render */ }
+
     var choresRes = await TFG.getAssignedChores();
     var assigned = (choresRes && choresRes.chores) || [];
     var byKid = {};
@@ -860,7 +902,12 @@
     } else {
       html = kids.map(function (kid) {
         var activeCode = codes.filter(function (cd) { return (cd.kid_label || "") === (kid.kid_label || ""); })[0] || null;
-        return kidCardHTML(kid, activeCode, byKid[kid.id] || []);
+        var band = kid.age_band || TFG.bandForLabel(kid.kid_label) || "7-9";
+        var affirm = {
+          daily: TFG.pickDailyAffirmations(affirmByBand[band] || [], 3),
+          said: affStatus[kid.id] || {}
+        };
+        return kidCardHTML(kid, activeCode, byKid[kid.id] || [], affirm);
       }).join("");
       html += pendingCodes.map(function (cd) {
         return (
@@ -920,8 +967,7 @@
     });
 
     // Delegated clicks: remove kid, new code, approve, ask to redo, delete chore.
-    document.getElementById("kidsList").addEventListener("click", async function (e) {
-      var removeBtn = e.target.closest("[data-kid-remove]");
+    document.getElementById("kidsList").addEventListener("click", async function (e) {      var removeBtn = e.target.closest("[data-kid-remove]");
       var newCodeBtn = e.target.closest("[data-kid-newcode]");
       var approveBtn = e.target.closest("[data-review-approve]");
       var redoBtn = e.target.closest("[data-review-redo]");
@@ -972,6 +1018,15 @@
           await loadKids();
         }
       }
+    });
+
+    // Age group selector per kid.
+    document.getElementById("kidsList").addEventListener("change", async function (e) {
+      var sel = e.target.closest("[data-age-band-for]");
+      if (!sel) return;
+      var r = await TFG.setKidAgeBand(sel.getAttribute("data-age-band-for"), sel.value);
+      if (r && r.error) { alert(TFG.friendlyError(r.error)); return; }
+      await loadKids();
     });
 
     loadAssignOptions();

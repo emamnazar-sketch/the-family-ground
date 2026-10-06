@@ -72,7 +72,12 @@
 
       <p class="form-error" id="kidError" style="margin: 0 0 16px;"></p>
 
-      <h2>Things to do</h2>
+      <h2>Today's affirmations</h2>
+      <p class="muted" style="margin: -6px 0 12px;">Say each one out loud — then tap "I said it."</p>
+      <div id="affirmList"></div>
+      <p style="margin: 8px 0 0;"><button type="button" class="link-btn" id="affirmShuffle">Show me different ones</button></p>
+
+      <h2 class="mt-4">Things to do</h2>
       <div id="todoList"></div>
 
       <h2 class="mt-4">Try again</h2>
@@ -99,8 +104,8 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261005b"></script>
-<script src="js/app.js?v=20261005b"></script>
+<script src="js/config.js?v=20261005c"></script>
+<script src="js/app.js?v=20261005c"></script>
 <script>
 (function () {
   var errBox = document.getElementById("kidError");
@@ -163,8 +168,42 @@
     );
   }
 
-  async function loadKidChores() {
-    var res = await TFG.getMyChores();
+  var affirmPool = [];
+  var affirmSaid = {};
+  var affirmCurrent = [];
+
+  function affirmCardHTML(a) {
+    var said = !!affirmSaid[a.id];
+    return (
+      '<div class="affirm-card' + (said ? " said" : "") + '">' +
+        '<p class="affirm-text">' + TFG.esc(a.text) + "</p>" +
+        '<div class="affirm-actions">' +
+          '<button type="button" class="btn btn-outline btn-sm" data-affirm-hear="' + TFG.esc(a.text) + '">Hear it</button>' +
+          (said
+            ? '<button type="button" class="btn btn-sm" disabled>Said ✓</button>'
+            : '<button type="button" class="btn btn-forest btn-sm" data-affirm-say="' + TFG.esc(String(a.id)) + '">I said it</button>') +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderAffirms(list) {
+    affirmCurrent = list;
+    document.getElementById("affirmList").innerHTML = list.length
+      ? list.map(affirmCardHTML).join("")
+      : '<p class="muted">No affirmations yet — check back soon.</p>';
+  }
+
+  async function loadAffirmations(kid) {
+    var band = (kid && kid.age_band) || TFG.bandForLabel(kid && kid.kid_label) || "7-9";
+    var res = await TFG.getAffirmations(band);
+    affirmPool = (res && res.affirmations) || [];
+    var chk = await TFG.getMyAffirmationCheckins();
+    affirmSaid = (chk && chk.said) || {};
+    renderAffirms(TFG.pickDailyAffirmations(affirmPool, 3));
+  }
+
+  async function loadKidChores() {    var res = await TFG.getMyChores();
     var chores = (res && res.chores) || [];
 
     var todo = chores.filter(function (c) { return c.status === "assigned"; });
@@ -245,7 +284,47 @@
       markDone(btn.getAttribute("data-mark-done"), btn.getAttribute("data-needs-photo") === "1", btn);
     });
 
+    // Affirmation buttons (delegated).
+    document.addEventListener("click", function (e) {
+      var hear = e.target.closest("[data-affirm-hear]");
+      if (hear) {
+        if (!TFG.speakAffirmation(hear.getAttribute("data-affirm-hear"))) {
+          showError("Your browser could not read it aloud — please read it together.");
+        }
+        return;
+      }
+      var say = e.target.closest("[data-affirm-say]");
+      if (say) {
+        var aid = say.getAttribute("data-affirm-say");
+        say.disabled = true;
+        TFG.sayAffirmation(aid).then(function (r) {
+          if (r && r.error) {
+            showError(TFG.friendlyError(r.error));
+            say.disabled = false;
+            return;
+          }
+          affirmSaid[aid] = true;
+          renderAffirms(affirmCurrent);
+        });
+        return;
+      }
+      if (e.target.closest("#affirmShuffle")) {
+        var said = affirmSaid;
+        var pool = affirmPool.filter(function (a) { return !said[a.id]; });
+        var pick = [];
+        while (pick.length < 3 && pool.length) {
+          pick.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+        }
+        // Fill from already-said ones if the pool ran out.
+        affirmPool.forEach(function (a) {
+          if (pick.length < 3 && pick.indexOf(a) === -1) pick.push(a);
+        });
+        renderAffirms(pick.slice(0, 3));
+      }
+    });
+
     await loadKidChores();
+    await loadAffirmations(res.kid);
   })();
 })();
 </script>
