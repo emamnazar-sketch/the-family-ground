@@ -532,16 +532,15 @@
       // Already joined before? Go straight in.
       var existing = await sb.from("kid_profiles").select("id").eq("id", user.id).maybeSingle();
       if (existing.data) return { kid: existing.data, already: true };
-      // Redeem atomically: validates the code and burns it in one step.
+      // Redeem atomically: validates the code, burns it, and creates the
+      // kid_profiles row (including reattach) in one step.
       var redeemed = await sb.rpc("redeem_invite_code", { p_code: code });
       if (redeemed.error) return { error: "That code did not work. Ask your parent for a new one." };
       var row = redeemed.data && redeemed.data[0];
       if (!row || !row.parent_id) return { error: "That code did not work. Ask your parent for a new one." };
-      var ins = await sb.from("kid_profiles")
-        .insert({ id: user.id, parent_id: row.parent_id, kid_label: row.kid_label || "" })
-        .select().single();
-      if (ins.error) return { error: friendlyError(ins.error) };
-      return { kid: ins.data };
+      var kp = await sb.from("kid_profiles").select("id").eq("id", user.id).maybeSingle();
+      if (kp.error || !kp.data) return { error: "Something went wrong setting up. Please try again." };
+      return { kid: kp.data };
     } catch (e) {
       return { error: friendlyError(e) };
     }
