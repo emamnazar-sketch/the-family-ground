@@ -38,6 +38,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="images/logo.png" type="image/png">
 <link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Family Ground">
+<link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
 </head>
 <body>
 
@@ -70,6 +76,15 @@
           <a class="btn btn-outline btn-sm" href="feedback.html">Give feedback</a>
           <button type="button" class="btn btn-outline btn-sm" data-action="sign-out">Sign out</button>
         </div>
+      </div>
+
+      <div class="install-banner" id="installBanner" hidden>
+        <p style="margin:0;"><b>Get the app.</b> Install The Family Ground for one-tap access.</p>
+        <div class="install-actions">
+          <button type="button" class="btn btn-forest btn-sm" data-install-app>Install app</button>
+          <button type="button" class="link-btn" data-install-dismiss>Not now</button>
+        </div>
+        <p class="muted small" data-install-ios hidden style="margin:8px 0 0;">On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>
       </div>
 
       <!-- START HERE: first-week onboarding + this weekend -->
@@ -335,8 +350,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="js/config.js?v=20261005d"></script>
-<script src="js/app.js?v=20261005d"></script>
+<script src="js/config.js?v=20261005e"></script>
+<script src="js/app.js?v=20261005e"></script>
 <script>
 (function () {
   function lines(value) {

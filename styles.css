@@ -667,3 +667,12 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 .affirm-card .btn-outline { border-color: var(--sage); color: var(--cream); }
 .affirm-card .btn[disabled] { background: var(--sage); color: var(--forest); border-color: var(--sage); }
 .link-btn { background: none; border: none; color: var(--forest); font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 0.95rem; padding: 0; }
+
+/* ---------- PWA install banner ---------- */
+.install-banner {
+  background: var(--card); border: 2px solid var(--sage); border-radius: 18px;
+  padding: 16px 20px; margin: 0 0 20px; box-shadow: var(--shadow);
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+}
+.install-banner[hidden] { display: none; }
+.install-actions { display: flex; gap: 12px; align-items: center; }

@@ -978,6 +978,69 @@
     }
   };
 
+  /* ---------------- PWA: service worker + install prompt ---------------- */
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/sw.js").catch(function () {});
+    });
+  }
+
+  var deferredInstallPrompt = null;
+
+  TFG.installApp = async function () {
+    try {
+      if (!deferredInstallPrompt) return { error: "not-available" };
+      deferredInstallPrompt.prompt();
+      var choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      return { accepted: choice && choice.outcome === "accepted" };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
+  // Shows the [data-install-app] banner when the browser offers installation,
+  // or iOS "Add to Home Screen" instructions on iPhones/iPads.
+  TFG.initInstallBanner = function () {
+    var banner = document.getElementById("installBanner");
+    if (!banner) return;
+    try {
+      if (localStorage.getItem("tfg-install-dismissed") === "1") return;
+    } catch (e) {}
+    var btn = banner.querySelector("[data-install-app]");
+    var iosNote = banner.querySelector("[data-install-ios]");
+    var dismiss = banner.querySelector("[data-install-dismiss]");
+    function hide() {
+      banner.hidden = true;
+      try { localStorage.setItem("tfg-install-dismissed", "1"); } catch (e) {}
+    }
+    if (dismiss) dismiss.addEventListener("click", hide);
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent || "") && !window.MSStream;
+    var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
+    if (standalone) return; // Already installed.
+    if (isIOS) {
+      if (iosNote) iosNote.hidden = false;
+      if (btn) btn.hidden = true;
+      banner.hidden = false;
+      return;
+    }
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      banner.hidden = false;
+    });
+    if (btn) btn.addEventListener("click", function () {
+      TFG.installApp().then(function () { hide(); });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", TFG.initInstallBanner);
+  } else {
+    TFG.initInstallBanner();
+  }
+
   // Starts Stripe checkout. Wired up when Amam connects Stripe;
   // until then the paywall shows the honest "opening soon" state.
   TFG.startCheckout = async function () {
