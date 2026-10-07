@@ -997,7 +997,14 @@
         var choresTab = document.querySelector('.tab[data-tab-target="panel-chores"]');
         if (choresTab) choresTab.click();
         var assignSel = document.getElementById("assignTo");
-        if (assignSel && kidId) assignSel.value = kidId;
+        if (assignSel && kidId) {
+          assignSel.value = kidId;
+          // Keep the "Who is it for?" label in sync so the parent never
+          // has to answer the same question twice.
+          if (assignSel.value === kidId && assignSel.selectedIndex >= 0) {
+            document.getElementById("kidLabel").value = assignSel.options[assignSel.selectedIndex].text;
+          }
+        }
         var form = document.getElementById("choreForm");
         if (form) form.scrollIntoView({ behavior: "smooth", block: "start" });
         var titleInput = document.getElementById("choreTitle");
@@ -1169,6 +1176,20 @@
     });
   }
   /* ---------------- Init (guarded) ---------------- */
+  // Keep "Who is it for?" in sync with the "Assign to" menu: picking a kid
+  // fills the label automatically; switching back to Unassigned clears it.
+  // (The menu is what actually routes the chore to the kid's dashboard.)
+  document.getElementById("assignTo").addEventListener("change", function () {
+    var sel = document.getElementById("assignTo");
+    var labelInput = document.getElementById("kidLabel");
+    if (!sel || !labelInput) return;
+    if (sel.value && sel.selectedIndex >= 0) {
+      labelInput.value = sel.options[sel.selectedIndex].text;
+    } else {
+      labelInput.value = "";
+    }
+  });
+
   // Tab switching (Chore tracker / Family agreement / Kids).
   document.querySelectorAll(".tab").forEach(function (btn) {
     btn.addEventListener("click", function () {
