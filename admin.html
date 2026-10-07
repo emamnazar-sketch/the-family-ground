@@ -284,23 +284,36 @@
       var okBox = document.getElementById("acSuccess");
       errBox.classList.remove("visible");
       okBox.classList.remove("visible");
-      var code = document.getElementById("acText").value;
-      var days = parseInt(document.getElementById("acDays").value, 10) || 30;
-      var usesRaw = document.getElementById("acUses").value.trim();
-      var maxUses = usesRaw === "" ? null : (parseInt(usesRaw, 10) || null);
-      var note = document.getElementById("acNote").value.trim();
-      var r = await TFG.adminCreateBetaCode(code, days, maxUses, note);
-      if (r.error) {
-        errBox.textContent = TFG.friendlyError(r.error);
+      var btn = e.target.querySelector('button[type="submit"]');
+      // Never fail silently: any unexpected error lands in the red box.
+      try {
+        if (!window.TFG || typeof TFG.adminCreateBetaCode !== "function") {
+          throw new Error("This page is out of date — please reload it and try again.");
+        }
+        var code = document.getElementById("acText").value;
+        var days = parseInt(document.getElementById("acDays").value, 10) || 30;
+        var usesRaw = document.getElementById("acUses").value.trim();
+        var maxUses = usesRaw === "" ? null : (parseInt(usesRaw, 10) || null);
+        var note = document.getElementById("acNote").value.trim();
+        if (btn) btn.disabled = true;
+        var r = await TFG.adminCreateBetaCode(code, days, maxUses, note);
+        if (btn) btn.disabled = false;
+        if (r.error) {
+          errBox.textContent = TFG.friendlyError(r.error);
+          errBox.classList.add("visible");
+          return;
+        }
+        okBox.textContent = "Code " + (r.code && r.code.code) + " created — share it with a parent.";
+        okBox.classList.add("visible");
+        e.target.reset();
+        document.getElementById("acDays").value = "30";
+        loadCodes();
+        loadStats();
+      } catch (err) {
+        if (btn) btn.disabled = false;
+        errBox.textContent = (err && err.message) || "Something went wrong. Please try again.";
         errBox.classList.add("visible");
-        return;
       }
-      okBox.textContent = "Code " + (r.code && r.code.code) + " created — share it with a parent.";
-      okBox.classList.add("visible");
-      e.target.reset();
-      document.getElementById("acDays").value = "30";
-      loadCodes();
-      loadStats();
     });
   })();
 })();
