@@ -822,6 +822,17 @@
     }
   };
 
+  TFG.adminDeleteBetaCode = async function (id) {
+    try {
+      var sb = getClient();
+      var res = await sb.rpc("admin_delete_beta_code", { p_id: id });
+      if (res.error) return { error: friendlyError(res.error) };
+      return { ok: true };
+    } catch (e) {
+      return { error: friendlyError(e) };
+    }
+  };
+
   TFG.adminStats = async function () {
     try {
       var sb = getClient();

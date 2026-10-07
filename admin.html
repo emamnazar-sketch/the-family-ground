@@ -141,7 +141,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006a"></script>
+<script src="js/app.js?v=20261006b"></script>
 <script>
 (function () {
   function fmtDate(iso) {
@@ -243,9 +243,13 @@
         "<p class='muted small' style='margin:8px 0 0;'>" + c.duration_days + " free days &middot; " +
         TFG.esc(uses) + " &middot; " + (c.is_active ? "Active" : "Off") +
         (c.note ? " &middot; " + TFG.esc(c.note) : "") + "</p>";
+      var btnRow = document.createElement("div");
+      btnRow.style.display = "flex";
+      btnRow.style.gap = "8px";
+      btnRow.className = "mt-2";
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "btn btn-outline btn-sm mt-2";
+      btn.className = "btn btn-outline btn-sm";
       btn.textContent = c.is_active ? "Turn off" : "Turn on";
       btn.addEventListener("click", async function () {
         btn.disabled = true;
@@ -253,7 +257,23 @@
         if (t.error) { alert(TFG.friendlyError(t.error)); } else { loadCodes(); }
         btn.disabled = false;
       });
-      card.appendChild(btn);
+      btnRow.appendChild(btn);
+      var delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "btn btn-outline btn-sm";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", async function () {
+        var usedNote = (c.used_count > 0)
+          ? " It was used " + c.used_count + " time" + (c.used_count === 1 ? "" : "s") + " — those parents keep their access."
+          : "";
+        if (!confirm("Delete code " + c.code + " permanently?" + usedNote)) return;
+        delBtn.disabled = true;
+        var d = await TFG.adminDeleteBetaCode(c.id);
+        if (d.error) { alert(TFG.friendlyError(d.error)); delBtn.disabled = false; }
+        else { loadCodes(); loadStats(); }
+      });
+      btnRow.appendChild(delBtn);
+      card.appendChild(btnRow);
       list.appendChild(card);
     });
   }
