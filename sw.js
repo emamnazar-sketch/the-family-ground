@@ -1,5 +1,5 @@
 /* The Family Ground service worker: offline-first static assets, fresh HTML. */
-var CACHE = "tfg-v1";
+var CACHE = "tfg-v2";
 var STATIC_RE = /\.(css|js|png|jpg|jpeg|svg|webp|woff2?)(\?|$)/i;
 
 self.addEventListener("install", function (e) {
@@ -37,10 +37,14 @@ self.addEventListener("fetch", function (e) {
   }
 
   // Pages: network-first, fall back to cache when offline.
+  // The cache write is tied to the event lifetime so it also persists
+  // on browsers that kill service workers aggressively (iOS Safari).
   e.respondWith(
     fetch(e.request).then(function (res) {
       var copy = res.clone();
-      caches.open(CACHE).then(function (cache) { cache.put(e.request, copy); });
+      e.waitUntil(
+        caches.open(CACHE).then(function (cache) { return cache.put(e.request, copy); }).catch(function () {})
+      );
       return res;
     }).catch(function () {
       return caches.match(e.request);

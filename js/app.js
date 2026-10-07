@@ -1054,7 +1054,9 @@
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
       u.rate = 0.9;
-      window.speechSynthesis.speak(u);
+      // Safari drops speak() if it follows cancel() in the same task —
+      // a short delay keeps the read-aloud reliable there.
+      setTimeout(function () { window.speechSynthesis.speak(u); }, 60);
       return true;
     } catch (e) {
       return false;
@@ -1099,7 +1101,9 @@
       try { localStorage.setItem("tfg-install-dismissed", "1"); } catch (e) {}
     }
     if (dismiss) dismiss.addEventListener("click", hide);
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent || "") && !window.MSStream;
+    var ua = navigator.userAgent || "";
+    var isIOS = (/iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) && !window.MSStream;
     var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
     if (standalone) return; // Already installed.
     if (isIOS) {
