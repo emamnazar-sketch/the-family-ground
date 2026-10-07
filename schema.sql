@@ -225,9 +225,10 @@ begin
       and kp.kid_label = v_label
       and kp.id != v_uid
     limit 1;
-    -- Create the new row FIRST so the FKs are satisfied.
-    insert into public.kid_profiles (id, parent_id, kid_label)
-    values (v_uid, v_parent, v_label)
+    -- Create the new row FIRST so the FKs are satisfied (carry age_band over).
+    insert into public.kid_profiles (id, parent_id, kid_label, age_band)
+    select v_uid, v_parent, v_label, kp.age_band
+    from public.kid_profiles kp where kp.id = v_old_id
     on conflict (id) do nothing;
     update public.chores set assigned_to = v_uid where assigned_to = v_old_id;
     -- Move affirmation history BEFORE deleting the old row

@@ -290,7 +290,7 @@
   };
 
   /* ---------------- Parent / kid dashboards ----------------
-     Kids join with a one-time parent code via anonymous sign-in:
+     Kids join with a permanent parent code via anonymous sign-in:
      no email or phone needed for kids.
   ------------------------------------------------------ */
 
@@ -336,15 +336,16 @@
   // (A kid with a dead session lands on the code form — with the
   // reattach fix, a fresh code reconnects their existing kid row —
   // instead of the parent Google login.)
+  // The ?from=dashboard flag feeds kid-login's bounce-loop guard.
   TFG.requireKid = async function () {
     var session = await TFG.getSession();
     if (!session) {
-      window.location.href = "kid-login.html";
+      window.location.href = "kid-login.html?from=dashboard";
       return null;
     }
     var kp = await TFG.getKidProfile();
     if (!kp || !kp.kid) {
-      window.location.href = "kid-login.html";
+      window.location.href = "kid-login.html?from=dashboard";
       return null;
     }
     return { session: session, kid: kp.kid };
@@ -353,6 +354,9 @@
   TFG.signOutKid = async function () {
     try {
       var sb = getClient();
+      // Forget this device's remembered code too: on a shared tablet the
+      // next kid must join with their own code, not auto-rejoin as this one.
+      TFG.clearStoredKidCode();
       await sb.auth.signOut();
     } catch (e) { /* non-fatal */ }
     window.location.href = "kid-login.html";

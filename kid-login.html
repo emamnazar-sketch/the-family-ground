@@ -112,7 +112,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006d"></script>
+<script src="js/app.js?v=20261006e"></script>
 <script>
 (function () {
   var form = document.getElementById("kidCodeForm");
@@ -120,12 +120,22 @@
   var btn = document.getElementById("kidGoBtn");
 
   // Already joined on this device? Go straight to the kid dashboard.
+  // Bounce-loop guard: after 3 dashboard->login bounces, stop all
+  // automatic redirects/rejoins and just show the form (the dashboard
+  // clears the counter on every successful load).
   (async function () {
     var params = new URLSearchParams(window.location.search || "");
+    var bounce = 0;
+    try { bounce = parseInt(sessionStorage.getItem("tfg.bounce") || "0", 10) || 0; } catch (e) {}
+    var looping = params.get("from") === "dashboard" && bounce >= 3;
+    if (params.get("from") === "dashboard" && !looping) {
+      try { sessionStorage.setItem("tfg.bounce", String(bounce + 1)); } catch (e2) {}
+    }
     if (params.get("code_replaced") === "1") {
       var note0 = document.getElementById("codeReplacedNote");
       if (note0) note0.hidden = false;
     }
+    if (looping) return; // Show the plain form; manual code entry still works.
     var session = await TFG.getSession();
     if (session) {
       var kp = await TFG.getKidProfile();
