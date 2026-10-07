@@ -301,7 +301,7 @@
         <div class="tab-panel" id="panel-kids">
           <div class="panel-card">
             <h2 class="mt-0">Add a kid</h2>
-            <p class="muted">Your kid gets their own simple dashboard. They join with a one-time code from you &mdash; no email or phone needed for them.</p>
+            <p class="muted">Your kid gets their own simple dashboard. They join with their own permanent code from you &mdash; no email or phone needed for them.</p>
             <form id="addKidForm">
               <div class="form-row" style="align-items: end;">
                 <div class="form-group" style="margin-bottom: 0;">
@@ -319,7 +319,7 @@
               <p class="muted small" style="margin: 0 0 4px;">Have your kid scan this with their camera:</p>
               <div class="qr-slot" id="newCodeQR" style="margin: 8px 0;"></div>
               <p class="invite-code" id="newCodeValue" aria-live="polite"></p>
-              <p class="muted small" style="margin: 8px 0 0;">Opens their dashboard in the browser — no typing, no app. Each code works once.</p>
+              <p class="muted small" style="margin: 8px 0 0;">Opens their dashboard in the browser — no typing, no app. The code never expires.</p>
             </div>
           </div>
 
@@ -351,7 +351,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006c"></script>
+<script src="js/app.js?v=20261006d"></script>
 <script>
 (function () {
   function lines(value) {
@@ -820,10 +820,10 @@
     }
 
     var codeBlock = activeCode
-      ? '<p class="muted small" style="margin: 12px 0 2px;">Have them scan this (works once):</p>' +
+      ? '<p class="muted small" style="margin: 12px 0 2px;">Their permanent code — scan it once, it keeps working:</p>' +
         '<div class="qr-slot" data-code="' + TFG.esc(activeCode.code) + '"></div>' +
         '<p class="invite-code sm">' + TFG.esc(activeCode.code) + "</p>"
-      : '<p class="muted small" style="margin: 12px 0;">No unused code for this kid.</p>';
+      : '<p class="muted small" style="margin: 12px 0;">No code for this kid yet — tap New code below.</p>';
 
     function bandOptions(selected) {
       var opts = [["", "Auto"], ["4-6", "Ages 4–6"], ["7-9", "Ages 7–9"], ["10-12", "Ages 10–12"], ["13+", "Ages 13+"]];
@@ -931,7 +931,7 @@
         return (
           '<div class="panel-card kid-card">' +
             "<h3>" + TFG.esc(cd.kid_label || "Kid") + ' <span class="muted small">· not joined yet</span></h3>' +
-            '<p class="muted small" style="margin: 12px 0 2px;">Have them scan this with their camera (works once):</p>' +
+            '<p class="muted small" style="margin: 12px 0 2px;">Their permanent code — scan it once, it keeps working:</p>' +
             '<div class="qr-slot" data-code="' + TFG.esc(cd.code) + '"></div>' +
             '<p class="invite-code sm">' + TFG.esc(cd.code) + "</p>" +
             '<p class="muted small">Opens their dashboard in the browser — no typing needed.</p>' +
@@ -1024,6 +1024,8 @@
         return;
       }
       if (newCodeBtn) {
+        var newCodeLabel = newCodeBtn.getAttribute("data-kid-newcode") || "this kid";
+        if (!confirm("Give " + newCodeLabel + " a new code? The old code will stop working.")) return;
         var r2 = await TFG.newInviteCodeForKid(newCodeBtn.getAttribute("data-kid-newcode"));
         if (r2 && r2.error) { alert(TFG.friendlyError(r2.error)); return; }
         document.getElementById("newCodeValue").textContent = r2.invite.code;

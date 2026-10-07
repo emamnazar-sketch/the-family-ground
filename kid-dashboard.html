@@ -120,7 +120,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006c"></script>
+<script src="js/app.js?v=20261006d"></script>
 <script>
 (function () {
   var errBox = document.getElementById("kidError");
@@ -275,6 +275,13 @@
   }
 
   (async function () {
+    // Silent auto-rejoin first: if the login died but this device
+    // remembers the kid's permanent code, we're back in with no typing.
+    var es = await TFG.ensureKidSession();
+    if (es && es.codeDead) {
+      window.location.href = "kid-login.html?code_replaced=1";
+      return;
+    }
     var res = await TFG.requireKid();
     if (!res) return;
     var label = (res.kid && res.kid.kid_label) || "Kid";

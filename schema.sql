@@ -166,9 +166,11 @@ create policy "Anyone can read active codes"
   on public.invite_codes for select
   using (is_active = true);
 
--- invite_codes: single-use redemption happens through an atomic
--- SECURITY DEFINER function (avoids cross-user RLS update quirks and
--- double-redeem races). Kids call it via rpc("redeem_invite_code").
+-- invite_codes: PERMANENT codes (2026-10-06). Redemption happens through
+-- an atomic SECURITY DEFINER function (avoids cross-user RLS update quirks
+-- and double-redeem races). Kids call it via rpc("redeem_invite_code").
+-- Codes do NOT burn: rejoining (new device, dead session) reattaches the
+-- existing kid row. Parents revoke via is_active=false ("New code").
 drop policy if exists "Redeem active code" on public.invite_codes;
 drop policy if exists "Redeemers deactivate used code" on public.invite_codes;
 
@@ -179,17 +181,65 @@ security definer
 set search_path = public
 as $$
 declare
+  v_uid uuid := auth.uid();
   v_parent uuid;
   v_label text;
+  v_old_id uuid;
+  v_match_count int;
 begin
+  if v_uid is null then
+    raise exception 'Not signed in';
+  end if;
+
   select ic.parent_id, ic.kid_label into v_parent, v_label
   from public.invite_codes ic
   where ic.code = p_code and ic.is_active = true
   for update;
   if not found then
-    raise exception 'Invalid or used code';
+    raise exception 'Invalid or replaced code';
   end if;
-  update public.invite_codes set is_active = false where code = p_code;
+  -- 2026-10-06: codes are permanent — no burn on redeem.
+
+  -- Already has a row (double-submit / same-session rejoin)? Return it.
+  perform 1 from public.kid_profiles kp where kp.id = v_uid;
+  if found then
+    parent_id := v_parent;
+    kid_label := v_label;
+    return next;
+    return;
+  end if;
+
+  -- Reattach: exactly one existing kid row for this parent+label under a
+  -- different auth id -> move it over to the new anonymous user,
+  -- preserving chores and affirmation history.
+  select count(*) into v_match_count
+  from public.kid_profiles kp
+  where kp.parent_id = v_parent
+    and kp.kid_label = v_label
+    and kp.id != v_uid;
+
+  if v_match_count = 1 then
+    select kp.id into v_old_id
+    from public.kid_profiles kp
+    where kp.parent_id = v_parent
+      and kp.kid_label = v_label
+      and kp.id != v_uid
+    limit 1;
+    -- Create the new row FIRST so the FKs are satisfied.
+    insert into public.kid_profiles (id, parent_id, kid_label)
+    values (v_uid, v_parent, v_label)
+    on conflict (id) do nothing;
+    update public.chores set assigned_to = v_uid where assigned_to = v_old_id;
+    -- Move affirmation history BEFORE deleting the old row
+    -- (check-ins cascade-delete with the kid row).
+    update public.affirmation_checkins set kid_id = v_uid where kid_id = v_old_id;
+    delete from public.kid_profiles where id = v_old_id;
+  else
+    insert into public.kid_profiles (id, parent_id, kid_label)
+    values (v_uid, v_parent, v_label)
+    on conflict (id) do nothing;
+  end if;
+
   parent_id := v_parent;
   kid_label := v_label;
   return next;

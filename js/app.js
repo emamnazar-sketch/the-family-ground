@@ -572,9 +572,45 @@
       if (!row || !row.parent_id) return { error: "That code did not work. Ask your parent for a new one." };
       var kp = await sb.from("kid_profiles").select("id").eq("id", user.id).maybeSingle();
       if (kp.error || !kp.data) return { error: "Something went wrong setting up. Please try again." };
+      // Remember this kid's permanent code on this device so the app can
+      // silently rejoin if the login ever dies — no typing it again.
+      try { localStorage.setItem("tfg.kidCode", code); } catch (e2) {}
       return { kid: kp.data };
     } catch (e) {
       return { error: friendlyError(e) };
+    }
+  };
+
+  TFG.getStoredKidCode = function () {
+    try { return localStorage.getItem("tfg.kidCode") || ""; } catch (e) { return ""; }
+  };
+
+  TFG.clearStoredKidCode = function () {
+    try { localStorage.removeItem("tfg.kidCode"); } catch (e) {}
+  };
+
+  // Kid auto-rejoin: if the login died but this device remembers the kid's
+  // permanent code, silently start a fresh session and rejoin (the server
+  // reattaches their existing kid row — chores and history carry over).
+  // Returns { user } or { user: null, codeDead: true } when the stored
+  // code no longer works (parent replaced it).
+  TFG.ensureKidSession = async function () {
+    try {
+      var user = await TFG.getUser();
+      if (user) return { user: user };
+      var code = TFG.getStoredKidCode();
+      if (!code) return { user: null };
+      var anon = await TFG.signInAnonymously();
+      if (anon && anon.error) return { user: null };
+      var res = await TFG.redeemInviteCode(code);
+      if (res && res.error) {
+        TFG.clearStoredKidCode();
+        return { user: null, codeDead: true };
+      }
+      var u2 = await TFG.getUser();
+      return { user: u2 || null };
+    } catch (e) {
+      return { user: null };
     }
   };
 

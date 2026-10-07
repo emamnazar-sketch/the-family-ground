@@ -76,6 +76,7 @@
         </svg>
         <h1>Hi there!</h1>
         <p class="lead">Scan the square your parent shows you — or type the code below.</p>
+        <p class="lead" id="codeReplacedNote" hidden style="color:#9c5c2b;">Your old code was replaced — ask your parent to show you the new square.</p>
         <form id="kidCodeForm" novalidate>
           <div class="form-error"></div>
           <div class="form-group">
@@ -111,7 +112,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006c"></script>
+<script src="js/app.js?v=20261006d"></script>
 <script>
 (function () {
   var form = document.getElementById("kidCodeForm");
@@ -120,17 +121,30 @@
 
   // Already joined on this device? Go straight to the kid dashboard.
   (async function () {
+    var params = new URLSearchParams(window.location.search || "");
+    if (params.get("code_replaced") === "1") {
+      var note0 = document.getElementById("codeReplacedNote");
+      if (note0) note0.hidden = false;
+    }
     var session = await TFG.getSession();
     if (session) {
       var kp = await TFG.getKidProfile();
       if (kp && kp.kid) { window.location.href = "kid-dashboard.html"; return; }
     }
     // QR scan landing (?code=XXXXXX): fill the code and join automatically.
-    var params = new URLSearchParams(window.location.search || "");
     var qrCode = (params.get("code") || "").trim().toUpperCase();
     if (qrCode) {
       input.value = qrCode;
       form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event("submit", { cancelable: true }));
+      return;
+    }
+    // Silent rejoin: this device remembers the kid's permanent code,
+    // so a dead login fixes itself with no typing.
+    var es = await TFG.ensureKidSession();
+    if (es && es.user) { window.location.href = "kid-dashboard.html"; return; }
+    if (es && es.codeDead) {
+      var note2 = document.getElementById("codeReplacedNote");
+      if (note2) note2.hidden = false;
     }
   })();
 
