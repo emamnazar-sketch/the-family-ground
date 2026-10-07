@@ -173,7 +173,18 @@
     try {
       var sb = getClient();
       var res = await sb.auth.getUser();
-      return res.data.user || null;
+      if (res.data && res.data.user) return res.data.user;
+      // The access token can expire while the page sits open (tablets
+      // that fall asleep are the classic case). Try one silent refresh
+      // before reporting the user as logged out.
+      try {
+        var ref = await sb.auth.refreshSession();
+        if (ref.data && ref.data.user) return ref.data.user;
+        var retry = await sb.auth.getUser();
+        return (retry.data && retry.data.user) || null;
+      } catch (e2) {
+        return null;
+      }
     } catch (e) {
       return null;
     }
