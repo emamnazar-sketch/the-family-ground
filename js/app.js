@@ -169,22 +169,37 @@
     }
   };
 
+  // Single-flight guard: only one token refresh runs at a time.
+  // Parallel refreshes can trigger refresh-token reuse detection
+  // server-side, which revokes the whole session.
+  var refreshFlight = null;
+
   TFG.getUser = async function () {
     try {
       var sb = getClient();
       var res = await sb.auth.getUser();
       if (res.data && res.data.user) return res.data.user;
+      // No local session at all — nothing to refresh.
+      var sess = await sb.auth.getSession();
+      if (!sess.data.session) return null;
       // The access token can expire while the page sits open (tablets
       // that fall asleep are the classic case). Try one silent refresh
       // before reporting the user as logged out.
-      try {
-        var ref = await sb.auth.refreshSession();
-        if (ref.data && ref.data.user) return ref.data.user;
-        var retry = await sb.auth.getUser();
-        return (retry.data && retry.data.user) || null;
-      } catch (e2) {
-        return null;
+      if (!refreshFlight) {
+        refreshFlight = (async function () {
+          try {
+            var ref = await sb.auth.refreshSession();
+            if (ref.data && ref.data.user) return ref.data.user;
+            var retry = await sb.auth.getUser();
+            return (retry.data && retry.data.user) || null;
+          } catch (e2) {
+            return null;
+          } finally {
+            refreshFlight = null;
+          }
+        })();
       }
+      return await refreshFlight;
     } catch (e) {
       return null;
     }
@@ -317,13 +332,19 @@
     return session;
   };
 
-  // Kid pages: bounce anyone who is not a kid to the login page.
+  // Kid pages: bounce anyone who is not a kid to the kid login page.
+  // (A kid with a dead session lands on the code form — with the
+  // reattach fix, a fresh code reconnects their existing kid row —
+  // instead of the parent Google login.)
   TFG.requireKid = async function () {
-    var session = await TFG.requireAuth();
-    if (!session) return null;
+    var session = await TFG.getSession();
+    if (!session) {
+      window.location.href = "kid-login.html";
+      return null;
+    }
     var kp = await TFG.getKidProfile();
     if (!kp || !kp.kid) {
-      window.location.href = "login.html";
+      window.location.href = "kid-login.html";
       return null;
     }
     return { session: session, kid: kp.kid };
