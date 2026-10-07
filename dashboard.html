@@ -858,7 +858,10 @@
             '" data-kid-label="' + TFG.esc(kid.kid_label || "") + '">Remove</button>' +
         "</div>" +
         codeBlock +
-        '<button type="button" class="btn btn-outline btn-sm" data-kid-newcode="' + TFG.esc(kid.kid_label || "") + '">New code</button>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;">' +
+          '<button type="button" class="btn btn-forest btn-sm" data-kid-assign="' + TFG.esc(kid.id) + '">Assign chore</button>' +
+          '<button type="button" class="btn btn-outline btn-sm" data-kid-newcode="' + TFG.esc(kid.kid_label || "") + '">New code</button>' +
+        "</div>" +
         affirmBlock +
         '<h4 class="mt-2">Waiting for review (' + waiting.length + ")</h4>" +
         (waiting.length ? waiting.map(function (c) { return choreRow(c, true); }).join("")
@@ -984,9 +987,23 @@
     // Delegated clicks: remove kid, new code, approve, ask to redo, delete chore.
     document.getElementById("kidsList").addEventListener("click", async function (e) {      var removeBtn = e.target.closest("[data-kid-remove]");
       var newCodeBtn = e.target.closest("[data-kid-newcode]");
+      var assignBtn = e.target.closest("[data-kid-assign]");
       var approveBtn = e.target.closest("[data-review-approve]");
       var redoBtn = e.target.closest("[data-review-redo]");
       var delBtn = e.target.closest("[data-chore-delete-assigned]");
+
+      if (assignBtn) {
+        var kidId = assignBtn.getAttribute("data-kid-assign");
+        var choresTab = document.querySelector('.tab[data-tab-target="panel-chores"]');
+        if (choresTab) choresTab.click();
+        var assignSel = document.getElementById("assignTo");
+        if (assignSel && kidId) assignSel.value = kidId;
+        var form = document.getElementById("choreForm");
+        if (form) form.scrollIntoView({ behavior: "smooth", block: "start" });
+        var titleInput = document.getElementById("choreTitle");
+        if (titleInput) setTimeout(function () { titleInput.focus({ preventScroll: true }); }, 400);
+        return;
+      }
 
       if (removeBtn) {
         var label = removeBtn.getAttribute("data-kid-label") || "this kid";
