@@ -18,9 +18,9 @@ marketing pages + member signup/login + a protected member dashboard
 
 ## Still to decide (see BUILD_NOTES.md)
 
-- Membership price (`PRICE_PLACEHOLDER` in `js/config.js` — currently shows
-  "Founding member pricing announced at launch")
+- Membership price — DECIDED: FREE (Amam, 2026-11-01). `PRICE_PLACEHOLDER`
+  in `js/config.js` is `"Free"`; Google sign-in is the only gate.
 - Real course lesson content (DRAFT outlines in place)
-- Payment collection (Stripe) — not wired yet
+- Payment collection (Stripe) — not used; memberships are free
 
 Full details: `BUILD_NOTES.md`.

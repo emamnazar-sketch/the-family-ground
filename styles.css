@@ -643,7 +643,7 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 .qr-slot { display: inline-block; background: #fff; padding: 8px; border-radius: 12px; border: 2px solid #E4E0D2; }
 .qr-slot img, .qr-slot canvas { display: block; }
 
-/* ---------- Why $9.99 box ---------- */
+/* ---------- Why-join box ---------- */
 .why-box { background: rgba(255,255,255,.12); border: 2px dashed rgba(247,243,234,.5); border-radius: 18px; padding: 22px 24px; margin: 20px 0; text-align: left; }
 .why-box h3 { color: var(--cream); margin: 0 0 6px; font-size: 1.25rem; }
 .why-box .why-price { color: var(--cream); opacity: .85; margin: 0 0 12px; }

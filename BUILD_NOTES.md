@@ -39,10 +39,11 @@ Blog lives separately on beehiiv at `blog.thefamilyground.com` — nav "Blog" li
 
 ## Decisions Amam must make
 
-- [ ] **Membership price.** `js/config.js` has `PRICE_PLACEHOLDER` (currently `"PRICE_NOT_SET"`).
-      Every `[data-price]` spot on the site shows "Founding member pricing announced at
-      launch" until you set it, e.g. `PRICE_PLACEHOLDER: "$9/month"`.
-      (Real payment collection — Stripe etc. — is a separate step, not wired yet.)
+- [x] **Membership price — DECIDED: FREE (Amam, 2026-11-01).** `js/config.js`
+      `PRICE_PLACEHOLDER` is `"Free"`; every `[data-price]` spot shows that.
+      Signing in with Google is the only gate — no invite code, no trial,
+      no payment. Stripe is not connected and must not be wired without
+      Amam's explicit say-so.
 - [ ] **Real course lessons.** `js/app.js` → `TFG.COURSES` holds titles + lesson lists;
       lesson bodies are DRAFT outlines (marked in `courses.html` comments). Write the real
       lessons, then decide how lesson content is delivered (pages, PDFs, video).

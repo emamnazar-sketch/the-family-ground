@@ -15,13 +15,13 @@ window.TFG_CONFIG = {
   // TODO (Amam): paste your Supabase anon/public key here
   SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwdWt3ZHZtd3JkaG5sb2dmdmF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NDgwMTEsImV4cCI6MjEwNjIyNDAxMX0.mYMoGZp_EK-Pq1fDhUkiTC7AlbooUD5CY64Yz15eCLM",
 
-  // Membership price — LOCKED by Amam 2026-09-29: $9.99/month.
+  // Membership is FREE — Amam's order, 2026-11-01. No price, no payment.
+  // Parents join by signing in with Google; that's the whole gate.
   // Shown everywhere [data-price] appears (homepage, signup).
-  PRICE_PLACEHOLDER: "$9.99/month",
+  PRICE_PLACEHOLDER: "Free",
 
-  // Stripe publishable key for the paywall checkout.
-  // Amam connects Stripe when he's ready — until this is a real key,
-  // the paywall shows an honest "payments open soon" note instead
-  // of a dead checkout button.
+  // Stripe is NOT connected and NOT used: memberships are free, so
+  // there is no checkout. Left empty on purpose — do not wire payments
+  // without Amam's explicit say-so.
   STRIPE_PUBLISHABLE_KEY: ""
 };

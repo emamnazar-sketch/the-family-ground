@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12503F">
+<title>Free weekend mission — The Family Ground</title>
+<meta name="description" content="See a real weekend mission from The Family Ground, free: Spiral vs Lightning, with a printable sheet for every age band. Membership is free — just sign in with Google.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/logo.png" type="image/png">
+<link rel="stylesheet" href="styles.css?v=20261101a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Family Ground">
+<link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SSYJB05LQT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SSYJB05LQT');
+</script>
+</head>
+<body>
+
+<div class="nav-float">
+  <div class="pill">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="images/logo-wordmark.png" alt="The Family Ground">
+    </a>
+    <nav>
+      <a class="nl" href="index.html">Home</a>
+      <a class="nl" href="about.html">About</a>
+      <a class="nl" href="https://blog.thefamilyground.com">Blog</a>
+      <a class="nl" href="dashboard.html" data-auth="logged-in" hidden>My Home</a>
+      <a class="nl" href="login.html" data-auth="logged-out">Log in</a>
+      <a class="btn btn-forest btn-sm" href="signup.html" data-auth="logged-out">Become a member</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <section class="form-section">
+    <div class="wrap">
+      <div class="form-card">
+        <div class="badge-row"><span class="badge">Free mission preview</span></div>
+        <h1>Spiral vs Lightning</h1>
+        <p class="lead">This is a real weekend mission from inside The Family Ground &mdash; the same one waiting in members&rsquo; homes. No sample, no teaser: the actual mission, free.</p>
+
+        <!-- Shown until we know the visitor is signed in. -->
+        <div id="gatePanel">
+          <p>Membership is free for now. Sign in with Google and the mission opens &mdash; no card, no payment, nothing to cancel.</p>
+          <div class="cta-row">
+            <a class="btn btn-forest" href="signup.html">Join free with Google</a>
+            <a class="btn btn-soft" href="login.html">Log in</a>
+          </div>
+        </div>
+
+        <!-- The real mission, revealed after the free sign-in. -->
+        <div id="missionPanel" hidden>
+          <div class="panel-card" style="margin-top: 8px;">
+            <p style="margin:0;"><b>The mission:</b> Left hand traces the smooth spiral. Right hand traces the sharp lightning. Both hands at the same time!</p>
+            <p class="muted" style="margin:8px 0 0;">Print the sheet, lay it flat on the table, and go. Twenty screen-free minutes &mdash; then run it again and try to beat your own time.</p>
+          </div>
+          <ul class="perk-list" style="margin-top: 20px;">
+            <li><b>All ages, one sheet:</b> <a href="missions/spiral-vs-lightning.pdf" target="_blank" rel="noopener">Print the mission sheet (PDF)</a></li>
+            <li><b>Ages 4&ndash;6:</b> <a href="missions/spiral-vs-lightning-4-6.pdf" target="_blank" rel="noopener">Print the 4&ndash;6 sheet</a></li>
+            <li><b>Ages 7&ndash;9:</b> <a href="missions/spiral-vs-lightning-7-9.pdf" target="_blank" rel="noopener">Print the 7&ndash;9 sheet</a></li>
+            <li><b>Ages 10&ndash;12:</b> <a href="missions/spiral-vs-lightning-10-12.pdf" target="_blank" rel="noopener">Print the 10&ndash;12 sheet</a></li>
+            <li><b>Ages 13+:</b> <a href="missions/spiral-vs-lightning-13+.pdf" target="_blank" rel="noopener">Print the 13+ sheet</a></li>
+          </ul>
+          <div class="cta-row" style="margin-top: 20px;">
+            <a class="btn btn-forest" href="dashboard.html">Go to My Home</a>
+          </div>
+          <p class="muted small" style="margin-top:12px;">Liked it? A new mission lands every weekend inside your member home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap fin">
+    <div class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="https://blog.thefamilyground.com">Blog</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <p class="copy">&copy; <span id="year">2026</span> The Family Ground &middot; Made with care, by a dad.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js?v=20261101a"></script>
+<script src="js/app.js?v=20261101a"></script>
+<script>
+(function () {
+  var gate = document.getElementById("gatePanel");
+  var mission = document.getElementById("missionPanel");
+  (async function () {
+    try {
+      // The site's gate: signed in with Google = member (membership is free).
+      var session = await TFG.getSession();
+      if (session) {
+        gate.hidden = true;
+        mission.hidden = false;
+      }
+    } catch (e) {
+      // If the check fails, the gate stays up — nobody sees member content signed-out.
+    }
+  })();
+})();
+</script>
+</body>
+</html>

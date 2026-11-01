@@ -776,30 +776,22 @@
     }
   };
 
-/* ---------------- Memberships: trial codes + paywall gate ----------------
-   Parents enter a beta invite code for free trial access.
-   The dashboard gate redirects: no membership -> welcome.html,
-   expired trial -> paywall.html.
+/* ---------------- Memberships: FREE for everyone signed in ----------------
+   Membership is free (Amam's order, 2026-11-01). There is no price, no
+   trial, no invite code, and no payment step: a parent who signs in with
+   Google is a member. The old trial-code/paywall gate is retired — the
+   helpers below (redeemBetaCode, admin code tools) stay for the owner's
+   admin use only and no longer block anyone.
 ---------------------------------------------------------------------- */
 
-  // 'ok' | 'welcome' | 'paywall' | 'login'
+  // 'ok' | 'login' — signed in means member; signed out means log in.
   TFG.membershipStatus = async function () {
     try {
-      var sb = getClient();
       var user = await TFG.getUser();
       if (!user) return 'login';
-      var res = await sb.from("memberships").select("status, trial_ends_at")
-        .eq("user_id", user.id).maybeSingle();
-      if (res.error || !res.data) return 'welcome';
-      var m = res.data;
-      if (m.status === 'active') return 'ok';
-      if (m.status === 'trialing') {
-        if (m.trial_ends_at && new Date(m.trial_ends_at).getTime() < Date.now()) return 'paywall';
-        return 'ok';
-      }
-      return 'paywall';
+      return 'ok';
     } catch (e) {
-      return 'welcome';
+      return 'login';
     }
   };
 
@@ -1128,16 +1120,10 @@
     TFG.initInstallBanner();
   }
 
-  // Starts Stripe checkout. Wired up when Amam connects Stripe;
-  // until then the paywall shows the honest "opening soon" state.
+  // Membership is free — there is no checkout and Stripe is not connected.
+  // Kept only so any old link fails honestly instead of charging anyone.
   TFG.startCheckout = async function () {
-    var key = (cfg.STRIPE_PUBLISHABLE_KEY || "");
-    if (!key || key.indexOf("PASTE_") === 0) {
-      return { error: "Payments aren't open yet — we'll let you know the moment they are." };
-    }
-    // TODO: create a Checkout Session via a secure backend endpoint and
-    // redirect to Stripe. Never put the secret key in this file.
-    return { error: "Checkout is being connected. Please try again soon." };
+    return { error: "Membership is free — just sign in with Google. There is nothing to pay." };
   };
 
 /* ---------------- Date helpers ---------------- */
@@ -1216,11 +1202,11 @@
       if (btn) btn.click();
     }
 
-    // Membership price placeholder injection.
+    // Membership price placeholder injection. Membership is free.
     document.querySelectorAll("[data-price]").forEach(function (el) {
       el.textContent = (cfg.PRICE_PLACEHOLDER && cfg.PRICE_PLACEHOLDER !== "PRICE_NOT_SET")
         ? cfg.PRICE_PLACEHOLDER
-        : "Founding member pricing announced at launch";
+        : "Free";
     });
   });
 })();

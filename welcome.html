@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#12503F">
 <title>Welcome — The Family Ground</title>
-<meta name="description" content="Enter your invite code to start your free trial of The Family Ground.">
+<meta name="description" content="Membership at The Family Ground is free — signed-in parents go straight to their dashboard.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="images/logo.png" type="image/png">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20261101a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -46,8 +46,8 @@
     <div class="wrap">
       <div class="form-card">
         <div class="badge-row"><span class="badge">Welcome</span></div>
-        <h1>You're in. One step left.</h1>
-        <p class="lead">Enter the invite code you were given and your free trial starts right away — full access, real account, no payment needed yet.</p>
+        <h1>You're in.</h1>
+        <p class="lead">Membership is free for now, and you&rsquo;re signed in &mdash; so there&rsquo;s nothing left to unlock. Your dashboard is open. (Early invite codes still work below if you have one, but you don&rsquo;t need one anymore.)</p>
         <form id="welcomeForm">
           <div class="form-group">
             <label class="form-label" for="inviteCode">Invite code</label>
@@ -59,11 +59,11 @@
               <span>I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span>
             </label>
           </div>
-          <button type="submit" class="btn btn-forest btn-block" id="startBtn">Start my free trial</button>
+          <button type="submit" class="btn btn-forest btn-block" id="startBtn">Use an invite code</button>
           <p class="form-error" id="welcomeError" style="margin: 16px 0 0;"></p>
           <p class="form-success" id="welcomeSuccess" style="margin: 16px 0 0;"></p>
         </form>
-        <p class="muted small text-center" style="margin-top: 16px;">No invite code? <a href="paywall.html">See membership options</a></p>
+        <p class="muted small text-center" style="margin-top: 16px;">No code needed &mdash; <a href="dashboard.html">go straight to your dashboard</a></p>
         <p class="auth-switch"><a href="#" data-action="sign-out">Log out</a></p>
       </div>
     </div>
@@ -85,8 +85,8 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006f"></script>
+<script src="js/config.js?v=20261101a"></script>
+<script src="js/app.js?v=20261101a"></script>
 <script>
 (function () {
   var form = document.getElementById("welcomeForm");
@@ -112,7 +112,7 @@
       return;
     }
     startBtn.disabled = true;
-    startBtn.textContent = "Starting your trial\u2026";
+    startBtn.textContent = "Checking your code\u2026";
     try {
       var result = await TFG.redeemBetaCode(codeInput.value);
       if (result.error) {
@@ -120,14 +120,11 @@
         return;
       }
       var endText = "";
-      if (result.trialEndsAt) {
-        endText = " Free until " + new Date(result.trialEndsAt).toLocaleDateString() + ".";
-      }
       TFG.showFormSuccess(form, "Welcome to The Family Ground!" + endText + " Taking you to your dashboard\u2026");
       setTimeout(function () { window.location.href = "dashboard.html"; }, 1200);
     } finally {
       startBtn.disabled = false;
-      startBtn.textContent = "Start my free trial";
+      startBtn.textContent = "Use an invite code";
     }
   });
 })();

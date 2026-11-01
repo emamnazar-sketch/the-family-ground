@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#12503F">
 <title>Membership — The Family Ground</title>
-<meta name="description" content="Join The Family Ground: $9.99/month for the whole family. Weekend missions, Sunday tournaments, and chore dashboards.">
+<meta name="description" content="Membership at The Family Ground is free for the whole family. Weekend missions, Sunday tournaments, and chore dashboards — just sign in with Google.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="images/logo.png" type="image/png">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=20261101a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -46,19 +46,19 @@
     <div class="wrap">
       <div class="form-card">
         <div class="badge-row"><span class="badge">Membership</span></div>
-        <h1 id="paywallTitle">Keep the weekends coming.</h1>
-        <p class="lead" id="paywallLead">Your free trial has ended. Keep everything — the missions, the tournaments, the chore dashboards — for one simple price.</p>
-        <p class="price-note" style="font-size: 1.4rem; font-weight: 800;">$9.99/month</p>
+        <h1 id="paywallTitle">Membership is free.</h1>
+        <p class="lead" id="paywallLead">No trial, no price, no card. If you&rsquo;re signed in with Google, you&rsquo;re a member &mdash; the missions, the tournaments, and the chore dashboards are all open.</p>
+        <p class="price-note" style="font-size: 1.4rem; font-weight: 800;">Free</p>
         <ul class="perk-list">
           <li><b>Weekend mission packs</b> &mdash; 20 screen-free minutes at the kitchen table, then a Sunday family tournament</li>
           <li><b>Chore dashboards your kids run themselves</b> &mdash; they check in, you just tap approve</li>
-          <li><b>One price for the whole family</b> &mdash; no per-kid fees, cancel anytime</li>
+          <li><b>Free for the whole family</b> &mdash; no per-kid fees, no card needed</li>
         </ul>
         <div id="paywallAction" style="margin-top: 20px;">
-          <!-- Filled by the script below: checkout button when payments are live,
-               honest "opening soon" note until then. Never a dead checkout. -->
+          <!-- Filled by the script below: signed-in members are sent straight
+               to their dashboard; everyone else is pointed at free sign-in. -->
         </div>
-        <p class="muted small text-center" style="margin-top: 16px;">Have an invite code? <a href="welcome.html">Enter it here</a></p>
+        <p class="muted small text-center" style="margin-top: 16px;">Not signed in yet? <a href="signup.html">Join free with Google</a></p>
         <p class="auth-switch"><a href="#" data-action="sign-out">Log out</a></p>
       </div>
     </div>
@@ -80,55 +80,25 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261005e"></script>
-<script src="js/app.js?v=20261006f"></script>
+<script src="js/config.js?v=20261101a"></script>
+<script src="js/app.js?v=20261101a"></script>
 <script>
 (function () {
-  var cfg = window.TFG_CONFIG || {};
   var actionBox = document.getElementById("paywallAction");
-  var title = document.getElementById("paywallTitle");
-  var lead = document.getElementById("paywallLead");
 
-  function esc(s) {
-    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
+  // Membership is free: anyone signed in is a member and goes straight in.
+  // This page is kept only so old links land somewhere sensible.
   (async function () {
     var session = await TFG.getSession();
-    if (!session) { window.location.href = "login.html"; return; }
-    var st = await TFG.membershipStatus();
-    if (st === "ok") { window.location.href = "dashboard.html"; return; }
-    if (st === "welcome") {
-      title.textContent = "Become a member.";
-      lead.textContent = "One membership for your whole family — missions, tournaments, and chore dashboards, for less than two cups of coffee a month.";
-    }
-
-    var key = cfg.STRIPE_PUBLISHABLE_KEY || "";
-    var stripeReady = key && key.indexOf("PASTE_") !== 0 && key !== "";
-    if (stripeReady) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "btn btn-forest btn-block";
-      btn.textContent = "Continue — $9.99/month";
-      btn.addEventListener("click", function () {
-        TFG.startCheckout();
-      });
-      actionBox.appendChild(btn);
-      var note = document.createElement("p");
-      note.className = "muted small text-center";
-      note.style.marginTop = "12px";
-      note.textContent = "Secure payment. Cancel anytime.";
-      actionBox.appendChild(note);
-    } else {
-      var soon = document.createElement("div");
-      soon.className = "panel-card";
-      soon.innerHTML =
-        "<p style='margin:0;'><b>Payments open soon.</b></p>" +
-        "<p class='muted' style='margin:8px 0 0;'>We're putting the finishing touches on checkout. " +
-        "You're logged in" + (session.user && session.user.email ? " as " + esc(session.user.email) : "") + ", " +
-        "so we'll let you know the moment memberships open.</p>";
-      actionBox.appendChild(soon);
-    }
+    if (session) { window.location.href = "dashboard.html"; return; }
+    var box = document.createElement("div");
+    box.className = "panel-card";
+    box.innerHTML =
+      "<p style='margin:0;'><b>Membership is free for now.</b></p>" +
+      "<p class='muted' style='margin:8px 0 0;'>Sign in with Google and everything opens &mdash; " +
+      "no card, no payment, nothing to cancel.</p>" +
+      "<p style='margin:12px 0 0;'><a class='btn btn-forest' href='signup.html'>Join free with Google</a></p>";
+    actionBox.appendChild(box);
   })();
 })();
 </script>

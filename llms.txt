@@ -21,7 +21,7 @@ The Family Ground is a parent membership site. Members get:
 
 - The family agreement is an experiment Amam is trying in his own home, not a proven method.
 - Course outlines are drafts awaiting review, not finished lessons.
-- Membership pricing is not set yet; founding member pricing will be announced at launch.
+- Membership is free for now; parents join by signing in with Google — no card, no payment.
 - There are no testimonials, statistics, or claimed results on this site.
 
 ## Who makes it
