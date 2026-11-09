@@ -773,3 +773,49 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
   .hero-search-label { font-size: 19px; }
   .news-item { padding: 20px 20px; }
 }
+
+/* ---------- Golden accent layer (Amam, 2026-11-09) ----------
+   One yellowish gold woven through the Forest Own theme.
+   Gold #E0AA3E: ink text on gold = 6.99:1, green on gold = 4.45:1,
+   gold on deep green = 4.45:1. Text on gold is always ink or deep
+   green — never gold text on cream. Gold on cream is borders only. */
+:root {
+  --gold: #E0AA3E;
+  --gold-deep: #B97F16;
+  --gold-soft: #F8EBC8;
+  --gold-hover: #CD971F;
+}
+
+/* Gold buttons (hero search, support) */
+.btn-gold { background: var(--gold); color: var(--ink); box-shadow: 0 10px 24px rgba(185, 127, 22, 0.35); }
+.btn-gold:hover { background: var(--gold-hover); color: var(--ink); }
+
+/* Badges pick up the gold thread */
+.kicker { background: var(--gold-soft); border: 2px solid var(--gold); }
+.flag { background: var(--gold-soft); }
+
+/* The hero headline underline turns gold */
+.hero h1 .wiggle svg path { stroke: var(--gold); }
+
+/* Section heading accent bars */
+.sec-head h2::after, .support-sec h2::after {
+  content: ""; display: block; width: 64px; height: 5px; border-radius: 3px;
+  background: var(--gold); margin: 18px auto 0;
+}
+.newsline-head h2::after {
+  content: ""; display: block; width: 64px; height: 5px; border-radius: 3px;
+  background: var(--gold); margin: 16px 0 0;
+}
+
+/* Hero search: gold frame, gold-tinted chips, gold-edged results */
+.hero-search-box { border-color: var(--gold); }
+.chip { background: var(--gold-soft); border-color: var(--gold); color: var(--ink); }
+.chip:hover { background: var(--gold); color: var(--ink); }
+.result-card { border-left: 6px solid var(--gold); }
+
+/* Newsline: gold top edge on every card */
+.news-item { border-top: 5px solid var(--gold); }
+.news-title a:hover { color: var(--gold-deep); }
+
+/* Support: the honest box gets the gold frame */
+.support-honest { border-color: var(--gold); }
