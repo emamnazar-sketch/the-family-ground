@@ -20,7 +20,7 @@
   var RADIUS_M = 12000; /* about 7.5 miles */
   var PER_CATEGORY = 20;
   var MAX_CARDS = 30;
-  var FETCH_TIMEOUT_MS = 20000;
+  var FETCH_TIMEOUT_MS = 60000;
   var CACHE_TTL_MS = 24 * 60 * 60 * 1000; /* 24 hours */
   var OVERPASS_ENDPOINTS = [
     "https://overpass-api.de/api/interpreter",
@@ -128,7 +128,7 @@
 
   function buildCategoryQuery(cat, lat, lon) {
     var around = "(around:" + RADIUS_M + "," + lat + "," + lon + ")";
-    var parts = ["[out:json][timeout:20];"];
+    var parts = ["[out:json][timeout:55];"];
     cat.clauses.forEach(function (clause) {
       parts.push(clause + around + ";");
     });
