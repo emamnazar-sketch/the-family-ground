@@ -1,0 +1,14 @@
+{
+ "built": "2026-11-09",
+ "month": "November 2026",
+ "total": 674232,
+ "categories": {
+  "park": 188851,
+  "playground": 175330,
+  "community": 14503,
+  "museum": 14839,
+  "library": 19268,
+  "pool": 261441
+ },
+ "tiles": 3413
+}

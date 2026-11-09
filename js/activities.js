@@ -1,15 +1,16 @@
 /* ============================================================
    The Family Ground — homepage: local activities search
-   Free data, no API keys, all calls happen in the visitor's
-   browser:
+   Free data, no API keys:
    - Geocoding: OpenStreetMap Nominatim (limit=5; administrative
      matches like counties are dropped when a real town matches,
      and same-name towns in different states get a chooser)
-   - Places:    OpenStreetMap via the Overpass API — one request
-     per kind of place, fired in parallel across three public
-     mirrors, rendered as each answer lands; a dead mirror only
-     slows its own categories, never the whole search
-   - Cache:     each kind of place is saved on the phone for a
+   - Places:    our own static index of U.S. family places, built
+     from OpenStreetMap data and hosted on this site as small
+     map tiles (see scripts/activities-index/). A search fetches
+     the 1-4 tiles around the town from our own pages — no live
+     map server is involved, so answers come back in about a
+     second. The index is rebuilt monthly.
+   - Cache:     each town's results are saved on the phone for a
      day, so repeat searches show results instantly
    - Weather:   api.weather.gov (National Weather Service, US)
    Place data © OpenStreetMap contributors (shown by results).
@@ -18,32 +19,29 @@
   "use strict";
 
   var RADIUS_M = 12000; /* about 7.5 miles */
-  var PER_CATEGORY = 20;
+  var RADIUS_MI = RADIUS_M / 1609.344;
   var MAX_CARDS = 30;
-  var FETCH_TIMEOUT_MS = 60000;
   var CACHE_TTL_MS = 24 * 60 * 60 * 1000; /* 24 hours */
-  var OVERPASS_ENDPOINTS = [
-    "https://overpass-api.de/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter",
-    "https://overpass.osm.ch/api/interpreter"
-  ];
+  var TILE_BASE = "/data/places/";
 
   var CATEGORIES = [
-    { key: "park", label: "Park", plural: "parks", clauses: ['nwr["leisure"="park"]'] },
-    { key: "playground", label: "Playground", plural: "playgrounds", clauses: ['nwr["leisure"="playground"]'] },
-    { key: "library", label: "Library", plural: "libraries", clauses: ['nwr["amenity"="library"]'] },
-    {
-      key: "pool",
-      label: "Swimming pool",
-      plural: "pools",
-      clauses: [
-        'nwr["leisure"="swimming_pool"]["access"!~"private|no"]',
-        'nwr["amenity"="public_bath"]'
-      ]
-    },
-    { key: "museum", label: "Museum", plural: "museums", clauses: ['nwr["tourism"="museum"]'] },
-    { key: "community", label: "Community centre", plural: "community centres", clauses: ["nwr[\"amenity\"=\"community_centre\"]"] }
+    { key: "park", label: "Park", plural: "parks" },
+    { key: "playground", label: "Playground", plural: "playgrounds" },
+    { key: "library", label: "Library", plural: "libraries" },
+    { key: "pool", label: "Swimming pool", plural: "pools" },
+    { key: "museum", label: "Museum", plural: "museums" },
+    { key: "community", label: "Community centre", plural: "community centres" }
   ];
+
+  /* Short category codes used inside the tile files. */
+  var CODE_TO_CATEGORY = {
+    park: "park",
+    play: "playground",
+    lib: "library",
+    pool: "pool",
+    mus: "museum",
+    comm: "community"
+  };
 
   /* Nominatim addresstype values that mean an actual place people
      live in / go to — as opposed to an administrative area like a
@@ -80,17 +78,6 @@
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
-  function categoryOf(tags) {
-    if (!tags) return null;
-    if (tags.leisure === "park") return "park";
-    if (tags.leisure === "playground") return "playground";
-    if (tags.amenity === "library") return "library";
-    if (tags.leisure === "swimming_pool" || tags.amenity === "public_bath") return "pool";
-    if (tags.tourism === "museum") return "museum";
-    if (tags.amenity === "community_centre") return "community";
-    return null;
-  }
-
   function categoryByKey(key) {
     for (var i = 0; i < CATEGORIES.length; i++) {
       if (CATEGORIES[i].key === key) return CATEGORIES[i];
@@ -103,92 +90,95 @@
     return cat ? cat.label : key;
   }
 
-  function pluralList(keys) {
-    var words = keys.map(function (k) {
-      var cat = categoryByKey(k);
-      return cat ? cat.plural : k;
-    });
-    if (words.length <= 1) return words.join("");
-    if (words.length === 2) return words[0] + " and " + words[1];
-    return words.slice(0, -1).join(", ") + " and " + words[words.length - 1];
+  /* ---------------- Places: our own static tiles ----------------
+     The index is sliced into 0.5° x 0.5° cells named by their
+     south-west corner indices: la<floor(lat*2)>_lo<floor(lon*2)>.
+     A 12 km search circle touches 1-4 cells; each is a small JSON
+     file of [name, categoryCode, lat, lon, address] rows. Cells
+     with no places have no file — a 404 just means "empty cell". */
+
+  var indexMonth = null; /* filled lazily from the index manifest */
+
+  function loadIndexMonth() {
+    fetch(TILE_BASE + "manifest.json").then(function (res) {
+      if (!res.ok) throw new Error("manifest " + res.status);
+      return res.json();
+    }).then(function (m) {
+      if (m && m.month) indexMonth = m.month;
+    }).catch(function () { /* freshness line is a bonus; skip it */ });
   }
 
-  function addressOf(tags) {
-    if (!tags) return "";
-    var line1 = "";
-    if (tags["addr:housenumber"] || tags["addr:street"]) {
-      line1 = ((tags["addr:housenumber"] || "") + " " + (tags["addr:street"] || "")).trim();
+  function cellsCovering(lat, lon) {
+    var dLat = RADIUS_M / 111000;
+    var cos = Math.max(Math.cos(lat * Math.PI / 180), 0.2);
+    var dLon = dLat / cos;
+    var la0 = Math.floor((lat - dLat) * 2), la1 = Math.floor((lat + dLat) * 2);
+    var lo0 = Math.floor((lon - dLon) * 2), lo1 = Math.floor((lon + dLon) * 2);
+    var cells = [];
+    for (var la = la0; la <= la1; la++) {
+      for (var lo = lo0; lo <= lo1; lo++) {
+        cells.push([la, lo]);
+      }
     }
-    var city = tags["addr:city"] || tags["addr:town"] || tags["addr:village"] || "";
-    if (line1 && city) return line1 + ", " + city;
-    return line1 || city || "";
+    return cells;
   }
 
-  /* ---------------- Places: one request per category ---------------- */
-
-  function buildCategoryQuery(cat, lat, lon) {
-    var around = "(around:" + RADIUS_M + "," + lat + "," + lon + ")";
-    var parts = ["[out:json][timeout:55];"];
-    cat.clauses.forEach(function (clause) {
-      parts.push(clause + around + ";");
-    });
-    parts.push("out center " + PER_CATEGORY + ";");
-    return parts.join("\n");
-  }
-
-  /* Try the assigned mirror first; on any failure (dead, busy, or
-     slower than the client timeout) retry once on the next mirror. */
-  function fetchCategory(cat, lat, lon, startIdx) {
-    var query = buildCategoryQuery(cat, lat, lon);
-    function attempt(idx) {
-      return fetchWithTimeout(OVERPASS_ENDPOINTS[idx], {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-        body: "data=" + encodeURIComponent(query)
-      }, FETCH_TIMEOUT_MS).then(function (res) {
-        if (!res.ok) throw new Error("overpass " + res.status);
-        return res.json();
-      });
-    }
-    return attempt(startIdx).catch(function () {
-      return attempt((startIdx + 1) % OVERPASS_ENDPOINTS.length);
+  function fetchTile(cell) {
+    var url = TILE_BASE + "la" + cell[0] + "_lo" + cell[1] + ".json";
+    return fetchWithTimeout(url, {}, 15000).then(function (res) {
+      if (res.status === 404) return [];
+      if (!res.ok) throw new Error("tile " + res.status);
+      return res.json();
     });
   }
 
-  function toPlaces(data, lat, lon) {
-    var seen = {};
-    var places = [];
-    (data.elements || []).forEach(function (el) {
-      var id = el.type + "/" + el.id;
-      if (seen[id]) return;
-      var elLat = el.lat != null ? el.lat : (el.center && el.center.lat);
-      var elLon = el.lon != null ? el.lon : (el.center && el.center.lon);
-      if (elLat == null || elLon == null) return;
-      var cat = categoryOf(el.tags);
-      if (!cat) return;
-      seen[id] = true;
-      places.push({
-        name: (el.tags && el.tags.name) || categoryLabel(cat),
-        category: cat,
-        distance: distanceMi(lat, lon, elLat, elLon),
-        address: addressOf(el.tags),
-        lat: elLat,
-        lon: elLon
+  /* Fetch every covering tile and merge the rows into places.
+     Rejects only when every tile failed with a real error (a 404
+     is an empty cell, not an error). */
+  function fetchPlaces(lat, lon) {
+    var cells = cellsCovering(lat, lon);
+    var errors = 0;
+    var jobs = cells.map(function (cell) {
+      return fetchTile(cell).catch(function () {
+        errors++;
+        return null;
       });
     });
-    places.sort(function (a, b) { return a.distance - b.distance; });
-    return places;
+    return Promise.all(jobs).then(function (tileRows) {
+      if (errors === cells.length) throw new Error("tiles failed");
+      var places = [];
+      tileRows.forEach(function (rows) {
+        if (!rows) return;
+        rows.forEach(function (row) {
+          var cat = CODE_TO_CATEGORY[row[1]];
+          if (!cat) return;
+          var pLat = row[2], pLon = row[3];
+          var dist = distanceMi(lat, lon, pLat, pLon);
+          if (dist > RADIUS_MI + 0.02) return;
+          places.push({
+            name: row[0] || categoryLabel(cat),
+            category: cat,
+            distance: dist,
+            address: row[4] || "",
+            lat: pLat,
+            lon: pLon
+          });
+        });
+      });
+      places.sort(function (a, b) { return a.distance - b.distance; });
+      return places;
+    });
   }
 
   /* ---------------- On-phone cache (localStorage, 24h) ---------------- */
 
-  function cacheKey(lat, lon, catKey) {
-    return "tfg-act:" + lat.toFixed(2) + "," + lon.toFixed(2) + ":" + catKey;
+  function cacheKey(lat, lon) {
+    return "tfg-act2:" + lat.toFixed(2) + "," + lon.toFixed(2);
   }
 
-  function cacheRead(lat, lon, catKey) {
+  function cacheRead(lat, lon) {
     try {
-      var raw = window.localStorage.getItem(cacheKey(lat, lon, catKey));
+      var raw = window.localStorage.getItem(cacheKey(lat, lon));
       if (!raw) return null;
       var entry = JSON.parse(raw);
       if (!entry || !entry.t || (Date.now() - entry.t) > CACHE_TTL_MS) return null;
@@ -201,16 +191,16 @@
           lat: p.lat, lon: p.lon,
           distance: distanceMi(lat, lon, p.lat, p.lon)
         };
-      });
+      }).filter(function (p) { return p.distance <= RADIUS_MI + 0.02; });
     } catch (e) {
       return null;
     }
   }
 
-  function cacheWrite(lat, lon, catKey, places) {
+  function cacheWrite(lat, lon, places) {
     try {
       window.localStorage.setItem(
-        cacheKey(lat, lon, catKey),
+        cacheKey(lat, lon),
         JSON.stringify({ t: Date.now(), places: places })
       );
     } catch (e) {
@@ -265,12 +255,20 @@
     return all;
   }
 
+  function groupByCat(places) {
+    var byCat = {};
+    places.forEach(function (p) {
+      if (!byCat[p.category]) byCat[p.category] = [];
+      byCat[p.category].push(p);
+    });
+    return byCat;
+  }
+
   /* One renderer for every stage of the search: cached cards first,
-     then each category re-renders as it lands, with a plain note
-     about whatever is still loading or could not load. */
+     then the fresh tile results swap in when they land. */
   function renderResults(box, state) {
     var places = collectPlaces(state);
-    var done = state.pending.length === 0;
+    var done = !state.pending;
     var html = "";
     html += '<p class="search-count">Family places near ' + esc(state.placeName) + "</p>";
 
@@ -310,28 +308,19 @@
     } else if (!done) {
       html += '<p class="activity-status">Looking for parks, playgrounds, libraries and more near ' +
         esc(state.placeName) + "&hellip;</p>";
-    } else if (state.failed.length === CATEGORIES.length) {
+    } else if (state.loadError) {
       html += '<div class="search-empty"><p><b>The activity finder could not load just now.</b></p>' +
-        "<p>The free map service is busy or unreachable. Give it a minute and try again — or search our guides instead, they always work.</p>" +
+        "<p>Something went wrong loading the places list. Check your connection, give it a moment and try again — or search our guides instead, they always work.</p>" +
         '<div class="search-chips"><button type="button" class="chip" data-retry-failed="1">Try again</button></div></div>';
     } else {
       html += '<div class="search-empty"><p><b>Nothing showed up near ' + esc(state.placeName) + ".</b></p>" +
         "<p>The map volunteers may not have added your area yet. Try a bigger nearby town — or search our guides instead, they work everywhere.</p></div>";
     }
 
-    if (state.pending.length && places.length) {
-      html += '<p class="place-attrib">Still looking for ' + esc(pluralList(state.pending)) + "&hellip;</p>";
-    }
-
-    if (done && state.failed.length && state.failed.length < CATEGORIES.length) {
-      html += '<div class="activity-status"><p style="margin:0 0 10px;">' +
-        esc(pluralList(state.failed).replace(/^./, function (ch) { return ch.toUpperCase(); })) +
-        " could not load — the free map service is having a slow day.</p>" +
-        '<button type="button" class="chip" data-retry-failed="1">Try again</button></div>';
-    }
-
     if (places.length) {
-      html += '<p class="place-attrib">Place data &copy; OpenStreetMap contributors &middot; Distances are straight-line, as the crow flies</p>';
+      html += '<p class="place-attrib">Place data &copy; OpenStreetMap contributors' +
+        (indexMonth ? " &middot; U.S. index updated " + esc(indexMonth) : "") +
+        " &middot; Distances are straight-line, as the crow flies</p>";
     }
     box.innerHTML = html;
   }
@@ -352,6 +341,8 @@
     var locateBtn = document.getElementById("activity-locate");
     if (!actForm || !input || !box) return;
 
+    loadIndexMonth();
+
     /* Mode toggle */
     var modeBtns = document.querySelectorAll("[data-mode]");
     modeBtns.forEach(function (btn) {
@@ -371,57 +362,23 @@
     var searchToken = 0; /* stale async work checks this before touching the page */
     var state = null;
     var pendingChoices = null;
-
-    function newState(lat, lon, placeName) {
-      return {
-        lat: lat, lon: lon, placeName: placeName,
-        byCat: {}, weather: null, filter: "all",
-        pending: CATEGORIES.map(function (c) { return c.key; }),
-        failed: []
-      };
-    }
-
-    function settleCategory(key, ok) {
-      state.pending = state.pending.filter(function (k) { return k !== key; });
-      if (!ok && !(key in state.byCat) && state.failed.indexOf(key) === -1) {
-        state.failed.push(key);
-      }
-      if (ok) {
-        state.failed = state.failed.filter(function (k) { return k !== key; });
-      }
-      renderResults(box, state);
-    }
-
-    function runCategory(cat, idx, token) {
-      fetchCategory(cat, state.lat, state.lon, idx % OVERPASS_ENDPOINTS.length)
-        .then(function (data) {
-          if (token !== searchToken || !state) return;
-          var places = toPlaces(data, state.lat, state.lon).filter(function (p) {
-            return p.category === cat.key;
-          });
-          cacheWrite(state.lat, state.lon, cat.key, places);
-          state.byCat[cat.key] = places;
-          settleCategory(cat.key, true);
-        })
-        .catch(function () {
-          if (token !== searchToken || !state) return;
-          /* A failed refresh never removes cached cards already shown. */
-          settleCategory(cat.key, false);
-        });
-    }
+    var lastSearch = null;
 
     function search(lat, lon, placeName) {
       var token = ++searchToken;
       pendingChoices = null;
-      state = newState(lat, lon, placeName);
+      lastSearch = { lat: lat, lon: lon, placeName: placeName };
+      state = {
+        lat: lat, lon: lon, placeName: placeName,
+        byCat: {}, weather: state ? state.weather : null, filter: "all",
+        pending: true, loadError: false
+      };
       box.hidden = false;
 
       /* Instant first paint: anything saved on this phone in the
          last day shows up before the network answers at all. */
-      CATEGORIES.forEach(function (cat) {
-        var cached = cacheRead(lat, lon, cat.key);
-        if (cached && cached.length) state.byCat[cat.key] = cached;
-      });
+      var cached = cacheRead(lat, lon);
+      if (cached && cached.length) state.byCat = groupByCat(cached);
       renderResults(box, state);
 
       fetchWeather(lat, lon).then(function (periods) {
@@ -430,22 +387,23 @@
         renderResults(box, state);
       }).catch(function () { /* weather is a bonus; places carry on without it */ });
 
-      CATEGORIES.forEach(function (cat, i) { runCategory(cat, i, token); });
+      fetchPlaces(lat, lon).then(function (places) {
+        if (token !== searchToken || !state) return;
+        cacheWrite(lat, lon, places);
+        state.byCat = groupByCat(places);
+        state.pending = false;
+        renderResults(box, state);
+      }).catch(function () {
+        if (token !== searchToken || !state) return;
+        state.pending = false;
+        /* A failed refresh never removes cached cards already shown. */
+        if (!collectPlaces(state).length) state.loadError = true;
+        renderResults(box, state);
+      });
     }
 
     function retryFailed() {
-      if (!state || !state.failed.length) return;
-      var token = searchToken;
-      var retryKeys = state.failed.slice();
-      state.failed = [];
-      retryKeys.forEach(function (key) {
-        if (state.pending.indexOf(key) === -1) state.pending.push(key);
-      });
-      renderResults(box, state);
-      retryKeys.forEach(function (key) {
-        var cat = categoryByKey(key);
-        if (cat) runCategory(cat, CATEGORIES.indexOf(cat), token);
-      });
+      if (lastSearch) search(lastSearch.lat, lastSearch.lon, lastSearch.placeName);
     }
 
     /* -------- Geocoding: pick the town, not the county -------- */
