@@ -152,6 +152,11 @@
         rows.forEach(function (row) {
           var cat = CODE_TO_CATEGORY[row[1]];
           if (!cat) return;
+          /* Unnamed pools are almost always private backyard pools
+             that were never tagged access=private — a family cannot
+             visit them, so they never appear. Named pools (public,
+             school, hotel, water parks) are unaffected. */
+          if (row[1] === "pool" && !row[0]) return;
           var pLat = row[2], pLon = row[3];
           var dist = distanceMi(lat, lon, pLat, pLon);
           if (dist > RADIUS_MI + 0.02) return;
@@ -173,7 +178,7 @@
   /* ---------------- On-phone cache (localStorage, 24h) ---------------- */
 
   function cacheKey(lat, lon) {
-    return "tfg-act2:" + lat.toFixed(2) + "," + lon.toFixed(2);
+    return "tfg-act3:" + lat.toFixed(2) + "," + lon.toFixed(2);
   }
 
   function cacheRead(lat, lon) {
