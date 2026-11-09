@@ -64,7 +64,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="images/logo.png" type="image/png">
-<link rel="stylesheet" href="styles.css?v=20261101a">
+<link rel="stylesheet" href="styles.css?v=20261109a">
 <link rel="manifest" href="/manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,6 +112,20 @@
     <span class="kicker">Welcome in</span>
     <h1>A warm little home on the internet <span class="wiggle">for parents<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10 Q 25 2 50 8 T 100 8 T 150 8 T 198 8" fill="none" stroke="#8FBC9F" stroke-width="6" stroke-linecap="round"/></svg></span></h1>
     <p class="lede">The Family Ground is a membership where you can track chores, write family agreements, and play weekend game missions together &mdash; all in one friendly place.</p>
+    <form class="hero-search" id="site-search" role="search">
+      <label class="hero-search-label" for="site-search-input">What is your family working on?</label>
+      <div class="hero-search-box">
+        <input id="site-search-input" type="search" placeholder="Try &ldquo;screen time&rdquo; or &ldquo;chores&rdquo;" autocomplete="off">
+        <button class="btn btn-forest" type="submit">Search</button>
+      </div>
+      <div class="search-chips" aria-label="Popular searches">
+        <button type="button" class="chip" data-search-chip="screen time">screen time</button>
+        <button type="button" class="chip" data-search-chip="chores">chores</button>
+        <button type="button" class="chip" data-search-chip="family meeting">family meeting</button>
+        <button type="button" class="chip" data-search-chip="waking up for school">waking up for school</button>
+      </div>
+      <div class="search-results" id="search-results" aria-live="polite" hidden></div>
+    </form>
     <div class="cta-row" data-auth="logged-out">
       <a class="btn btn-forest" href="signup.html">Become a member</a>
       <a class="btn btn-soft" href="login.html">Log in</a>
@@ -213,6 +227,22 @@
   </div>
 </section>
 
+<section class="newsline-sec">
+  <div class="wrap">
+    <div class="newsline-grid">
+      <div class="newsline-head">
+        <span class="kicker">Worth your time</span>
+        <h2>Helpful links for today</h2>
+        <p>Good things I find while I read and watch &mdash; posts, talks, and videos that help with the daily decisions of family life. Each one gets a short note from me, in plain words.</p>
+        <p>New links land here as I find them. If a link helped your family, it probably belongs here for the next one.</p>
+      </div>
+      <div class="newsline-list" id="newsline-list">
+        <noscript><p>Turn on JavaScript to see today&rsquo;s links, or head straight to <a href="https://blog.thefamilyground.com">the blog</a>.</p></noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="about-sec">
   <div class="wrap-narrow">
     <div class="stars" aria-hidden="true">
@@ -255,6 +285,21 @@
   </div>
 </section>
 
+<section class="support-sec" id="support">
+  <div class="wrap-narrow">
+    <span class="kicker">Keep it free</span>
+    <h2>Support The Family Ground</h2>
+    <p>Everything on this site is free &mdash; the tools, the printables, the blog, all of it. No family gets asked for a card to read a chore chart or print a meeting agenda. That is on purpose.</p>
+    <p>If this place has helped your family and you want to chip in, you can. A little support from a lot of families is what keeps the door open for the next family.</p>
+    <p class="support-honest">The Family Ground is a for-profit business, not a charity. Support payments are not tax-deductible &mdash; they simply help keep everything here free for every family.</p>
+    <!-- STRIPE: replace with Amam's Stripe payment link when he connects Stripe -->
+    <div class="cta-row" style="justify-content:center;">
+      <a class="btn btn-forest" href="#support">Support The Family Ground</a>
+    </div>
+    <p class="note" style="text-align:center;">Support payments open soon.</p>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="wrap fin">
     <div class="links">
@@ -275,5 +320,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/config.js?v=20261101a"></script>
 <script src="js/app.js?v=20261101a"></script>
+<script src="js/search-index.js?v=20261109a"></script>
+<script src="js/newsline.js?v=20261109a"></script>
+<script src="js/home.js?v=20261109a"></script>
 </body>
 </html>
