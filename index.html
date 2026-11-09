@@ -64,7 +64,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="images/logo.png" type="image/png">
-<link rel="stylesheet" href="styles.css?v=20261109b">
+<link rel="stylesheet" href="styles.css?v=20261109c">
 <link rel="manifest" href="/manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -84,7 +84,7 @@
 <div class="nav-float">
   <div class="pill">
     <a class="brand" href="index.html">
-      <img class="brand-logo" src="images/logo-wordmark.png" alt="The Family Ground">
+      <span class="brand-name">The Family Ground</span>
     </a>
     <nav>
       <a class="nl" href="index.html">Home</a>
@@ -112,6 +112,10 @@
     <span class="kicker">Welcome in</span>
     <h1>A warm little home on the internet <span class="wiggle">for parents<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10 Q 25 2 50 8 T 100 8 T 150 8 T 198 8" fill="none" stroke="#8FBC9F" stroke-width="6" stroke-linecap="round"/></svg></span></h1>
     <p class="lede">The Family Ground is a membership where you can track chores, write family agreements, and play weekend game missions together &mdash; all in one friendly place.</p>
+    <div class="search-modes" role="tablist" aria-label="Choose what to search">
+      <button type="button" class="search-mode is-active" data-mode="guides" role="tab" aria-selected="true">Search our guides</button>
+      <button type="button" class="search-mode" data-mode="activities" role="tab" aria-selected="false">Find activities near you</button>
+    </div>
     <form class="hero-search" id="site-search" role="search">
       <label class="hero-search-label" for="site-search-input">What is your family working on?</label>
       <div class="hero-search-box">
@@ -125,6 +129,17 @@
         <button type="button" class="chip" data-search-chip="waking up for school">waking up for school</button>
       </div>
       <div class="search-results" id="search-results" aria-live="polite" hidden></div>
+    </form>
+    <form class="hero-search" id="activity-search" role="search" hidden>
+      <label class="hero-search-label" for="activity-input">Where should we look?</label>
+      <div class="hero-search-box">
+        <input id="activity-input" type="text" placeholder="Town or ZIP &mdash; try &ldquo;Sacramento&rdquo;" autocomplete="off">
+        <button class="btn btn-gold" type="submit">Find activities</button>
+      </div>
+      <div class="search-chips">
+        <button type="button" class="chip" id="activity-locate">Use my location instead</button>
+      </div>
+      <div class="search-results" id="activity-results" aria-live="polite" hidden></div>
     </form>
     <div class="cta-row" data-auth="logged-out">
       <a class="btn btn-forest" href="signup.html">Become a member</a>
@@ -323,5 +338,6 @@
 <script src="js/search-index.js?v=20261109a"></script>
 <script src="js/newsline.js?v=20261109a"></script>
 <script src="js/home.js?v=20261109a"></script>
+<script src="js/activities.js?v=20261109a"></script>
 </body>
 </html>

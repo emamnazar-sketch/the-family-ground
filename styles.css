@@ -819,3 +819,67 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 
 /* Support: the honest box gets the gold frame */
 .support-honest { border-color: var(--gold); }
+
+/* ---------- Hero search modes + local activities ---------- */
+.search-modes {
+  display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;
+  max-width: 660px; margin: 0 auto 22px;
+  background: var(--sage-soft); border: 2px solid var(--sage);
+  border-radius: 999px; padding: 6px;
+}
+.search-mode {
+  flex: 1 1 auto; font-family: var(--font-head); font-weight: 800;
+  font-size: 17px; color: var(--forest); background: transparent;
+  border: none; border-radius: 999px; padding: 11px 20px; cursor: pointer;
+  white-space: nowrap;
+}
+.search-mode:hover { background: var(--sage-soft); }
+.search-mode.is-active { background: var(--gold); color: var(--ink); box-shadow: var(--shadow); }
+.search-mode.is-active:hover { background: var(--gold-hover); }
+
+.activity-status {
+  font-size: 17.5px; color: var(--ink-soft); text-align: center;
+  background: var(--card); border-radius: 18px; padding: 20px 22px; box-shadow: var(--shadow);
+}
+.weather-strip {
+  background: var(--gold-soft); border: 2px solid var(--gold);
+  border-radius: 18px; padding: 18px 22px; margin-bottom: 14px;
+}
+.weather-head {
+  font-family: var(--font-head); font-weight: 800; font-size: 15px;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--forest);
+  margin: 0 0 8px;
+}
+.weather-line { font-size: 17px; color: var(--ink); margin: 0 0 5px; }
+.weather-credit { font-size: 13px; color: var(--ink-faint); margin: 6px 0 0; }
+
+.place-filters { justify-content: flex-start; margin: 4px 0 16px; }
+.chip.is-active { background: var(--gold); color: var(--ink); border-color: var(--gold-deep); }
+
+.place-card .place-map {
+  display: inline-block; margin-top: 10px;
+  font-family: var(--font-head); font-weight: 800; font-size: 16.5px;
+  color: var(--forest); text-decoration: none;
+}
+.place-card .place-map:hover { color: var(--gold-deep); text-decoration: underline; }
+
+.place-attrib { font-size: 13.5px; color: var(--ink-faint); text-align: center; margin: 14px 4px 0; }
+
+@media (max-width: 640px) {
+  .search-mode { font-size: 15.5px; padding: 10px 12px; }
+  .place-filters { justify-content: center; }
+}
+
+/* ---------- Header wordmark: big and bold (Amam, 2026-11-09) ----------
+   Replaces the thin serif logo image in every page header with live
+   text in the heading font at full weight — Forest green with the
+   gold underline thread from the accent layer. */
+.brand-name {
+  font-family: var(--font-head); font-weight: 900;
+  font-size: 28px; line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--forest); white-space: nowrap;
+  border-bottom: 4px solid var(--gold); padding-bottom: 3px;
+}
+@media (max-width: 640px) {
+  .brand-name { font-size: 23px; }
+}
