@@ -6,6 +6,12 @@
    ============================================================ */
 window.TFG_NEWSLINE = [
   {
+    title: "What's Really in Campbell's Soup?",
+    source: "DoctorTruth.Teachings on Facebook",
+    note: "He reads the ingredient list out loud \u2014 the GMO ingredients, the sugar, the 'natural flavoring.' Worth a watch before soup season.",
+    url: "https://www.facebook.com/reel/1414764547216743/"
+  },
+  {
     title: "Why a Doctor Won't Touch Paper Receipts",
     source: "Dr. Tania Elliott on Facebook",
     note: "Most paper receipts are coated in BPA that soaks into your skin — she explains why an email receipt is the safer habit.",
