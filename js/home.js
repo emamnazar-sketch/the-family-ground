@@ -23,6 +23,9 @@
     list.innerHTML = window.TFG_NEWSLINE.map(function (item) {
       return (
         '<article class="news-item">' +
+          (item.img
+            ? '<a class="news-thumb-link" href="' + esc(item.url) + '"><img class="news-thumb" src="' + esc(item.img) + '" alt="' + esc(item.title) + '" loading="lazy"' + (item.pos ? ' style="object-position: ' + esc(item.pos) + '"' : '') + '></a>'
+            : "") +
           '<p class="news-source">' + esc(item.source) + "</p>" +
           '<h3 class="news-title"><a href="' + esc(item.url) + '">' + esc(item.title) + "</a></h3>" +
           '<p class="news-note">' + esc(item.note) + "</p>" +

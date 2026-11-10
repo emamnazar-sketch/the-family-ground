@@ -750,6 +750,11 @@ footer .copy { font-size: 13px; color: var(--ink-faint); }
 .news-title a { color: var(--forest); text-decoration: none; }
 .news-title a:hover { text-decoration: underline; }
 .news-note { font-size: 16.5px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+.news-thumb-link { display: block; margin: 0 0 14px; }
+.news-thumb {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  object-position: center 28%; border-radius: 12px;
+}
 
 /* ---------- Support (homepage) ---------- */
 .support-sec { background: var(--sage-soft); padding: 90px 0; text-align: center; }
