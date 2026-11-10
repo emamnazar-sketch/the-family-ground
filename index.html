@@ -113,10 +113,10 @@
     <h1>A warm little home on the internet <span class="wiggle">for parents<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 10 Q 25 2 50 8 T 100 8 T 150 8 T 198 8" fill="none" stroke="#8FBC9F" stroke-width="6" stroke-linecap="round"/></svg></span></h1>
     <p class="lede">The Family Ground is a membership where you can track chores, write family agreements, and play weekend game missions together &mdash; all in one friendly place.</p>
     <div class="search-modes" role="tablist" aria-label="Choose what to search">
-      <button type="button" class="search-mode is-active" data-mode="guides" role="tab" aria-selected="true">Search our guides</button>
-      <button type="button" class="search-mode" data-mode="activities" role="tab" aria-selected="false">Find activities near you</button>
+      <button type="button" class="search-mode" data-mode="guides" role="tab" aria-selected="false">Search our guides</button>
+      <button type="button" class="search-mode is-active" data-mode="activities" role="tab" aria-selected="true">Find activities near you</button>
     </div>
-    <form class="hero-search" id="site-search" role="search">
+    <form class="hero-search" id="site-search" role="search" hidden>
       <label class="hero-search-label" for="site-search-input">What is your family working on?</label>
       <div class="hero-search-box">
         <input id="site-search-input" type="search" placeholder="Try &ldquo;screen time&rdquo; or &ldquo;chores&rdquo;" autocomplete="off">
@@ -130,7 +130,7 @@
       </div>
       <div class="search-results" id="search-results" aria-live="polite" hidden></div>
     </form>
-    <form class="hero-search" id="activity-search" role="search" hidden>
+    <form class="hero-search" id="activity-search" role="search">
       <label class="hero-search-label" for="activity-input">Where should we look?</label>
       <div class="hero-search-box">
         <input id="activity-input" type="text" placeholder="Town or ZIP &mdash; try &ldquo;Sacramento&rdquo;" autocomplete="off">
