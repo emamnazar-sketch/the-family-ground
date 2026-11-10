@@ -6,6 +6,12 @@
    ============================================================ */
 window.TFG_NEWSLINE = [
   {
+    title: "Why a Doctor Won't Touch Paper Receipts",
+    source: "Dr. Tania Elliott on Facebook",
+    note: "Most paper receipts are coated in BPA that soaks into your skin — she explains why an email receipt is the safer habit.",
+    url: "https://www.facebook.com/reel/2266267647476122/"
+  },
+  {
     title: "The Nightly Phone Fight",
     source: "The Family Ground blog",
     note: "Why the phone argument repeats every night, and the agreement that ends it.",
