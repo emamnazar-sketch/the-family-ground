@@ -6,6 +6,13 @@
    ============================================================ */
 window.TFG_NEWSLINE = [
   {
+    title: "Receipts Might Be Exposing You to More Than You Think",
+    source: "Dr. Rhonda Patrick on The Diary of a CEO (Facebook)",
+    note: "She explains how the BPA coating on thermal receipts gets through your skin — and why lotion or hand sanitizer right after makes it worse.",
+    img: "img/newsline/receipts-podcast.jpg", pos: "center 20%",
+    url: "https://www.facebook.com/reel/1282012523866865/"
+  },
+  {
     title: "What's Really in Campbell's Soup?",
     source: "DoctorTruth.Teachings on Facebook",
     note: "He reads the ingredient list out loud \u2014 the GMO ingredients, the sugar, the 'natural flavoring.' Worth a watch before soup season.",
